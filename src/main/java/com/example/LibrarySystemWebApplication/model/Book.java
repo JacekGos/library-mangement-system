@@ -9,6 +9,8 @@ public class Book extends LibraryElement {
         this.pagesNumber = pagesNumber;
     }
 
+    public Book() {}
+
     public int getPagesNumber() {
         return pagesNumber;
     }

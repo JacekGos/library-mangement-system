@@ -18,6 +18,8 @@ public abstract class LibraryElement {
 
     }
 
+    public LibraryElement() {}
+
     public int getLibraryElementId() {
         return libraryElementId;
     }

@@ -8,7 +8,9 @@ public class Movie extends LibraryElement {
         super(libraryElementId, typeId, title, sortId, statusId);
         this.durationTime = durationTime;
     }
-    
+
+    public Movie() {}
+
     public int getDurationTime() {
         return durationTime;
     }
