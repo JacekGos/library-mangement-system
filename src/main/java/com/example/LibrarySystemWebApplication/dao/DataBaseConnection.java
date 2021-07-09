@@ -13,8 +13,9 @@ public class DataBaseConnection {
 
     private DataBaseConnection() throws SQLException {
         try {
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             this.conn = DriverManager.getConnection(url);
-        } catch (SQLException ex) {
+        } catch (SQLException | ClassNotFoundException ex) {
             System.out.println("Database Connection Creation Failed : " + ex.getMessage());
         }
     }
