@@ -6,6 +6,6 @@ public class LibraryWorker extends User{
         super(userId, userName, userSurName, login, password, accountType);
     }
 
-
+    public LibraryWorker() {}
 
 }

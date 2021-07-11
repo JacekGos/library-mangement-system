@@ -1,6 +1,8 @@
 package com.example.LibrarySystemWebApplication.web;
 
+import com.example.LibrarySystemWebApplication.dao.LibraryWorkerDao;
 import com.example.LibrarySystemWebApplication.dao.LoginDao;
+import com.example.LibrarySystemWebApplication.model.LibraryWorker;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -19,12 +21,18 @@ public class LoginProcessServlet extends HttpServlet {
 
         boolean status = false;
 
-        status = LoginDao.validate(login, password);
+        status = LoginDao.validateWorker(login, password);
 
         if (status == true) {
-            response.sendRedirect("dobrze");
+            LibraryWorker worker = LibraryWorkerDao.getLibraryWorkerByLoginAndPasword(login, password);
+            response.sendRedirect("test.jsp");
         } else {
-            response.sendRedirect("zleee");
+            status = LoginDao.validateUser(login, password);
+            if (status == true) {
+                response.sendRedirect("dobrze");
+            } else {
+                response.sendRedirect("zle");
+            }
         }
     }
 }

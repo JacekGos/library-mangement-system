@@ -19,8 +19,8 @@
             <ul class="navbar-nav">
                 <li><b><a href="<%=request.getContextPath()%>/libraryElementList"
                           class="nav-link" >Wyszukaj w zbiorze</a></b></li>
-                <li><a href="<%=request.getContextPath()%>/login"
-                       class="nav-link">Login</a></li>
+                <li><b><a href="<%=request.getContextPath()%>/login"
+                       class="nav-link">Login</a></b></li>
             </ul>
         </nav>
     </header>
