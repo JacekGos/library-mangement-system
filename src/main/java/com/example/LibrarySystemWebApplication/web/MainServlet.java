@@ -23,12 +23,18 @@ public class MainServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         String option = request.getServletPath();
-
+        String action = "default";
         RequestDispatcher requestDispatcher;
 
         switch (option) {
             case "/libraryElementList":
-                String action = "ShowList";
+                action = "showList";
+                request.setAttribute("action", action);
+                requestDispatcher = request.getRequestDispatcher("libraryElement");
+                requestDispatcher.forward(request, response);
+                break;
+            case "/search":
+                action = "search";
                 request.setAttribute("action", action);
                 requestDispatcher = request.getRequestDispatcher("libraryElement");
                 requestDispatcher.forward(request, response);

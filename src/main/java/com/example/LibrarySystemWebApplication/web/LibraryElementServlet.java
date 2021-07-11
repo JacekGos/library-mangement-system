@@ -23,17 +23,13 @@ public class LibraryElementServlet extends HttpServlet {
 
         String action = (String)request.getAttribute("action");
 
-    /*    response.setContentType("text/html");
-        PrintWriter out = response.getWriter();
-        out.println("<html><body>");
-        out.println(action);
-        out.println("</body></html>");*/
 
         switch (action) {
-            case "ShowList":
+            case "showList":
                 libraryElementList(request, response);
-            case "/search":
-//                searchedResultsLibraryElements(request, response);
+                break;
+            case "search":
+                searchedResultsLibraryElements(request, response);
                 break;
             default:
 
@@ -55,8 +51,8 @@ public class LibraryElementServlet extends HttpServlet {
     private void searchedResultsLibraryElements(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String title = request.getParameter("searchedTitle");
-        List<LibraryElement> searchedLibraryElements = libraryElementDao.getLibraryElementsByTitle(title);
-        request.setAttribute("searchedLibraryElements", searchedLibraryElements);
+        List<LibraryElement> libraryElementList = libraryElementDao.getLibraryElementsByTitle(title);
+        request.setAttribute("libraryElementList", libraryElementList);
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("searcher.jsp");
         requestDispatcher.forward(request, response);
     }

@@ -27,8 +27,7 @@ public class LibraryElementDao {
             + "VALUES (?, ?, ?, ?, NULL, ?)";
     public static final String SELECT_ALL_LIBRARY_ELEMENTS = "SELECT * FROM [LibraryProject_v2].[dbo].[Library_element]";
     public static final String SELECT_LIBRARY_ELEMENTS_BY_TITLE = "SELECT * FROM [LibraryProject_v2].[dbo].[Library_element]" +
-            "WHERE name = ?";
-
+            "WHERE title = ?";
 
     public static int insertBook(Book book) {
 

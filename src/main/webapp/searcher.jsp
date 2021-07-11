@@ -67,7 +67,7 @@
 </div>
 <div class="row">
     <div class="container">
-        <form action="search" method="post">
+        <form action="search" method="get">
             <fieldset class="form-group">
                 <input type="text" class="form-control" name="searchedTitle">
             </fieldset>
