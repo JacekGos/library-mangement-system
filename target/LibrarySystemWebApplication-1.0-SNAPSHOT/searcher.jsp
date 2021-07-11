@@ -10,7 +10,6 @@
           crossorigin="anonymous">
 </head>
 <body>
-
 <header>
     <nav class="navbar navbar-expand-md navbar-dark"
          style="background-color: #47a0ff">
@@ -18,7 +17,7 @@
             <a href="<%=request.getContextPath()%>/index.jsp" class="navbar-brand"> Strona główna </a>
         </div>
         <ul class="navbar-nav">
-            <li><b><a href="<%=request.getContextPath()%>/list"
+            <li><b><a href="<%=request.getContextPath()%>/libraryElementList"
                       class="nav-link">Wyszukaj w zbiorze</a></b></li>
         </ul>
     </nav>
@@ -26,8 +25,6 @@
 <br>
 
 <div class="row">
-    <!-- <div class="alert alert-success" *ngIf='message'>{{message}}</div> -->
-
     <div class="container">
         <h3 class="text-center">Katalog On-line</h3>
         <hr>
@@ -67,19 +64,17 @@
             </tbody>
         </table>
     </div>
-    <hr>
-    <div class="container col-md-5">
-        <div class="card">
-            <div class="card-body">
-                <form action="search" method="post">
-                    <fieldset class="form-group">
-                        <input type="text" class="form-control" name="name"
-                               required="required">
-                    </fieldset>
-                    <button type="submit" class="btn btn-success">Wyszukaj</button>
-                </form>
+</div>
+<div class="row">
+    <div class="container">
+        <form action="search" method="post">
+            <fieldset class="form-group">
+                <input type="text" class="form-control" name="searchedTitle">
+            </fieldset>
+            <div class="container text-center">
+                <button type="submit" class="btn btn-success">Wyszukaj</button>
             </div>
-        </div>
+        </form>
     </div>
 </div>
 </body>

@@ -22,18 +22,15 @@ public class MainServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-       /* response.setContentType("text/html");
-        PrintWriter out = response.getWriter();*/
+        String option = request.getServletPath();
 
-        String action = request.getServletPath();
+        RequestDispatcher requestDispatcher;
 
-    /*    out.println("<html><body>");
-        out.println(action);
-        out.println("</body></html>");*/
-
-        switch (action) {
+        switch (option) {
             case "/libraryElementList":
-                RequestDispatcher requestDispatcher = request.getRequestDispatcher("libraryElement");
+                String action = "ShowList";
+                request.setAttribute("action", action);
+                requestDispatcher = request.getRequestDispatcher("libraryElement");
                 requestDispatcher.forward(request, response);
                 break;
             default:
