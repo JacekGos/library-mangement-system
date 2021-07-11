@@ -16,10 +16,6 @@ import java.util.List;
 @WebServlet(name = "mainServlet", value = "/")
 public class MainServlet extends HttpServlet {
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-    }
-
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         String option = request.getServletPath();
@@ -39,10 +35,30 @@ public class MainServlet extends HttpServlet {
                 requestDispatcher = request.getRequestDispatcher("libraryElement");
                 requestDispatcher.forward(request, response);
                 break;
+            case "/login":
+                doPost(request, response);
+                break;
             default:
 
                 break;
         }
+    }
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        String option = request.getServletPath();
+        String action = "default";
+        RequestDispatcher requestDispatcher;
+
+        switch (option) {
+            case "/login":
+                requestDispatcher = request.getRequestDispatcher("login.jsp");
+                requestDispatcher.forward(request, response);
+                break;
+            default:
+                break;
+        }
+
     }
 
 }
