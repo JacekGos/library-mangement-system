@@ -58,8 +58,8 @@
                     <tr>
                         <td><c:out value="${object.getLibraryElementId()}"/></td>
                         <td><c:out value="${object.getTitle()}"/></td>
-                        <td><c:out value="${object.getTypeId()}"/></td>
-                        <td><c:out value="${object.getSortId()}"/></td>
+                        <td><c:out value="${object.getTypeName()}"/></td>
+                        <td><c:out value="${object.getSortName()}"/></td>
                         <c:if test="${object.getTypeId() == 1}">
                             <td><c:out value="${object.getPagesNumber()}"/></td>
                             <td><c:out value="---"/></td>
@@ -68,7 +68,7 @@
                             <td><c:out value="---"/></td>
                             <td><c:out value="${object.getDurationTime()}"/></td>
                         </c:if>
-                        <td><c:out value="${object.getStatusId()}"/></td>
+                        <td><c:out value="${object.getStatusName()}"/></td>
                         <c:if test="${sessionScope.userName == null}">
                             <td><a href="edit?id=<c:out value='${object.getLibraryElementId()}' />">Wypożycz</a></td>
                         </c:if>

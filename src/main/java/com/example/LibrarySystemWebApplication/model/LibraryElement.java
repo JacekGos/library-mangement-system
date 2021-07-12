@@ -1,6 +1,6 @@
 package com.example.LibrarySystemWebApplication.model;
 
-public abstract class LibraryElement {
+public abstract class LibraryElement implements DataDisplayHelper{
 
     private int libraryElementId;
     private byte typeId;
@@ -60,5 +60,16 @@ public abstract class LibraryElement {
         this.typeId = typeId;
     }
 
+    public String getSortName () {
+        return DataDisplayHelper.convertsSortToString(this.sortId);
+    }
+
+    public String getTypeName () {
+        return DataDisplayHelper.convertTypeToString(this.typeId);
+    }
+
+    public String getStatusName () {
+        return DataDisplayHelper.convertStatusToString(this.statusId);
+    }
 
 }
