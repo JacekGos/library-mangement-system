@@ -60,7 +60,15 @@
                         <td><c:out value="${object.getDurationTime()}"/></td>
                     </c:if>
                     <td><c:out value="${object.getStatusId()}"/></td>
-                    <td><a href="edit?id=<c:out value='${object.getLibraryElementId()}' />">Wypożycz</a>
+                    <c:if test="${sessionScope.userName == null}">
+                        <td><a href="edit?id=<c:out value='${object.getLibraryElementId()}' />">Wypożycz</a></td>
+                    </c:if>
+                    <c:if test="${sessionScope.userType == 1}">
+                        <td><a href="edit?id=<c:out value='${object.getLibraryElementId()}' />">Edytuj</a>
+                            &nbsp;&nbsp;&nbsp;&nbsp;
+                            <a href="edit?id=<c:out value='${object.getLibraryElementId()}' />">Usuń</a></td>
+                    </c:if>
+
                 </tr>
             </c:forEach>
             </tbody>

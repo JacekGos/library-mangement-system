@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
     <title>Panel logowania</title>
@@ -9,7 +10,6 @@
           crossorigin="anonymous">
 </head>
 <body>
-
     <header>
         <nav class="navbar navbar-expand-md navbar-dark"
              style="background-color: #47a0ff">
@@ -21,6 +21,9 @@
                           class="nav-link" >Wyszukaj w zbiorze</a></b></li>
                 <li><b><a href="<%=request.getContextPath()%>/login"
                        class="nav-link">Login</a></b></li>
+               <%-- <c:if test="${sessionScope.userName != null}">
+                    <li><b>Użytkownik: <c:out value="${sessionScope.userName}"/></b></li>
+                </c:if>--%>
             </ul>
         </nav>
     </header>
@@ -29,7 +32,7 @@
         <div class="card">
             <div class="card-body">
                 <form action="loginProcess" method="post">
-                    <caption style="text-align:center">
+                    <caption>
                         <h2> Panel Logowania </h2>
                     </caption>
                     <fieldset class="form-group">

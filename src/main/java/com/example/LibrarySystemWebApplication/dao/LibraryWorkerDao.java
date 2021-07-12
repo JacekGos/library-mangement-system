@@ -54,6 +54,7 @@ public class LibraryWorkerDao {
 
             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_WORKER_BY_NAME_AND_PASSWORD);
             preparedStatement.setString(1, login);
+            preparedStatement.setString(2, password);
 
             ResultSet resultSet = preparedStatement.executeQuery();
 
