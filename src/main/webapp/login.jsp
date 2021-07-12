@@ -10,6 +10,9 @@
           crossorigin="anonymous">
 </head>
 <body>
+    <%
+        response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+    %>
     <header>
         <nav class="navbar navbar-expand-md navbar-dark"
              style="background-color: #47a0ff">
@@ -24,7 +27,7 @@
                               class="nav-link">Zaloguj</a></b></li>
                 </c:if>
                 <c:if test="${sessionScope.userName != null}">
-                    <li><b><a href="<%=request.getContextPath()%>/logout"
+                    <li><b><a href="<%=request.getContextPath()%>/logoutProcess"
                               class="nav-link">Wyloguj</a></b></li>
                 </c:if>
                <%-- <c:if test="${sessionScope.userName != null}">

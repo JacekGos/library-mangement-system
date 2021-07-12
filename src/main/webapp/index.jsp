@@ -10,6 +10,9 @@
           crossorigin="anonymous">
 </head>
 <body>
+    <%
+        response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+    %>
     <header>
         <nav class="navbar navbar-expand-md navbar-dark"
              style="background-color: #47a0ff">
@@ -19,8 +22,14 @@
             <ul class="navbar-nav">
                 <li><b><a href="<%=request.getContextPath()%>/libraryElementList"
                           class="nav-link" >Wyszukaj w zbiorze</a></b></li>
-                <li><b><a href="<%=request.getContextPath()%>/login"
-                       class="nav-link">Login</a></b></li>
+                <c:if test="${sessionScope.userName == null}">
+                    <li><b><a href="<%=request.getContextPath()%>/login"
+                              class="nav-link">Zaloguj</a></b></li>
+                </c:if>
+                <c:if test="${sessionScope.userName != null}">
+                    <li><b><a href="<%=request.getContextPath()%>/logoutProcess"
+                              class="nav-link">Wyloguj</a></b></li>
+                </c:if>
             </ul>
         </nav>
     </header>

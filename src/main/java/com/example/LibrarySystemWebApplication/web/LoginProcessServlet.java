@@ -32,7 +32,7 @@ public class LoginProcessServlet extends HttpServlet {
             userSession.setAttribute("userName", worker.getUserName());
             userSession.setAttribute("userType", worker.getAccountType());
 
-            response.sendRedirect("test.jsp");
+            response.sendRedirect("index.jsp");
         } else {
             status = LoginDao.validateUser(login, password);
             if (status == true) {
