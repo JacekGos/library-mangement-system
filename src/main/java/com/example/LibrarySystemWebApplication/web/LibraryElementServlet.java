@@ -31,7 +31,7 @@ public class LibraryElementServlet extends HttpServlet {
                 searchedResultsLibraryElements(request, response);
                 break;
             case "edit":
-                searchedResultsLibraryElements(request, response);
+                showEditFrom(request, response);
                 break;
             default:
 
@@ -56,6 +56,12 @@ public class LibraryElementServlet extends HttpServlet {
         requestDispatcher.forward(request, response);
     }
 
-    private void showEditFrom
+    private void showEditFrom(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        int libraryElementId = Integer.parseInt(request.getParameter("libraryElementId"));
+        LibraryElement libraryElement = libraryElementDao.getLibraryElementById(libraryElementId);
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("libraryElementForm.jsp");
+        request.setAttribute("libraryElement", libraryElement);
+        requestDispatcher.forward(request, response);
+    }
 
 }

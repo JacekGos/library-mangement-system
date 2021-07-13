@@ -28,6 +28,8 @@ public class LibraryElementDao {
     public static final String SELECT_ALL_LIBRARY_ELEMENTS = "SELECT * FROM [LibraryProject_v2].[dbo].[Library_element]";
     public static final String SELECT_LIBRARY_ELEMENTS_BY_TITLE = "SELECT * FROM [LibraryProject_v2].[dbo].[Library_element]" +
             "WHERE title = ?";
+    public static final String SELECT_LIBRARY_ELEMENTS_BY_ID = "SELECT * FROM [LibraryProject_v2].[dbo].[Library_element]" +
+            "WHERE library_element_id = ?";
 
     public static int insertBook(Book book) {
 
@@ -115,5 +117,36 @@ public class LibraryElementDao {
         }
 
         return libraryElementsList;
+    }
+
+    public static LibraryElement getLibraryElementById(int elementId) {
+
+        LibraryElement libraryElement = null;
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(SELECT_LIBRARY_ELEMENTS_BY_ID);
+            preparedStatement.setInt(1, elementId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+
+                int id = resultSet.getInt("library_element_id");
+                String title = resultSet.getString("title");
+                byte typeId = resultSet.getByte("type_id");
+                int sortId = resultSet.getInt("sort_id");
+                int statusId = resultSet.getInt("status_id");
+                if (typeId == 1) {
+                    int pagesNumber = resultSet.getInt("pages_number");
+                    libraryElement = new Book(id, typeId, title, sortId, statusId, pagesNumber);
+                } else if (typeId == 2) {
+                    int durationTime = resultSet.getInt("duration_time");
+                    libraryElement = new Movie(id, typeId, title, sortId, statusId, durationTime);
+                }
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return libraryElement;
     }
 }
