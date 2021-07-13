@@ -23,7 +23,6 @@ public class LibraryElementServlet extends HttpServlet {
 
         String action = (String)request.getAttribute("action");
 
-
         switch (action) {
             case "showList":
                 libraryElementList(request, response);
@@ -31,13 +30,13 @@ public class LibraryElementServlet extends HttpServlet {
             case "search":
                 searchedResultsLibraryElements(request, response);
                 break;
+            case "edit":
+                searchedResultsLibraryElements(request, response);
+                break;
             default:
 
                 break;
         }
-
-
-
     }
 
     private void libraryElementList(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -56,5 +55,7 @@ public class LibraryElementServlet extends HttpServlet {
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("searcher.jsp");
         requestDispatcher.forward(request, response);
     }
+
+    private void showEditFrom
 
 }

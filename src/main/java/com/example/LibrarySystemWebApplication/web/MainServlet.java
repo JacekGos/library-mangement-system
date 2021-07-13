@@ -38,6 +38,12 @@ public class MainServlet extends HttpServlet {
             case "/login":
                 doPost(request, response);
                 break;
+            case "/edit":
+                action = "edit";
+                request.setAttribute("action", action);
+                requestDispatcher = request.getRequestDispatcher("libraryElement");
+                requestDispatcher.forward(request, response);
+                break;
             default:
 
                 break;
@@ -61,4 +67,7 @@ public class MainServlet extends HttpServlet {
 
     }
 
+    //TODO create edit and remove option for LibraryWorker
+    //TODO add register form for new users
+    //TODO add account options for LibraryWorker
 }

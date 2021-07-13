@@ -10,91 +10,116 @@
           crossorigin="anonymous">
 </head>
 <body>
-    <%
-        response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
-    %>
-    <header>
-        <nav class="navbar navbar-expand-md navbar-dark"
-             style="background-color: #47a0ff">
-            <div>
-                <a href="<%=request.getContextPath()%>/index.jsp" class="navbar-brand"> Strona główna </a>
-            </div>
+<%
+    response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+%>
+<style>
+    .loggedUser {
+        margin-left: auto;
+        margin-right: 0;
+    }
+</style>
+<header>
+    <nav class="navbar navbar-expand-md navbar-dark"
+         style="background-color: #47a0ff">
+        <div>
+            <a href="<%=request.getContextPath()%>/index.jsp" class="navbar-brand"> Strona główna </a>
+        </div>
+        <ul class="navbar-nav">
+            <li><b><a href="<%=request.getContextPath()%>/libraryElementList"
+                      class="nav-link">Wyszukaj w zbiorze</a></b></li>
+        </ul>
+        <div class="loggedUser">
             <ul class="navbar-nav">
-                <li><b><a href="<%=request.getContextPath()%>/libraryElementList"
-                          class="nav-link">Wyszukaj w zbiorze</a></b></li>
                 <c:if test="${sessionScope.userName == null}">
                     <li><b><a href="<%=request.getContextPath()%>/login"
                               class="nav-link">Zaloguj</a></b></li>
                 </c:if>
                 <c:if test="${sessionScope.userName != null}">
+                <span class="navbar-text">
+                    Użytkownik: <c:out value="${sessionScope.userName}"/>
+                </span>
                     <li><b><a href="<%=request.getContextPath()%>/logoutProcess"
                               class="nav-link">Wyloguj</a></b></li>
+                    <%-- <li class="nav-item dropdown">
+                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
+                            role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                             Użytkownik: <c:out value="${sessionScope.userName}"/>
+                         </a>
+                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                             <a class="dropdown-item" href="#">Action</a>
+                             <a class="dropdown-item" href="#">Another action</a>
+                             <div class="dropdown-divider"></div>
+                             <a class="dropdown-item" href="#">Logout</a>
+                         </div>
+                     </li>--%>
                 </c:if>
             </ul>
-        </nav>
-    </header>
-    <br>
+        </div>
+    </nav>
+</header>
+<br>
 
-    <div class="row">
-        <div class="container">
-            <h3 class="text-center">Katalog On-line</h3>
-            <hr>
-            <br>
-            <table class="table table-bordered">
-                <thead>
-                <tr bgcolor="#68C967">
-                    <th>ID</th>
-                    <th>Tytuł</th>
-                    <th>Typ</th>
-                    <th>Rodzaj</th>
-                    <th>Liczba stron</th>
-                    <th>Czas trwania</th>
-                    <th>Status</th>
-                    <th>Opcje</th>
+<div class="row">
+    <div class="container">
+        <h3 class="text-center">Katalog On-line</h3>
+        <hr>
+        <br>
+        <table class="table table-bordered">
+            <thead>
+            <tr bgcolor="#68C967">
+                <th>ID</th>
+                <th>Tytuł</th>
+                <th>Typ</th>
+                <th>Rodzaj</th>
+                <th>Liczba stron</th>
+                <th>Czas trwania</th>
+                <th>Status</th>
+                <th>Opcje</th>
+            </tr>
+            </thead>
+            <tbody>
+            <c:forEach var="object" items="${libraryElementList}">
+                <tr>
+                    <td><c:out value="${object.getLibraryElementId()}"/></td>
+                    <td><c:out value="${object.getTitle()}"/></td>
+                    <td><c:out value="${object.getTypeName()}"/></td>
+                    <td><c:out value="${object.getSortName()}"/></td>
+                    <c:if test="${object.getTypeId() == 1}">
+                        <td><c:out value="${object.getPagesNumber()}"/></td>
+                        <td><c:out value="---"/></td>
+                    </c:if>
+                    <c:if test="${object.getTypeId() == 2}">
+                        <td><c:out value="---"/></td>
+                        <td><c:out value="${object.getDurationTime()}"/></td>
+                    </c:if>
+                    <td><c:out value="${object.getStatusName()}"/></td>
+                    <c:if test="${sessionScope.userType == 2}">
+                        <td><a href="borrow?id=<c:out value='${object.getLibraryElementId()}' />">Wypożycz</a></td>
+                    </c:if>
+                    <c:if test="${sessionScope.userType == 1}">
+                        <td><a href="edit?libraryElementId=<c:out value='${object.getLibraryElementId()}' />">Edytuj</a>
+                            &nbsp;&nbsp;&nbsp;&nbsp;
+                            <a href="delete?id=<c:out value='${object.getLibraryElementId()}' />">Usuń</a></td>
+                    </c:if>
+
                 </tr>
-                </thead>
-                <tbody>
-                <c:forEach var="object" items="${libraryElementList}">
-                    <tr>
-                        <td><c:out value="${object.getLibraryElementId()}"/></td>
-                        <td><c:out value="${object.getTitle()}"/></td>
-                        <td><c:out value="${object.getTypeName()}"/></td>
-                        <td><c:out value="${object.getSortName()}"/></td>
-                        <c:if test="${object.getTypeId() == 1}">
-                            <td><c:out value="${object.getPagesNumber()}"/></td>
-                            <td><c:out value="---"/></td>
-                        </c:if>
-                        <c:if test="${object.getTypeId() == 2}">
-                            <td><c:out value="---"/></td>
-                            <td><c:out value="${object.getDurationTime()}"/></td>
-                        </c:if>
-                        <td><c:out value="${object.getStatusName()}"/></td>
-                        <c:if test="${sessionScope.userName == null}">
-                            <td><a href="edit?id=<c:out value='${object.getLibraryElementId()}' />">Wypożycz</a></td>
-                        </c:if>
-                        <c:if test="${sessionScope.userType == 1}">
-                            <td><a href="edit?id=<c:out value='${object.getLibraryElementId()}' />">Edytuj</a>
-                                &nbsp;&nbsp;&nbsp;&nbsp;
-                                <a href="edit?id=<c:out value='${object.getLibraryElementId()}' />">Usuń</a></td>
-                        </c:if>
-
-                    </tr>
-                </c:forEach>
-                </tbody>
-            </table>
-        </div>
+            </c:forEach>
+            </tbody>
+        </table>
     </div>
-    <div class="row">
-        <div class="container">
-            <form action="search" method="get">
-                <fieldset class="form-group">
-                    <input type="text" class="form-control" name="searchedTitle">
-                </fieldset>
-                <div class="container text-center">
-                    <button type="submit" class="btn btn-success">Wyszukaj</button>
-                </div>
-            </form>
-        </div>
+</div>
+<div class="row">
+    <div class="container">
+        <form action="search" method="get">
+            <fieldset class="form-group">
+                <input type="text" class="form-control" name="searchedTitle">
+            </fieldset>
+            <div class="container text-center">
+                <button type="submit" class="btn btn-success">Wyszukaj</button>
+            </div>
+        </form>
     </div>
+</div>
 </body>
 </html>
