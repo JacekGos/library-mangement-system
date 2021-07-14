@@ -67,7 +67,7 @@
                 <form action="update" method="post">
             </c:if>
             <c:if test="${libraryElement == null}">
-                <form action="insert" method="post">
+                <form action="insert" method="post" accept-charset="utf-8">
             </c:if>
                     <caption>
                         <h2>
@@ -99,12 +99,12 @@
                     <fieldset class="form-group">
                         <label for="sortId">Rodzaj</label>
                         <br>
-                        <select id="sortId" class="form-control">
+                        <select id="sortId" name="sortId" class="form-control">
                             <option value="1" selected>Historyczne</option>
-                            <option value="2" selected>Fantastyka</option>
-                            <option value="3" selected>Kryminał</option>
-                            <option value="4" selected>Edukacja</option>
-                            <option value="5" selected>Technologie</option>
+                            <option value="2" >Fantastyka</option>
+                            <option value="3" >Kryminał</option>
+                            <option value="4" >Edukacja</option>
+                            <option value="5" >Technologie</option>
                         </select>
                     </fieldset>
 

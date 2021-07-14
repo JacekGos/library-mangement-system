@@ -47,9 +47,7 @@ public class LibraryElementServlet extends HttpServlet {
 
         switch (action) {
             case "update":
-//                updateLibraryElement(request, response);
-                RequestDispatcher requestDispatcher = request.getRequestDispatcher("test.jsp");
-                requestDispatcher.forward(request, response);
+                updateLibraryElement(request, response);
                 break;
             default:
                 break;
@@ -105,7 +103,10 @@ public class LibraryElementServlet extends HttpServlet {
         }
 
         LibraryElementDao.updateLibraryElement(libraryElement);
-        response.sendRedirect("test.jsp");
+//        response.sendRedirect("searcher.jsp");
+
+       /* PrintWriter out = response.getWriter();
+        out.println(title);*/
 
     }
 
