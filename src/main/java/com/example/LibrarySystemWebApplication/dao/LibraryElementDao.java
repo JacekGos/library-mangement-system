@@ -30,7 +30,11 @@ public class LibraryElementDao {
             "WHERE title = ?";
     public static final String SELECT_LIBRARY_ELEMENTS_BY_ID = "SELECT * FROM [LibraryProject_v2].[dbo].[Library_element]" +
             "WHERE library_element_id = ?";
+    public static final String UPDATE_LIBRARY_ELEMENT = "UPDATE [LibraryProject_v2].[dbo].[Library_element]" +
+            "SET library_element_id = ?, title = ?, type_id = ?, sort_id = ?, pages_number = ?, duration_time = ?, status_id = ?" +
+            "WHERE library_element_id = ?";
 
+    //TODO - change this to insert LibraryElement type
     public static int insertBook(Book book) {
 
         int status = 0;
@@ -148,5 +152,32 @@ public class LibraryElementDao {
         }
 
         return libraryElement;
+    }
+
+    public static boolean updateLibraryElement(LibraryElement libraryElement) {
+
+        boolean rowUpdated = false;
+
+        try {
+
+            PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_LIBRARY_ELEMENT);
+            preparedStatement.setInt(1, libraryElement.getLibraryElementId());
+            preparedStatement.setString(2, libraryElement.getTitle());
+            preparedStatement.setInt(3, libraryElement.getTypeId());
+            preparedStatement.setInt(4, libraryElement.getSortId());
+            preparedStatement.setInt(7, libraryElement.getStatusId());
+            if (libraryElement.getTypeId() == 1) {
+                preparedStatement.setInt(5, ((Book)libraryElement).getPagesNumber());
+            } else if (libraryElement.getTypeId() == 2) {
+                preparedStatement.setInt(6, ((Movie)libraryElement).getDurationTime());
+            }
+
+            rowUpdated = preparedStatement.executeUpdate() > 0;
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return rowUpdated;
     }
 }

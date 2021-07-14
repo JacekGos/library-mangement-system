@@ -72,7 +72,7 @@
                     <caption>
                         <h2>
                             <c:if test="${libraryElement != null}">
-                                Edytuj element <c:out value='${libraryElement.getLibraryElementId()}'/>
+                                Edytuj element
                             </c:if>
                             <c:if test="${libraryElement == null}">
                                 Dodaj element
@@ -83,6 +83,10 @@
                     <c:if test="${libraryElement != null}">
                         <input type="hidden" name="libraryElementId"
                                value="<c:out value='${libraryElement.getLibraryElementId()}' />"/>
+                        <input type="hidden" name="statusId"
+                               value="<c:out value='${libraryElement.getStatusId()}' />"/>
+                        <input type="hidden" name="typeId"
+                               value="<c:out value='${libraryElement.getTypeId()}' />"/>
                     </c:if>
 
                     <fieldset class="form-group">
@@ -93,9 +97,15 @@
                     </fieldset>
 
                     <fieldset class="form-group">
-                        <label>Rodzaj</label> <input type="text"
-                                                     value="<c:out value='${libraryElement.getSortName()}' />"
-                                                     class="form-control" name="sort">
+                        <label for="sortId">Rodzaj</label>
+                        <br>
+                        <select id="sortId" class="form-control">
+                            <option value="1" selected>Historyczne</option>
+                            <option value="2" selected>Fantastyka</option>
+                            <option value="3" selected>Kryminał</option>
+                            <option value="4" selected>Edukacja</option>
+                            <option value="5" selected>Technologie</option>
+                        </select>
                     </fieldset>
 
                     <c:if test="${libraryElement.getTypeId() == 1}">

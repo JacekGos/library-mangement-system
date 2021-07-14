@@ -61,6 +61,12 @@ public class MainServlet extends HttpServlet {
                 requestDispatcher = request.getRequestDispatcher("login.jsp");
                 requestDispatcher.forward(request, response);
                 break;
+            case "/update":
+                action = "update";
+                request.setAttribute("action", action);
+                requestDispatcher = request.getRequestDispatcher("libraryElement");
+                requestDispatcher.forward(request, response);
+                break;
             default:
                 break;
         }

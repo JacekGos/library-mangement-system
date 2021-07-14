@@ -7,7 +7,7 @@
 <body>
     Testowa strona:
     <br>
-    <c:out value="${sessionScope.userName}"/>
+    <c:out value="${libraryElement.getTypeId()}"/>
 
 </body>
 </html>
