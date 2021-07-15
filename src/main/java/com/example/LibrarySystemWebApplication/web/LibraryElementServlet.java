@@ -23,6 +23,8 @@ public class LibraryElementServlet extends HttpServlet {
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+        request.setCharacterEncoding("UTF-8");
+
         String action = (String)request.getAttribute("action");
 
         switch (action) {
@@ -42,6 +44,8 @@ public class LibraryElementServlet extends HttpServlet {
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        request.setCharacterEncoding("UTF-8");
 
         String action = (String)request.getAttribute("action");
 
@@ -103,7 +107,7 @@ public class LibraryElementServlet extends HttpServlet {
         }
 
         LibraryElementDao.updateLibraryElement(libraryElement);
-//        response.sendRedirect("searcher.jsp");
+        libraryElementList(request, response);
 
        /* PrintWriter out = response.getWriter();
         out.println(title);*/

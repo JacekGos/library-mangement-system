@@ -2,6 +2,7 @@
          pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 <head>
     <title>User Management Application</title>
     <link rel="stylesheet"
@@ -64,10 +65,10 @@
     <div class="card">
         <div class="card-body">
             <c:if test="${libraryElement != null}">
-                <form action="update" method="post">
+                <form action="update" method="post" accept-charset="character_set">
             </c:if>
             <c:if test="${libraryElement == null}">
-                <form action="insert" method="post" accept-charset="utf-8">
+                <form action="insert" method="post" accept-charset="character_set">
             </c:if>
                     <caption>
                         <h2>
@@ -89,7 +90,7 @@
                                value="<c:out value='${libraryElement.getTypeId()}' />"/>
                     </c:if>
 
-                    <fieldset class="form-group">
+                    <fieldset class="form-group" accept-charset="utf-8">
                         <label>Tytuł</label> <input type="text"
                                                     value="<c:out value='${libraryElement.getTitle()}' />"
                                                     class="form-control"

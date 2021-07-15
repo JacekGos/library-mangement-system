@@ -163,8 +163,7 @@ public class LibraryElementDao {
             preparedStatement.setString(1, libraryElement.getTitle());
             preparedStatement.setInt(2, libraryElement.getSortId());
             if (libraryElement.getTypeId() == 1) {
-//                preparedStatement.setInt(3, ((Book)libraryElement).getPagesNumber());
-                preparedStatement.setInt(3, 100);
+                preparedStatement.setInt(3, ((Book)libraryElement).getPagesNumber());
                 preparedStatement.setNull(4, Types.INTEGER);
             } else if (libraryElement.getTypeId() == 2) {
                 preparedStatement.setNull(3, Types.INTEGER);

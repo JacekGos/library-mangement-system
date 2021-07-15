@@ -18,6 +18,8 @@ public class MainServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+        request.setCharacterEncoding("UTF-8");
+
         String option = request.getServletPath();
         String action = "default";
         RequestDispatcher requestDispatcher;
@@ -52,6 +54,8 @@ public class MainServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+        request.setCharacterEncoding("UTF-8");
+
         String option = request.getServletPath();
         String action = "default";
         RequestDispatcher requestDispatcher;
@@ -75,5 +79,7 @@ public class MainServlet extends HttpServlet {
 
     //TODO create edit and remove option for LibraryWorker
     //TODO add register form for new users
-    //TODO add account options for LibraryWorker
+
+  /*  PrintWriter out = response.getWriter();
+                out.println(request.getParameter("title"));*/
 }
