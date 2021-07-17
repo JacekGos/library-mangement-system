@@ -13,7 +13,7 @@
 <%
     response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
 %>
-<c:import url="NavigationBar.jsp" />
+<c:import url="navigationBar.jsp" />
     <br>
     <div class="container col-md-5">
         <div class="card">

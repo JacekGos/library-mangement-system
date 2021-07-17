@@ -15,7 +15,7 @@
 <%
     response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
 %>
-<c:import url="NavigationBar.jsp" />
+<c:import url="navigationBar.jsp" />
 <div class="container col-md-5">
     <div class="card">
         <div class="card-body">
@@ -55,8 +55,9 @@
                     <fieldset class="form-group">
                         <label for="sortId">Rodzaj</label>
                         <br>
-                        <select id="sortId" name="sortId" class="form-control">
-                            <option value="1" selected>Historyczne</option>
+                        <select value="2" id="sortId" name="sortId" class="form-control">
+<%--                            <option value="<c:out value='${libraryElement.getSortId()}'/>" selected disabled hidden>Wybierz rodzaj</option>--%>
+                            <option value="1" >Historyczne</option>
                             <option value="2" >Fantastyka</option>
                             <option value="3" >Kryminał</option>
                             <option value="4" >Edukacja</option>

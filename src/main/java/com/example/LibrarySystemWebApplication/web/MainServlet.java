@@ -85,7 +85,6 @@ public class MainServlet extends HttpServlet {
 
     }
 
-    //TODO create edit and remove option for LibraryWorker
     //TODO add register form for new users
 
   /*  PrintWriter out = response.getWriter();
