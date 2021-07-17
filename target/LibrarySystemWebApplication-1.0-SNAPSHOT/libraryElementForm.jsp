@@ -55,8 +55,7 @@
                     <fieldset class="form-group">
                         <label for="sortId">Rodzaj</label>
                         <br>
-                        <select value="2" id="sortId" name="sortId" class="form-control">
-<%--                            <option value="<c:out value='${libraryElement.getSortId()}'/>" selected disabled hidden>Wybierz rodzaj</option>--%>
+                        <select id="sortId" name="sortId" class="form-control">
                             <option value="1" >Historyczne</option>
                             <option value="2" >Fantastyka</option>
                             <option value="3" >Kryminał</option>
