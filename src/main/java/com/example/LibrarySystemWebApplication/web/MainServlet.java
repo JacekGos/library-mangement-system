@@ -55,6 +55,12 @@ public class MainServlet extends HttpServlet {
                 requestDispatcher = request.getRequestDispatcher("libraryUser");
                 requestDispatcher.forward(request, response);
                 break;
+            case "/searchUser":
+                action = "searchUser";
+                request.setAttribute("action", action);
+                requestDispatcher = request.getRequestDispatcher("libraryUser");
+                requestDispatcher.forward(request, response);
+                break;
             default:
 
                 break;

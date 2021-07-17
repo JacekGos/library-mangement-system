@@ -27,6 +27,9 @@ public class LibraryUserDao {
     public static final String INSERT_LIBRARY_USER = "INSERT INTO [LibraryProject_v2].[dbo].[Library_user]"
             + "VALUES (?, ?, ?, ?, ?, ?)";
     public static final String SELECT_ALL_LIBRARY_USERS = "SELECT * FROM [LibraryProject_v2].[dbo].[Library_user]";
+    public static final String SELECT_LIBRARY_USERS_BY_ID = "SELECT * FROM [LibraryProject_v2].[dbo].[Library_user]" +
+            "WHERE library_user_id = ?";
+
 
     public static int insertLibraryUser(LibraryUser libraryUser) {
 
@@ -78,5 +81,33 @@ public class LibraryUserDao {
         return libraryUserList;
     }
 
+
+    public static List<LibraryUser> getLibraryUsersById(int userId) {
+
+        List<LibraryUser> libraryUserList = new ArrayList<LibraryUser>();
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(SELECT_LIBRARY_USERS_BY_ID);
+            preparedStatement.setInt(1, userId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+
+
+                int id = resultSet.getInt("library_user_id");
+                String name = resultSet.getString("name");
+                String surName = resultSet.getString("surName");
+                String login = resultSet.getString("login");
+                double penalty = resultSet.getDouble("penalty");
+
+                LibraryUser libraryUser = new LibraryUser(id, name, surName, login, penalty);
+                libraryUserList.add(libraryUser);
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return libraryUserList;
+    }
 
 }

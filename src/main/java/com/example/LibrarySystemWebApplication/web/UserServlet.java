@@ -30,6 +30,10 @@ public class UserServlet extends HttpServlet {
             case "showUserList":
                 libraryUserList(request, response);
                 break;
+            case "searchUser":
+//                response.sendRedirect("test.jsp");
+                searchedResultsLibraryUsers(request, response);
+                break;
             default:
 
                 break;
@@ -54,6 +58,19 @@ public class UserServlet extends HttpServlet {
 
         List<LibraryUser> libraryUserList = new ArrayList<LibraryUser>();
         libraryUserList = libraryUserDao.getAllLibraryUsers();
+        request.setAttribute("libraryUserList", libraryUserList);
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("userList.jsp");
+        requestDispatcher.forward(request, response);
+
+    }
+
+    private void searchedResultsLibraryUsers(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        int userId = Integer.parseInt(request.getParameter("searchedUserId"));
+        List<LibraryUser> libraryUserList = new ArrayList<LibraryUser>();
+        libraryUserList = libraryUserDao.getLibraryUsersById(userId);
+
         request.setAttribute("libraryUserList", libraryUserList);
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("userList.jsp");
         requestDispatcher.forward(request, response);
