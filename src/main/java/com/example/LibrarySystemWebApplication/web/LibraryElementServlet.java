@@ -36,6 +36,8 @@ public class LibraryElementServlet extends HttpServlet {
                 break;
             case "edit":
                 showEditFrom(request, response);
+            case "delete":
+                doPost(request, response);
                 break;
             default:
 
@@ -52,6 +54,9 @@ public class LibraryElementServlet extends HttpServlet {
         switch (action) {
             case "update":
                 updateLibraryElement(request, response);
+                break;
+            case "delete":
+                deleteLibraryElement(request, response);
                 break;
             default:
                 break;
@@ -109,9 +114,18 @@ public class LibraryElementServlet extends HttpServlet {
         LibraryElementDao.updateLibraryElement(libraryElement);
         libraryElementList(request, response);
 
-       /* PrintWriter out = response.getWriter();
-        out.println(title);*/
+    }
+
+    private void deleteLibraryElement(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        int libraryElementId = Integer.parseInt(request.getParameter("libraryElementId"));
+
+        LibraryElementDao.deleteLibraryElement(libraryElementId);
+        libraryElementList(request, response);
 
     }
 
 }
+
+   /* PrintWriter out = response.getWriter();
+                out.println("action");*/

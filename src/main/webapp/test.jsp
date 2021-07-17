@@ -7,7 +7,7 @@
 <body>
     Testowa strona:
     <br>
-    <c:out value="${libraryElement.getTypeId()}"/>
+    <c:out value="siema"/>
 
 </body>
 </html>

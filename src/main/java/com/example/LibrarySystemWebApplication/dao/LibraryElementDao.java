@@ -31,6 +31,8 @@ public class LibraryElementDao {
     public static final String UPDATE_LIBRARY_ELEMENT = "UPDATE [LibraryProject_v2].[dbo].[Library_element]" +
             " SET title = ?, sort_id = ?, pages_number = ?, duration_time = ?" +
             " WHERE library_element_id = ?";
+    public static final String DELETE_LIBRARY_ELEMENT = "DELETE FROM [LibraryProject_v2].[dbo].[Library_element]" +
+            " WHERE library_element_id = ?";
 
     //TODO - change this to insert LibraryElement type
     public static int insertBook(Book book) {
@@ -178,5 +180,23 @@ public class LibraryElementDao {
         }
 
         return rowUpdated;
+    }
+    public static boolean deleteLibraryElement(int libraryElementId) {
+
+        boolean rowDeleted = false;
+
+        try {
+
+            PreparedStatement preparedStatement = connection.prepareStatement(DELETE_LIBRARY_ELEMENT);
+
+            preparedStatement.setInt(1, libraryElementId);
+
+            rowDeleted = preparedStatement.executeUpdate() > 0;
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return rowDeleted;
     }
 }
