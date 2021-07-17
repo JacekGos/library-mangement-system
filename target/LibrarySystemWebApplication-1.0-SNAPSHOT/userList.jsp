@@ -55,7 +55,7 @@
   <div class="container">
     <form action="search" method="get">
       <fieldset class="form-group">
-        <input type="text" class="form-control" name="searchedUserId">
+        <input type="text" class="form-control" name="searchedTitle">
       </fieldset>
       <div class="container text-center">
         <button type="submit" class="btn btn-success">Wyszukaj</button>

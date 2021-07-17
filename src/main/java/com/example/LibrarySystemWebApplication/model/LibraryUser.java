@@ -12,6 +12,15 @@ public class LibraryUser extends User {
         this.penalty = penalty;
     }
 
+    public LibraryUser(int userId, String userName, String userSurName, String login, double penalty) {
+
+        this.setUserId(userId);
+        this.setUserName(userName);
+        this.setUserSurName(userSurName);
+        this.setLogin(login);
+        this.penalty = penalty;
+    }
+
     public double getPenalty() {
         return penalty;
     }

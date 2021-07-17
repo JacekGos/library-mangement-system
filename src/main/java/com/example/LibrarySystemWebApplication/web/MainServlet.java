@@ -49,6 +49,12 @@ public class MainServlet extends HttpServlet {
             case "/delete":
                 doPost(request, response);
                 break;
+            case "/userList":
+                action = "showUserList";
+                request.setAttribute("action", action);
+                requestDispatcher = request.getRequestDispatcher("libraryUser");
+                requestDispatcher.forward(request, response);
+                break;
             default:
 
                 break;
