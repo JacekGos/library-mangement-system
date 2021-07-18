@@ -30,6 +30,8 @@
                       class="nav-link">Wyszukaj w zbiorze</a></b></li>
             <c:if test="${sessionScope.userType == 1}">
                 <li><b><a href="<%=request.getContextPath()%>/userList"
+                          class="nav-link">Dodaj pozycję zbioru</a></b></li>
+                <li><b><a href="<%=request.getContextPath()%>/userList"
                           class="nav-link">Opcje użytkowników</a></b></li>
             </c:if>
         </ul>

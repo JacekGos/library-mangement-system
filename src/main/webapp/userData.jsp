@@ -44,7 +44,7 @@
         </table>
     </div>
 </div>
-<div class="row">
+<%--<div class="row">
     <div class="container">
         <form action="searchUser" method="get">
             <fieldset class="form-group">
@@ -55,6 +55,6 @@
             </div>
         </form>
     </div>
-</div>
+</div>--%>
 </body>
 </html>

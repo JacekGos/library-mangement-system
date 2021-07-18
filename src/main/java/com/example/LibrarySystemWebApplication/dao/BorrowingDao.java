@@ -42,7 +42,7 @@ public class BorrowingDao {
                 java.sql.Timestamp date = resultSet.getTimestamp(3);
                 int statusId = resultSet.getInt(4);
                 int libraryUserId = resultSet.getInt(5);
-                System.out.println(statusId);
+
                 Borrowing borrowing = new Borrowing(borrowingId, elementId, date, statusId, libraryUserId);
                 borrowingsList.add(borrowing);
 
@@ -53,7 +53,5 @@ public class BorrowingDao {
 
         return borrowingsList;
     }
-
-
 
 }
