@@ -181,6 +181,7 @@ public class LibraryElementDao {
 
         return rowUpdated;
     }
+
     public static boolean deleteLibraryElement(int libraryElementId) {
 
         boolean rowDeleted = false;

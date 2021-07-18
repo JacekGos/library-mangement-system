@@ -61,6 +61,15 @@ public class MainServlet extends HttpServlet {
                 requestDispatcher = request.getRequestDispatcher("libraryUser");
                 requestDispatcher.forward(request, response);
                 break;
+            case "/deleteUser":
+                doPost(request, response);
+                break;
+            case "/userInfo":
+                action = "userInfo";
+                request.setAttribute("action", action);
+                requestDispatcher = request.getRequestDispatcher("libraryUser");
+                requestDispatcher.forward(request, response);
+                break;
             default:
 
                 break;
@@ -91,6 +100,13 @@ public class MainServlet extends HttpServlet {
                 request.setAttribute("action", action);
                 requestDispatcher = request.getRequestDispatcher("libraryElement");
                 requestDispatcher.forward(request, response);
+                break;
+            case "/deleteUser":
+                action = "deleteUser";
+                request.setAttribute("action", action);
+                requestDispatcher = request.getRequestDispatcher("libraryUser");
+                requestDispatcher.forward(request, response);
+                break;
             default:
                 break;
         }

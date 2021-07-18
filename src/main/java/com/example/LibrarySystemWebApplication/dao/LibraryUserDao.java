@@ -29,7 +29,8 @@ public class LibraryUserDao {
     public static final String SELECT_ALL_LIBRARY_USERS = "SELECT * FROM [LibraryProject_v2].[dbo].[Library_user]";
     public static final String SELECT_LIBRARY_USERS_BY_ID = "SELECT * FROM [LibraryProject_v2].[dbo].[Library_user]" +
             "WHERE library_user_id = ?";
-
+    public static final String DELETE_LIBRARY_USER = "DELETE FROM [LibraryProject_v2].[dbo].[Library_user]" +
+            " WHERE library_user_id = ?";
 
     public static int insertLibraryUser(LibraryUser libraryUser) {
 
@@ -108,6 +109,25 @@ public class LibraryUserDao {
         }
 
         return libraryUserList;
+    }
+    //TODO - Add delete User's borrowings first
+    public static boolean deleteLibraryUser(int libraryUserId) {
+
+        boolean rowDeleted = false;
+
+        try {
+
+            PreparedStatement preparedStatement = connection.prepareStatement(DELETE_LIBRARY_USER);
+
+            preparedStatement.setInt(1, libraryUserId);
+
+            rowDeleted = preparedStatement.executeUpdate() > 0;
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return rowDeleted;
     }
 
 }

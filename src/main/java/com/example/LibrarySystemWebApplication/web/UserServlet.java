@@ -31,8 +31,13 @@ public class UserServlet extends HttpServlet {
                 libraryUserList(request, response);
                 break;
             case "searchUser":
-//                response.sendRedirect("test.jsp");
                 searchedResultsLibraryUsers(request, response);
+                break;
+            case "deleteUser":
+                doPost(request, response);
+                break;
+            case "userInfo":
+                userInfoList(request, response);
                 break;
             default:
 
@@ -47,7 +52,10 @@ public class UserServlet extends HttpServlet {
         String action = (String)request.getAttribute("action");
 
         switch (action) {
-
+            case "deleteUser":
+//                response.sendRedirect("test.jsp");
+                deleteLibraryUser(request, response);
+                break;
             default:
                 break;
         }
@@ -77,5 +85,21 @@ public class UserServlet extends HttpServlet {
 
     }
 
+    private void deleteLibraryUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+        int libraryUserId = Integer.parseInt(request.getParameter("libraryUserId"));
+
+        libraryUserDao.deleteLibraryUser(libraryUserId);
+        libraryUserList(request, response);
+    }
+
+    private void userInfoList(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        List<LibraryUser> libraryUserList = new ArrayList<LibraryUser>();
+        libraryUserList = libraryUserDao.getAllLibraryUsers();
+        request.setAttribute("libraryUserList", libraryUserList);
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("userList.jsp");
+        requestDispatcher.forward(request, response);
+
+    }
 }

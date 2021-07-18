@@ -36,6 +36,7 @@ public class LibraryElementServlet extends HttpServlet {
                 break;
             case "edit":
                 showEditFrom(request, response);
+                break;
             case "delete":
                 doPost(request, response);
                 break;

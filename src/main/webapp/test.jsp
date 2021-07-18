@@ -7,7 +7,7 @@
 <body>
     Testowa strona:
     <br>
-    <c:out value="${libraryUser.getUserName()}"/>
+    <c:out value="${libraryUserId}"/>
 
 </body>
 </html>
