@@ -1,8 +1,8 @@
 package com.example.LibrarySystemWebApplication.web;
 
-import com.example.LibrarySystemWebApplication.dao.LibraryElementDao;
+import com.example.LibrarySystemWebApplication.dao.BorrowingDao;
 import com.example.LibrarySystemWebApplication.dao.LibraryUserDao;
-import com.example.LibrarySystemWebApplication.model.LibraryElement;
+import com.example.LibrarySystemWebApplication.model.Borrowing;
 import com.example.LibrarySystemWebApplication.model.LibraryUser;
 
 import javax.servlet.RequestDispatcher;
@@ -19,6 +19,7 @@ import java.util.List;
 public class UserServlet extends HttpServlet {
 
     private LibraryUserDao libraryUserDao = new LibraryUserDao();
+    private BorrowingDao borrowingDao = new BorrowingDao();
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -95,10 +96,10 @@ public class UserServlet extends HttpServlet {
 
     private void userInfoList(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        List<LibraryUser> libraryUserList = new ArrayList<LibraryUser>();
-        libraryUserList = libraryUserDao.getAllLibraryUsers();
-        request.setAttribute("libraryUserList", libraryUserList);
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("userList.jsp");
+        int libraryUserId = Integer.parseInt(request.getParameter("libraryUserId"));
+        List<Borrowing> libraryUserBorrowingsList = borrowingDao.getAllBorrowingsByUserId(libraryUserId);
+        request.setAttribute("libraryUserBorrowingsList", libraryUserBorrowingsList);
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("userData.jsp");
         requestDispatcher.forward(request, response);
 
     }

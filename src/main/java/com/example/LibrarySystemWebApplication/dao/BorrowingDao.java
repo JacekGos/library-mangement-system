@@ -1,11 +1,14 @@
 package com.example.LibrarySystemWebApplication.dao;
 
+import com.example.LibrarySystemWebApplication.model.Borrowing;
 import com.example.LibrarySystemWebApplication.model.LibraryUser;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class BorrowingDao {
 
@@ -20,9 +23,11 @@ public class BorrowingDao {
     }
 
     public static final String SELECT_BORROWINGS_BY_ID = "SELECT * FROM [LibraryProject_v2].[dbo].[Borrowings]" +
-            "WHERE borrowing_id = ?";
+            " WHERE library_user_id = ?";
 
-    public static void getAllBorrowingsByUserId(int userId, LibraryUser libraryUser) {
+    public static List<Borrowing> getAllBorrowingsByUserId(int userId) {
+
+        List<Borrowing> borrowingsList = new ArrayList<Borrowing>();
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_BORROWINGS_BY_ID);
@@ -37,14 +42,16 @@ public class BorrowingDao {
                 java.sql.Timestamp date = resultSet.getTimestamp(3);
                 int statusId = resultSet.getInt(4);
                 int libraryUserId = resultSet.getInt(5);
-
-                libraryUser.addBorrowing(borrowingId, elementId, date, statusId, libraryUserId);
+                System.out.println(statusId);
+                Borrowing borrowing = new Borrowing(borrowingId, elementId, date, statusId, libraryUserId);
+                borrowingsList.add(borrowing);
 
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
 
+        return borrowingsList;
     }
 
 

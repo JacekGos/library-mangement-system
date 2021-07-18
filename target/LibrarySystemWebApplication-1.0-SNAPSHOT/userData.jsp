@@ -28,6 +28,7 @@
                 <th>Id Elementu</th>
                 <th>Data</th>
                 <th>Status</th>
+                <th>Opcje</th>
             </tr>
             </thead>
             <tbody>

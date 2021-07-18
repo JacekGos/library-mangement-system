@@ -25,10 +25,12 @@ public class LibraryUserDao {
     }
 
     public static final String INSERT_LIBRARY_USER = "INSERT INTO [LibraryProject_v2].[dbo].[Library_user]"
-            + "VALUES (?, ?, ?, ?, ?, ?)";
+            + " VALUES (?, ?, ?, ?, ?, ?)";
     public static final String SELECT_ALL_LIBRARY_USERS = "SELECT * FROM [LibraryProject_v2].[dbo].[Library_user]";
     public static final String SELECT_LIBRARY_USERS_BY_ID = "SELECT * FROM [LibraryProject_v2].[dbo].[Library_user]" +
-            "WHERE library_user_id = ?";
+            " WHERE library_user_id = ?";
+    public static final String SELECT_LIBRARY_USER_BY_ID = "SELECT * FROM [LibraryProject_v2].[dbo].[Library_user]" +
+            " WHERE library_user_id = ?";
     public static final String DELETE_LIBRARY_USER = "DELETE FROM [LibraryProject_v2].[dbo].[Library_user]" +
             " WHERE library_user_id = ?";
 
@@ -110,6 +112,35 @@ public class LibraryUserDao {
 
         return libraryUserList;
     }
+
+    public static LibraryUser getLibraryUserById(int userId) {
+
+        LibraryUser libraryUser = null;
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(SELECT_LIBRARY_USER_BY_ID);
+            preparedStatement.setInt(1, userId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+
+
+                int id = resultSet.getInt("library_user_id");
+                String name = resultSet.getString("name");
+                String surName = resultSet.getString("surName");
+                String login = resultSet.getString("login");
+                double penalty = resultSet.getDouble("penalty");
+
+                libraryUser = new LibraryUser(id, name, surName, login, penalty);
+
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return libraryUser;
+    }
+
     //TODO - Add delete User's borrowings first
     public static boolean deleteLibraryUser(int libraryUserId) {
 

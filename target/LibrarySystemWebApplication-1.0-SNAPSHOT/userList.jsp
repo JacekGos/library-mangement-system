@@ -41,7 +41,7 @@
           <td><c:out value="${object.getLogin()}"/></td>
           <td><c:out value="${object.getPenalty()}"/></td>
 
-          <td><a href="borrow?libraryUserId=<c:out value="${object.getUserId()}" />">Szczegóły</a>
+          <td><a href="userInfo?libraryUserId=<c:out value="${object.getUserId()}" />">Szczegóły</a>
             <a href="deleteUser?libraryUserId=<c:out value="${object.getUserId()}" />">Usuń</a>
           </td>
 
