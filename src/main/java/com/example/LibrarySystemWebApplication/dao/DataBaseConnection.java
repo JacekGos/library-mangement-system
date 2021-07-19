@@ -7,6 +7,7 @@ import java.sql.SQLException;
 public class DataBaseConnection {
 
     private static String url = "jdbc:sqlserver://DESKTOP-2NG6J3P;databaseName=LibraryProject_v2;integratedSecurity=true";
+    private static String url = "jdbc:sqlserver://DESKTOP-2NG6J3P;databaseName=LibraryProject_v2;integratedSecurity=true";
     static Connection conn = null;
 
     private static DataBaseConnection instance;
