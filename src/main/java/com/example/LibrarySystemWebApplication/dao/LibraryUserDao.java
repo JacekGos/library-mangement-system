@@ -37,12 +37,15 @@ public class LibraryUserDao {
 
 
     public static final String INSERT_LIBRARY_USER = "INSERT INTO public.\"Library_user\""
-            + " VALUES (?, ?, ?, ?, ?, ?)";
+            + " (name, surname, login, password, penalty, account_type) VALUES (?, ?, ?, ?, ?, ?)";
 
     public static final String SELECT_ALL_LIBRARY_USERS = "SELECT * FROM public.\"Library_user\"";
 
     public static final String SELECT_LIBRARY_USERS_BY_ID = "SELECT * FROM public.\"Library_user\"" +
             " WHERE library_user_id = ?";
+
+    public static final String SELECT_LIBRARY_USERS_BY_NAME = "SELECT * FROM public.\"Library_user\"" +
+            " WHERE name = ? AND surname = ?";
 
     public static final String DELETE_LIBRARY_USER = "DELETE FROM public.\"Library_user\"" +
             " WHERE library_user_id = ?";
@@ -152,6 +155,26 @@ public class LibraryUserDao {
         }
 
         return libraryUser;
+    }
+
+    public static int getLibraryUserNumberByName(String name, String surname) {
+
+        int amount = 0;
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(SELECT_LIBRARY_USERS_BY_NAME);
+            preparedStatement.setString(1, name);
+            preparedStatement.setString(2, surname);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                amount++;
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return amount;
     }
 
     //TODO - Add delete User's borrowings first

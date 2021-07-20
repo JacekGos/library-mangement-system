@@ -32,7 +32,9 @@
                     </fieldset>
                     <button type="submit" class="btn btn-success">Zaloguj</button>
                 </form>
-
+                <form action="newUser" method="get">
+                    <button type="submit" class="btn btn-success">Załóż konto</button>
+                </form>
             </div>
         </div>
     </div>

@@ -64,6 +64,12 @@ public class MainServlet extends HttpServlet {
             case "/deleteUser":
                 doPost(request, response);
                 break;
+            case "/newUser":
+                action = "newUser";
+                request.setAttribute("action", action);
+                requestDispatcher = request.getRequestDispatcher("libraryUser");
+                requestDispatcher.forward(request, response);
+                break;
             case "/new":
                 action = "new";
                 request.setAttribute("action", action);
@@ -115,6 +121,12 @@ public class MainServlet extends HttpServlet {
                 break;
             case "/deleteUser":
                 action = "deleteUser";
+                request.setAttribute("action", action);
+                requestDispatcher = request.getRequestDispatcher("libraryUser");
+                requestDispatcher.forward(request, response);
+                break;
+            case "/insertUser":
+                action = "insertUser";
                 request.setAttribute("action", action);
                 requestDispatcher = request.getRequestDispatcher("libraryUser");
                 requestDispatcher.forward(request, response);

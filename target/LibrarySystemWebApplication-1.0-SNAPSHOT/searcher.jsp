@@ -69,7 +69,7 @@
     <div class="container">
         <form action="search" method="get">
             <fieldset class="form-group">
-                <input type="text" class="form-control" name="searchedTitle" required="required">
+                <input type="text" class="form-control" name="searchedTitle" placeholder="Tytuł" required="required">
             </fieldset>
             <div class="container text-center">
                 <button type="submit" class="btn btn-success">Wyszukaj</button>

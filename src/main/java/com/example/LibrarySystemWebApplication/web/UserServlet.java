@@ -2,8 +2,7 @@ package com.example.LibrarySystemWebApplication.web;
 
 import com.example.LibrarySystemWebApplication.dao.BorrowingDao;
 import com.example.LibrarySystemWebApplication.dao.LibraryUserDao;
-import com.example.LibrarySystemWebApplication.model.Borrowing;
-import com.example.LibrarySystemWebApplication.model.LibraryUser;
+import com.example.LibrarySystemWebApplication.model.*;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -37,6 +36,12 @@ public class UserServlet extends HttpServlet {
             case "deleteUser":
                 doPost(request, response);
                 break;
+            case "newUser":
+                addLibraryUser(request, response);
+                break;
+            case "insertUser":
+                doPost(request, response);
+                break;
             case "userInfo":
                 userInfoList(request, response);
                 break;
@@ -54,8 +59,10 @@ public class UserServlet extends HttpServlet {
 
         switch (action) {
             case "deleteUser":
-//                response.sendRedirect("test.jsp");
                 deleteLibraryUser(request, response);
+                break;
+            case "insertUser":
+                insertLibraryUser(request, response);
                 break;
             default:
                 break;
@@ -86,6 +93,13 @@ public class UserServlet extends HttpServlet {
 
     }
 
+    private void addLibraryUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("addLibraryUserForm.jsp");
+        requestDispatcher.forward(request, response);
+
+    }
+
     private void deleteLibraryUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         int libraryUserId = Integer.parseInt(request.getParameter("libraryUserId"));
@@ -103,4 +117,49 @@ public class UserServlet extends HttpServlet {
         requestDispatcher.forward(request, response);
 
     }
+
+    private void insertLibraryUser(HttpServletRequest request, HttpServletResponse response)
+            throws IOException, ServletException {
+
+        LibraryUser libraryUser = null;
+        String userName = request.getParameter("userName");
+        String userSurname = request.getParameter("userSurname");
+        String login = loginGenerator(userName, userSurname);
+        String password = request.getParameter("userPassword");
+
+        libraryUser = new LibraryUser(0, userName, userSurname, login, password, 2, 0.0);
+
+        libraryUserDao.insertLibraryUser(libraryUser);
+
+        request.setAttribute("libraryUser", libraryUser);
+
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("accountInfo.jsp");
+        requestDispatcher.forward(request, response);
+    }
+
+    private String loginGenerator(String name, String surname) {
+
+        String login = null;
+        char[] nameArray = name.toCharArray();
+        char[] surNameArray = surname.toCharArray();
+        int amount = 0;
+
+        nameArray[0] = Character.toLowerCase(nameArray[0]);
+        surNameArray[0] = Character.toLowerCase(surNameArray[0]);
+
+        amount = libraryUserDao.getLibraryUserNumberByName(name, surname);
+
+        name = new String(nameArray);
+        surname = new String(surNameArray);
+
+        if (amount == 0) {
+            login = name + "." + surname;
+        } else {
+            login = name + "." + (amount + 1) + "." + surname;
+        }
+
+        return login;
+
+    }
+
 }

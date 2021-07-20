@@ -33,6 +33,8 @@
                           class="nav-link">Dodaj pozycję zbioru</a></b></li>
                 <li><b><a href="<%=request.getContextPath()%>/userList"
                           class="nav-link">Opcje użytkowników</a></b></li>
+                <li><b><a href="<%=request.getContextPath()%>/requestList"
+                          class="nav-link">Zapytania</a></b></li>
             </c:if>
         </ul>
 
