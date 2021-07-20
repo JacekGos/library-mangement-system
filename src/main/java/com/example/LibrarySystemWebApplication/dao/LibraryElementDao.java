@@ -21,7 +21,8 @@ public class LibraryElementDao {
         }
     }
 
-    public static final String INSERT_BOOK = "INSERT INTO [LibraryProject_v2].[dbo].[Library_element]"
+    //MS SQL SERVER
+ /*   public static final String INSERT_BOOK = "INSERT INTO [LibraryProject_v2].[dbo].[Library_element]"
             + "VALUES (?, ?, ?, ?, NULL, ?)";
     public static final String SELECT_ALL_LIBRARY_ELEMENTS = "SELECT * FROM [LibraryProject_v2].[dbo].[Library_element]";
     public static final String SELECT_LIBRARY_ELEMENTS_BY_TITLE = "SELECT * FROM [LibraryProject_v2].[dbo].[Library_element]" +
@@ -33,22 +34,49 @@ public class LibraryElementDao {
             " WHERE library_element_id = ?";
     public static final String DELETE_LIBRARY_ELEMENT = "DELETE FROM [LibraryProject_v2].[dbo].[Library_element]" +
             " WHERE library_element_id = ?";
+*/
+    public static final String INSERT_LIBRARY_ELEMENT = "INSERT INTO public.\"Library_element\""
+            + " (title, type_id, sort_id, pages_number, duration_time, status_id)"
+            + " VALUES (?, ?, ?, ?, ?, ?)";
+
+    public static final String SELECT_ALL_LIBRARY_ELEMENTS = "SELECT * FROM public.\"Library_element\"";
+
+    public static final String SELECT_LIBRARY_ELEMENTS_BY_TITLE = "SELECT * FROM public.\"Library_element\"" +
+            " WHERE title = ?";
+
+    public static final String SELECT_LIBRARY_ELEMENTS_BY_ID = "SELECT * FROM public.\"Library_element\"" +
+            " WHERE library_element_id = ?";
+
+    public static final String UPDATE_LIBRARY_ELEMENT = "UPDATE public.\"Library_element\"" +
+            " SET title = ?, sort_id = ?, pages_number = ?, duration_time = ?" +
+            " WHERE library_element_id = ?";
+
+    public static final String DELETE_LIBRARY_ELEMENT = "DELETE FROM public.\"Library_element\"" +
+            " WHERE library_element_id = ?";
+
 
     //TODO - change this to insert LibraryElement type
-    public static int insertBook(Book book) {
+    public static boolean insertLibraryElement(LibraryElement libraryElement) {
 
-        int status = 0;
+        boolean status = false;
 
         try {
 
-            PreparedStatement preparedStatement = connection.prepareStatement(INSERT_BOOK);
-            preparedStatement.setString(1, book.getTitle());
-            preparedStatement.setInt(2, book.getTypeId());
-            preparedStatement.setInt(3, book.getSortId());
-            preparedStatement.setInt(4, book.getPagesNumber());
-            preparedStatement.setInt(5, book.getStatusId());
+            PreparedStatement preparedStatement = connection.prepareStatement(INSERT_LIBRARY_ELEMENT);
 
-            status = preparedStatement.executeUpdate();
+            preparedStatement.setString(1, libraryElement.getTitle());
+            preparedStatement.setInt(2, libraryElement.getTypeId());
+            preparedStatement.setInt(3, libraryElement.getSortId());
+            if (libraryElement.getTypeId() == 1) {
+                preparedStatement.setInt(4, ((Book)libraryElement).getPagesNumber());
+                preparedStatement.setNull(5, Types.INTEGER);
+            } else if (libraryElement.getTypeId() == 2) {
+                preparedStatement.setNull(4, Types.INTEGER);
+                preparedStatement.setInt(5, ((Movie)libraryElement).getDurationTime());
+            }
+            preparedStatement.setInt(6, libraryElement.getStatusId());
+
+            status = preparedStatement.executeUpdate() > 0;
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();

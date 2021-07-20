@@ -19,9 +19,16 @@ public class LibraryWorkerDao {
         }
     }
 
-    public static final String INSERT_LIBRARY_WORKER = "INSERT INTO [LibraryProject_v2].[dbo].[Librarian]"
+    //MS SQL SERVER
+  /*  public static final String INSERT_LIBRARY_WORKER = "INSERT INTO [LibraryProject_v2].[dbo].[Librarian]"
             + "VALUES (?, ?, ?, ?, ?)";
     public static final String SELECT_WORKER_BY_NAME_AND_PASSWORD = "SELECT * FROM [LibraryProject_v2].[dbo].[Librarian]" +
+            " WHERE login = ? AND password = ?";
+*/
+
+    public static final String INSERT_LIBRARY_WORKER = "INSERT INTO public.\"Librarian\""
+            + "VALUES (?, ?, ?, ?, ?)";
+    public static final String SELECT_WORKER_BY_NAME_AND_PASSWORD = "SELECT * FROM public.\"Librarian\"" +
             " WHERE login = ? AND password = ?";
 
 

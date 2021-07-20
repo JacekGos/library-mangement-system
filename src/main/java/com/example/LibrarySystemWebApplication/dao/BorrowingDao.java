@@ -22,8 +22,13 @@ public class BorrowingDao {
         }
     }
 
-    public static final String SELECT_BORROWINGS_BY_ID = "SELECT * FROM [LibraryProject_v2].[dbo].[Borrowings]" +
-            " WHERE library_user_id = ?";
+    //MS SQL SERVER
+    /*public static final String SELECT_BORROWINGS_BY_ID = "SELECT * FROM [LibraryProject_v2].[dbo].[Borrowings]" +
+            " WHERE library_user_id = ?";*/
+
+    public static final String SELECT_BORROWINGS_BY_ID = "SELECT * FROM public.\"Borrowings\" WHERE library_user_id = ?";
+
+
 
     public static List<Borrowing> getAllBorrowingsByUserId(int userId) {
 

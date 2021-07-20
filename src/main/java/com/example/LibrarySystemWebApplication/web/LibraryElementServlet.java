@@ -40,6 +40,9 @@ public class LibraryElementServlet extends HttpServlet {
             case "delete":
                 doPost(request, response);
                 break;
+            case "new":
+                addLibraryElement(request, response);
+                break;
             default:
 
                 break;
@@ -58,6 +61,9 @@ public class LibraryElementServlet extends HttpServlet {
                 break;
             case "delete":
                 deleteLibraryElement(request, response);
+                break;
+            case "insert":
+                insertLibraryElement(request, response);
                 break;
             default:
                 break;
@@ -124,6 +130,33 @@ public class LibraryElementServlet extends HttpServlet {
         LibraryElementDao.deleteLibraryElement(libraryElementId);
         libraryElementList(request, response);
 
+    }
+
+    private void addLibraryElement(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("libraryElementForm.jsp");
+        requestDispatcher.forward(request, response);
+
+    }
+
+    private void insertLibraryElement(HttpServletRequest request, HttpServletResponse response)
+            throws  IOException {
+
+        LibraryElement libraryElement = null;
+        String title = request.getParameter("title");
+        byte typeId = Byte.parseByte(request.getParameter("typeId"));
+        int sortId = Integer.parseInt(request.getParameter("sortId"));
+
+        if (typeId == 1) {
+            int pagesNumber = Integer.parseInt(request.getParameter("detailedInfo"));
+            libraryElement = new Book(0, typeId, title, sortId, 1, pagesNumber);
+        } else if (typeId == 2) {
+            int durationTime = Integer.parseInt(request.getParameter("detailedInfo"));
+            libraryElement = new Movie(0, typeId, title, sortId, 1, durationTime);
+        }
+
+        libraryElementDao.insertLibraryElement(libraryElement);
+        response.sendRedirect("index.jsp");
     }
 
 }

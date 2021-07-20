@@ -64,6 +64,12 @@ public class MainServlet extends HttpServlet {
             case "/deleteUser":
                 doPost(request, response);
                 break;
+            case "/new":
+                action = "new";
+                request.setAttribute("action", action);
+                requestDispatcher = request.getRequestDispatcher("libraryElement");
+                requestDispatcher.forward(request, response);
+                break;
             case "/userInfo":
                 action = "userInfo";
                 request.setAttribute("action", action);
@@ -101,6 +107,12 @@ public class MainServlet extends HttpServlet {
                 requestDispatcher = request.getRequestDispatcher("libraryElement");
                 requestDispatcher.forward(request, response);
                 break;
+            case "/insert":
+                action = "insert";
+                request.setAttribute("action", action);
+                requestDispatcher = request.getRequestDispatcher("libraryElement");
+                requestDispatcher.forward(request, response);
+                break;
             case "/deleteUser":
                 action = "deleteUser";
                 request.setAttribute("action", action);
@@ -114,6 +126,7 @@ public class MainServlet extends HttpServlet {
     }
 
     //TODO add register form for new users
+    //TODO Search LibraryElements by fragments of title
 
   /*  PrintWriter out = response.getWriter();
                 out.println(request.getParameter("title"));*/
