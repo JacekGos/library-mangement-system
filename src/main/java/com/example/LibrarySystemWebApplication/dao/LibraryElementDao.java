@@ -21,7 +21,8 @@ public class LibraryElementDao {
         }
     }
 
-    public static final String INSERT_BOOK = "INSERT INTO [LibraryProject_v2].[dbo].[Library_element]"
+    //MS SQL SERVER
+ /*   public static final String INSERT_BOOK = "INSERT INTO [LibraryProject_v2].[dbo].[Library_element]"
             + "VALUES (?, ?, ?, ?, NULL, ?)";
     public static final String SELECT_ALL_LIBRARY_ELEMENTS = "SELECT * FROM [LibraryProject_v2].[dbo].[Library_element]";
     public static final String SELECT_LIBRARY_ELEMENTS_BY_TITLE = "SELECT * FROM [LibraryProject_v2].[dbo].[Library_element]" +
@@ -33,6 +34,22 @@ public class LibraryElementDao {
             " WHERE library_element_id = ?";
     public static final String DELETE_LIBRARY_ELEMENT = "DELETE FROM [LibraryProject_v2].[dbo].[Library_element]" +
             " WHERE library_element_id = ?";
+*/
+    public static final String SELECT_ALL_LIBRARY_ELEMENTS = "SELECT * FROM public.\"Library_element\"";
+
+    public static final String SELECT_LIBRARY_ELEMENTS_BY_TITLE = "SELECT * FROM public.\"Library_element\"" +
+            " WHERE title = ?";
+
+    public static final String SELECT_LIBRARY_ELEMENTS_BY_ID = "SELECT * FROM public.\"Library_element\"" +
+            " WHERE library_element_id = ?";
+
+    public static final String UPDATE_LIBRARY_ELEMENT = "UPDATE public.\"Library_element\"" +
+            " SET title = ?, sort_id = ?, pages_number = ?, duration_time = ?" +
+            " WHERE library_element_id = ?";
+
+    public static final String DELETE_LIBRARY_ELEMENT = "DELETE FROM public.\"Library_element\"" +
+            " WHERE library_element_id = ?";
+
 
     //TODO - change this to insert LibraryElement type
     public static int insertBook(Book book) {
@@ -41,7 +58,7 @@ public class LibraryElementDao {
 
         try {
 
-            PreparedStatement preparedStatement = connection.prepareStatement(INSERT_BOOK);
+            PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_LIBRARY_ELEMENTS);
             preparedStatement.setString(1, book.getTitle());
             preparedStatement.setInt(2, book.getTypeId());
             preparedStatement.setInt(3, book.getSortId());
