@@ -24,7 +24,8 @@ public class LibraryUserDao {
         }
     }
 
-    public static final String INSERT_LIBRARY_USER = "INSERT INTO [LibraryProject_v2].[dbo].[Library_user]"
+    //MS SQL SERVER
+    /*public static final String INSERT_LIBRARY_USER = "INSERT INTO [LibraryProject_v2].[dbo].[Library_user]"
             + " VALUES (?, ?, ?, ?, ?, ?)";
     public static final String SELECT_ALL_LIBRARY_USERS = "SELECT * FROM [LibraryProject_v2].[dbo].[Library_user]";
     public static final String SELECT_LIBRARY_USERS_BY_ID = "SELECT * FROM [LibraryProject_v2].[dbo].[Library_user]" +
@@ -32,6 +33,18 @@ public class LibraryUserDao {
     public static final String SELECT_LIBRARY_USER_BY_ID = "SELECT * FROM [LibraryProject_v2].[dbo].[Library_user]" +
             " WHERE library_user_id = ?";
     public static final String DELETE_LIBRARY_USER = "DELETE FROM [LibraryProject_v2].[dbo].[Library_user]" +
+            " WHERE library_user_id = ?";*/
+
+
+    public static final String INSERT_LIBRARY_USER = "INSERT INTO public.\"Library_user\""
+            + " VALUES (?, ?, ?, ?, ?, ?)";
+
+    public static final String SELECT_ALL_LIBRARY_USERS = "SELECT * FROM public.\"Library_user\"";
+
+    public static final String SELECT_LIBRARY_USERS_BY_ID = "SELECT * FROM public.\"Library_user\"" +
+            " WHERE library_user_id = ?";
+
+    public static final String DELETE_LIBRARY_USER = "DELETE FROM public.\"Library_user\"" +
             " WHERE library_user_id = ?";
 
     public static int insertLibraryUser(LibraryUser libraryUser) {
@@ -118,7 +131,7 @@ public class LibraryUserDao {
         LibraryUser libraryUser = null;
 
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement(SELECT_LIBRARY_USER_BY_ID);
+            PreparedStatement preparedStatement = connection.prepareStatement(SELECT_LIBRARY_USERS_BY_ID);
             preparedStatement.setInt(1, userId);
             ResultSet resultSet = preparedStatement.executeQuery();
 

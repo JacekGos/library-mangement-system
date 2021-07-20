@@ -20,11 +20,11 @@
     <div class="card">
         <div class="card-body">
             <c:if test="${libraryElement != null}">
-                <form action="update" method="post" accept-charset="character_set">
-            </c:if>
-            <c:if test="${libraryElement == null}">
+            <form action="update" method="post" accept-charset="character_set">
+                </c:if>
+                <c:if test="${libraryElement == null}">
                 <form action="insert" method="post" accept-charset="character_set">
-            </c:if>
+                    </c:if>
                     <caption>
                         <h2>
                             <c:if test="${libraryElement != null}">
@@ -52,17 +52,36 @@
                                                     name="title" required="required">
                     </fieldset>
 
+                    <c:if test="${libraryElement == null}">
+                        <fieldset class="form-group">
+                            <label for="typeId">Typ</label>
+                            <br>
+                            <select id="typeId" name="typeId" class="form-control">
+                                <option value="1">Książka</option>
+                                <option value="2">Film</option>
+                            </select>
+                        </fieldset>
+                    </c:if>
+
                     <fieldset class="form-group">
-                        <label for="sortId">Rodzaj</label>
+                        <label for="sortId">Gatunek</label>
                         <br>
                         <select id="sortId" name="sortId" class="form-control">
-                            <option value="1" >Historyczne</option>
-                            <option value="2" >Fantastyka</option>
-                            <option value="3" >Kryminał</option>
-                            <option value="4" >Edukacja</option>
-                            <option value="5" >Technologie</option>
+                            <option value="1">Historyczne</option>
+                            <option value="2">Fantastyka</option>
+                            <option value="3">Kryminał</option>
+                            <option value="4">Edukacja</option>
+                            <option value="5">Technologie</option>
                         </select>
                     </fieldset>
+
+                    <c:if test="${libraryElement == null}">
+                        <fieldset class="form-group">
+                            <label>Liczba stron / Czas trwania[min]</label>
+                            <input type="text" class="form-control" name="detailedInfo">
+                        </fieldset>
+                    </c:if>
+
 
                     <c:if test="${libraryElement.getTypeId() == 1}">
                         <fieldset class="form-group">

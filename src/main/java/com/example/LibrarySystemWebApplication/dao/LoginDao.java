@@ -7,15 +7,16 @@ import java.sql.SQLException;
 
 public class LoginDao {
 
-    //MS SQL
+    //MS SQL SERVER
     /*private static final String SELECT_WORKER_BY_LOGIN_AND_PASS = "SELECT * FROM [LibraryProject_v2].[dbo].[Librarian]" +
             "WHERE login = ? AND password = ?";
     private static final String SELECT_USER_BY_LOGIN_AND_PASS = "SELECT * FROM [LibraryProject_v2].[dbo].[Library_user]" +
             "WHERE login = ? AND password = ?";*/
 
-      private static final String SELECT_WORKER_BY_LOGIN_AND_PASS = "SELECT librarian_id, name, surname, login, password, account_type" +
-              " FROM public.\"Librarian\";";
-    private static final String SELECT_USER_BY_LOGIN_AND_PASS = "SELECT * FROM [LibraryProject_v2].[dbo].[Library_user]" +
+    private static final String SELECT_WORKER_BY_LOGIN_AND_PASS = "SELECT librarian_id, name, surname, login, password, account_type" +
+            " FROM public.\"Librarian\" WHERE login = ? AND password = ?";
+
+    private static final String SELECT_USER_BY_LOGIN_AND_PASS = "SELECT * FROM public.\"Library_user\"" +
             "WHERE login = ? AND password = ?";
 
 
