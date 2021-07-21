@@ -1,5 +1,6 @@
 package com.example.LibrarySystemWebApplication.web;
 
+import com.example.LibrarySystemWebApplication.dao.LibraryElementDao;
 import com.example.LibrarySystemWebApplication.model.LibraryUser;
 
 import javax.servlet.RequestDispatcher;
@@ -14,6 +15,8 @@ import java.util.List;
 
 @WebServlet(name = "borrrowingProcess", value = "/borrowingProcess")
 public class BorrowingProcessServlet extends HttpServlet {
+
+    private LibraryElementDao libraryElementDao = new LibraryElementDao();
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -51,7 +54,22 @@ public class BorrowingProcessServlet extends HttpServlet {
 
     private void sendRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+        boolean borrowingResult = false;
+        int libraryElementId = Integer.parseInt(request.getParameter("libraryElementId"));
 
+        if (libraryElementDao.getLibraryElementStatus(libraryElementId) == 1) {
+            borrowingResult = true;
+//            libraryElementDao.updateLibraryElementStatus(libraryElementId, 2);
+            request.setAttribute("borrowingResult", borrowingResult);
+            request.setAttribute("test", "testowy");
+            RequestDispatcher requestDispatcher = request.getRequestDispatcher("borrowInfo.jsp");
+            requestDispatcher.forward(request, response);
+        } else {
+            borrowingResult = false;
+            request.setAttribute("borrowingResult", borrowingResult);
+            RequestDispatcher requestDispatcher = request.getRequestDispatcher("borrowInfo.jsp");
+            requestDispatcher.forward(request, response);
+        }
 
     }
 

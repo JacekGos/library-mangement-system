@@ -29,7 +29,6 @@ public class BorrowingDao {
     public static final String SELECT_BORROWINGS_BY_ID = "SELECT * FROM public.\"Borrowings\" WHERE library_user_id = ?";
 
 
-
     public static List<Borrowing> getAllBorrowingsByUserId(int userId) {
 
         List<Borrowing> borrowingsList = new ArrayList<Borrowing>();

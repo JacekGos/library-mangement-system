@@ -47,9 +47,15 @@ public class LibraryElementDao {
     public static final String SELECT_LIBRARY_ELEMENTS_BY_ID = "SELECT * FROM public.\"Library_element\"" +
             " WHERE library_element_id = ?";
 
+    public static final String SELECT_LIBRARY_ELEMENTS_STATUS_BY_ID = "SELECT status_id FROM public.\"Library_element\"" +
+            " WHERE library_element_id = ?";
+
     public static final String UPDATE_LIBRARY_ELEMENT = "UPDATE public.\"Library_element\"" +
             " SET title = ?, sort_id = ?, pages_number = ?, duration_time = ?" +
             " WHERE library_element_id = ?";
+
+    public static final String UPDATE_LIBRARY_ELEMENT_STATUS = "UPDATE public.\"Library_element\"" +
+            " SET status_id = ? WHERE library_element_id = ?";
 
     public static final String DELETE_LIBRARY_ELEMENT = "DELETE FROM public.\"Library_element\"" +
             " WHERE library_element_id = ?";
@@ -182,6 +188,27 @@ public class LibraryElementDao {
         return libraryElement;
     }
 
+    public static int getLibraryElementStatus(int elementId) {
+
+        int statusId = 0;
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(SELECT_LIBRARY_ELEMENTS_STATUS_BY_ID);
+            preparedStatement.setInt(1, elementId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+
+                statusId = resultSet.getInt("status_id");
+
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return statusId;
+    }
+
     public static boolean updateLibraryElement(LibraryElement libraryElement) {
 
         boolean rowUpdated = false;
@@ -200,6 +227,25 @@ public class LibraryElementDao {
                 preparedStatement.setInt(4, ((Movie)libraryElement).getDurationTime());
             }
             preparedStatement.setInt(5, libraryElement.getLibraryElementId());
+
+            rowUpdated = preparedStatement.executeUpdate() > 0;
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return rowUpdated;
+    }
+
+    public static boolean updateLibraryElementStatus(int libraryElementId, int statusId) {
+
+        boolean rowUpdated = false;
+
+        try {
+
+            PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_LIBRARY_ELEMENT_STATUS);
+            preparedStatement.setInt(1, statusId);
+            preparedStatement.setInt(2, libraryElementId);
 
             rowUpdated = preparedStatement.executeUpdate() > 0;
 
