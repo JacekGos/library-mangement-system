@@ -82,6 +82,9 @@ public class MainServlet extends HttpServlet {
                 requestDispatcher = request.getRequestDispatcher("libraryUser");
                 requestDispatcher.forward(request, response);
                 break;
+            case "/borrow":
+                doPost(request, response);
+                break;
             default:
 
                 break;
@@ -129,6 +132,12 @@ public class MainServlet extends HttpServlet {
                 action = "insertUser";
                 request.setAttribute("action", action);
                 requestDispatcher = request.getRequestDispatcher("libraryUser");
+                requestDispatcher.forward(request, response);
+                break;
+            case "/borrow":
+                action = "borrow";
+                request.setAttribute("action", action);
+                requestDispatcher = request.getRequestDispatcher("borrowingProcess");
                 requestDispatcher.forward(request, response);
                 break;
             default:

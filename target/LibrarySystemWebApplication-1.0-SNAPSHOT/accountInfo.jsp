@@ -15,15 +15,20 @@
 %>
 <c:import url="navigationBar.jsp" />
 
-<div class="card-body">
-    <caption>
-        <h2> Dane Twojego Konta </h2><br>
-        <h1> <c:out value="${libraryUser.getUserName()}" /></h1><br>
-        <h1> <c:out value="${libraryUser.getUserSurName()}" /></h1><br>
-        <h1> <c:out value="${libraryUser.getLogin()}" /></h1><br>
-        <h1> <c:out value="${libraryUser.getPassword()}" /></h1><br>
-        <h1> Dane Twojego Konta </h1><br>
-    </caption>
-</div>
+<div class="container col-md-5" align="center">
+    <h2> Konto zostało utworzone </h2><br>
+    <div class="card">
+        <div class="card-body" >
+            <caption>
+                <h3 align="left"> Imie: <c:out value="${libraryUser.getUserName()}" /></h3><br>
+                <h3 align="left"> Nazwisko: <c:out value="${libraryUser.getUserSurName()}" /></h3><br>
+                <h3 align="left"> Login: <c:out value="${libraryUser.getLogin()}" /></h3><br>
+                <form action="login.jsp" method="get">
+                    <button type="submit" class="btn btn-success">Zaloguj się</button>
+                </form>
+            </caption>
+        </div>
+    </div>
 
+</div>
 </body>

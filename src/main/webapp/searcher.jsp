@@ -50,7 +50,7 @@
                         <td><c:out value="${object.getDurationTime()}"/></td>
                     </c:if>
                     <td><c:out value="${object.getStatusName()}"/></td>
-                    <c:if test="${sessionScope.userType == 2}">
+                    <c:if test="${sessionScope.userType == 2 && object.getStatusId() == 1}">
                         <td><a href="borrow?libraryElementId=<c:out value='${object.getLibraryElementId()}' />">Wypożycz</a></td>
                     </c:if>
                     <c:if test="${sessionScope.userType == 1}">
