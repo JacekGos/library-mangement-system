@@ -18,6 +18,15 @@ public class Borrowing {
 
     }
 
+    public Borrowing(int libraryElementId, java.sql.Timestamp borrowingDate, int borrowingStatusId, int libraryUserId) {
+
+        this.libraryElementId = libraryElementId;
+        this.borrowingDate = borrowingDate;
+        this.borrowingStatusId = borrowingStatusId;
+        this.libraryUserId = libraryUserId;
+
+    }
+
     private Borrowing() {
     }
 

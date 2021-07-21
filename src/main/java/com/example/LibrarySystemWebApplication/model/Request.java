@@ -16,6 +16,14 @@ public class Request {
 
     }
 
+    public Request(int borrowingId, java.sql.Timestamp requestDate, int statusId) {
+
+        this.setBorrowingId(borrowingId);
+        this.setRequestDate(requestDate);
+        this.setStatusId(statusId);
+
+    }
+
     public int getRequestId() {
         return requestId;
     }
@@ -47,3 +55,4 @@ public class Request {
     public void setStatusId(int statusId) {
         this.statusId = statusId;
     }
+}

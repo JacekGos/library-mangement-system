@@ -2,6 +2,7 @@ package com.example.LibrarySystemWebApplication.dao;
 
 import com.example.LibrarySystemWebApplication.model.Borrowing;
 import com.example.LibrarySystemWebApplication.model.LibraryUser;
+import com.example.LibrarySystemWebApplication.model.Request;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -26,9 +27,38 @@ public class BorrowingDao {
     /*public static final String SELECT_BORROWINGS_BY_ID = "SELECT * FROM [LibraryProject_v2].[dbo].[Borrowings]" +
             " WHERE library_user_id = ?";*/
 
+    public static final String INSERT_BORROWING = "INSERT INTO public.\"Borrowings\""
+            + " (element_id, borrowing_date, status_id, library_user_id) VALUES (?, ?, ?, ?)";
+
     public static final String SELECT_BORROWINGS_BY_ID = "SELECT * FROM public.\"Borrowings\" WHERE library_user_id = ?";
 
+    public static final String SELECT_LAST_BORROWING_ID = "SELECT borrowing_id FROM public.\"Borrowings\"" +
+            " WHERE library_user_id = ? AND element_id = ? AND borrowing_date = ?";
 
+    public static final String DELETE_BORROWING = "DELETE FROM public.\"Borrowings\"" +
+            " WHERE borrowing_id = ?";
+
+
+    public static int insertBorrowing(Borrowing borrowing) {
+
+        int status = 0;
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(INSERT_BORROWING);
+            preparedStatement.setInt(1, borrowing.getLibraryElementId());
+            preparedStatement.setTimestamp(2, borrowing.getBorrowingDate());
+            preparedStatement.setInt(3, borrowing.getBorrowingStatusId());
+            preparedStatement.setInt(4, borrowing.getLibraryUserId());
+
+            status = preparedStatement.executeUpdate();
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return status;
+    }
+    
     public static List<Borrowing> getAllBorrowingsByUserId(int userId) {
 
         List<Borrowing> borrowingsList = new ArrayList<Borrowing>();
@@ -56,6 +86,31 @@ public class BorrowingDao {
         }
 
         return borrowingsList;
+    }
+
+    public static int getLastBorrowingId(Borrowing borrowing) {
+
+       int borrowingId = 0;
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(SELECT_LAST_BORROWING_ID);
+            preparedStatement.setInt(1, borrowing.getLibraryUserId());
+            preparedStatement.setInt(2, borrowing.getLibraryElementId());
+            preparedStatement.setTimestamp(3, borrowing.getBorrowingDate());
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+
+                borrowingId = resultSet.getInt(1);
+
+
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return borrowingId;
     }
 
 }

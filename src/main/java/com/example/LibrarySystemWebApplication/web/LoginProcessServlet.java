@@ -45,6 +45,7 @@ public class LoginProcessServlet extends HttpServlet {
                 LibraryUser user = LibraryUserDao.getLibraryUserByLoginAndPasword(login, password);
 
                 userSession = request.getSession();
+                userSession.setAttribute("userId", user.getUserId());
                 userSession.setAttribute("userName", user.getUserName());
                 userSession.setAttribute("userType", user.getAccountType());
                 userSession.setAttribute("userLogin", user.getLogin());
