@@ -60,15 +60,15 @@ public abstract class LibraryElement implements DataDisplayHelper{
         this.typeId = typeId;
     }
 
-    public String getSortName () {
+    public String getSortName() {
         return DataDisplayHelper.convertsSortToString(this.sortId);
     }
 
-    public String getTypeName () {
+    public String getTypeName() {
         return DataDisplayHelper.convertTypeToString(this.typeId);
     }
 
-    public String getStatusName () {
+    public String getStatusName() {
         return DataDisplayHelper.convertStatusToString(this.statusId);
     }
 

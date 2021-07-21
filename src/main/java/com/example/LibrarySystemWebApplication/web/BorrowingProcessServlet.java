@@ -1,6 +1,7 @@
 package com.example.LibrarySystemWebApplication.web;
 
 import com.example.LibrarySystemWebApplication.dao.LibraryElementDao;
+import com.example.LibrarySystemWebApplication.model.LibraryElement;
 import com.example.LibrarySystemWebApplication.model.LibraryUser;
 
 import javax.servlet.RequestDispatcher;
@@ -56,12 +57,14 @@ public class BorrowingProcessServlet extends HttpServlet {
 
         boolean borrowingResult = false;
         int libraryElementId = Integer.parseInt(request.getParameter("libraryElementId"));
+        LibraryElement libraryElement = libraryElementDao.getLibraryElementById(libraryElementId);
 
         if (libraryElementDao.getLibraryElementStatus(libraryElementId) == 1) {
             borrowingResult = true;
 //            libraryElementDao.updateLibraryElementStatus(libraryElementId, 2);
+
             request.setAttribute("borrowingResult", borrowingResult);
-            request.setAttribute("test", "testowy");
+            request.setAttribute("libraryElement", libraryElement);
             RequestDispatcher requestDispatcher = request.getRequestDispatcher("borrowInfo.jsp");
             requestDispatcher.forward(request, response);
         } else {
