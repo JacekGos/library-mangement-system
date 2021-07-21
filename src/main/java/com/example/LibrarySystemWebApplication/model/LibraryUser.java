@@ -22,6 +22,8 @@ public class LibraryUser extends User implements DataDisplayHelper {
         this.penalty = penalty;
     }
 
+    public LibraryUser() {}
+
     public double getPenalty() {
         return penalty;
     }

@@ -1,7 +1,9 @@
 package com.example.LibrarySystemWebApplication.web;
 
+import com.example.LibrarySystemWebApplication.dao.LibraryUserDao;
 import com.example.LibrarySystemWebApplication.dao.LibraryWorkerDao;
 import com.example.LibrarySystemWebApplication.dao.LoginDao;
+import com.example.LibrarySystemWebApplication.model.LibraryUser;
 import com.example.LibrarySystemWebApplication.model.LibraryWorker;
 
 import javax.servlet.annotation.WebServlet;
@@ -31,14 +33,23 @@ public class LoginProcessServlet extends HttpServlet {
             userSession = request.getSession();
             userSession.setAttribute("userName", worker.getUserName());
             userSession.setAttribute("userType", worker.getAccountType());
-
+            userSession.setAttribute("userLogin", worker.getLogin());
             response.sendRedirect("index.jsp");
+
         } else {
             status = LoginDao.validateUser(login, password);
             if (status == true) {
-                response.sendRedirect("user");
+
+                LibraryUser user = LibraryUserDao.getLibraryUserByLoginAndPasword(login, password);
+
+                userSession = request.getSession();
+                userSession.setAttribute("userName", user.getUserName());
+                userSession.setAttribute("userType", user.getAccountType());
+                userSession.setAttribute("userLogin", user.getLogin());
+                response.sendRedirect("index.jsp");
+
             } else {
-                response.sendRedirect("zle");
+                response.sendRedirect("login.jsp");
             }
         }
     }

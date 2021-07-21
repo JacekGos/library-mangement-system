@@ -7,10 +7,7 @@ import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.example.LibrarySystemWebApplication.model.Book;
-import com.example.LibrarySystemWebApplication.model.LibraryElement;
-import com.example.LibrarySystemWebApplication.model.LibraryUser;
-import com.example.LibrarySystemWebApplication.model.Movie;
+import com.example.LibrarySystemWebApplication.model.*;
 
 public class LibraryUserDao {
 
@@ -46,6 +43,9 @@ public class LibraryUserDao {
 
     public static final String SELECT_LIBRARY_USERS_BY_NAME = "SELECT * FROM public.\"Library_user\"" +
             " WHERE name = ? AND surname = ?";
+
+    public static final String SELECT_USER_BY_LOGIN_AND_PASSWORD = "SELECT * FROM public.\"Library_user\"" +
+            " WHERE login = ? AND password = ?";
 
     public static final String DELETE_LIBRARY_USER = "DELETE FROM public.\"Library_user\"" +
             " WHERE library_user_id = ?";
@@ -175,6 +175,37 @@ public class LibraryUserDao {
         }
 
         return amount;
+    }
+
+    public static LibraryUser getLibraryUserByLoginAndPasword(String login, String password) {
+
+        LibraryUser libraryUser = new LibraryUser();
+
+        try {
+
+            PreparedStatement preparedStatement = connection.prepareStatement(SELECT_USER_BY_LOGIN_AND_PASSWORD);
+            preparedStatement.setString(1, login);
+            preparedStatement.setString(2, password);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                //TODO change index number to full column name
+                libraryUser.setUserId(resultSet.getInt(1));
+                libraryUser.setUserName(resultSet.getString(2));
+                libraryUser.setUserSurName(resultSet.getString(3));
+                libraryUser.setLogin(resultSet.getString(4));
+                libraryUser.setPassword(resultSet.getString(5));
+                libraryUser.setPenalty(resultSet.getDouble(6));
+                libraryUser.setAccountType(resultSet.getInt(7));
+            }
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return libraryUser;
+
     }
 
     //TODO - Add delete User's borrowings first

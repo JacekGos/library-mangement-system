@@ -80,6 +80,5 @@ public class LibraryWorkerDao {
         }
 
         return libraryWorker;
-
     }
 }

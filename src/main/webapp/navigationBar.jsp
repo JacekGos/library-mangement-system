@@ -46,7 +46,7 @@
                 </c:if>
                 <c:if test="${sessionScope.userName != null}">
                     <span class="navbar-text">
-                        Użytkownik: <c:out value="${sessionScope.userName}"/>
+                        Użytkownik: <c:out value="${sessionScope.userLogin}"/>
                     </span>
                         <li><b><a href="<%=request.getContextPath()%>/logoutProcess"
                                   class="nav-link">Wyloguj</a></b></li>
