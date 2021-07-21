@@ -60,13 +60,15 @@ public class BorrowingProcessServlet extends HttpServlet {
         LibraryElement libraryElement = libraryElementDao.getLibraryElementById(libraryElementId);
 
         if (libraryElementDao.getLibraryElementStatus(libraryElementId) == 1) {
+
             borrowingResult = true;
-//            libraryElementDao.updateLibraryElementStatus(libraryElementId, 2);
+            libraryElementDao.updateLibraryElementStatus(libraryElementId, 2);
 
             request.setAttribute("borrowingResult", borrowingResult);
             request.setAttribute("libraryElement", libraryElement);
             RequestDispatcher requestDispatcher = request.getRequestDispatcher("borrowInfo.jsp");
             requestDispatcher.forward(request, response);
+
         } else {
             borrowingResult = false;
             request.setAttribute("borrowingResult", borrowingResult);
