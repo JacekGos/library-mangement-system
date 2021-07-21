@@ -55,4 +55,8 @@ public class Request {
     public void setStatusId(int statusId) {
         this.statusId = statusId;
     }
+
+    public String getStatusName() {
+        return DataDisplayHelper.convertStatusToString(this.statusId);
+    }
 }

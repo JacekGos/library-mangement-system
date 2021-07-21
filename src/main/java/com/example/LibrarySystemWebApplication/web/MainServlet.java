@@ -85,6 +85,18 @@ public class MainServlet extends HttpServlet {
             case "/borrow":
                 doPost(request, response);
                 break;
+            case "/requestList":
+                action = "showRequests";
+                request.setAttribute("action", action);
+                requestDispatcher = request.getRequestDispatcher("borrowingProcess");
+                requestDispatcher.forward(request, response);
+                break;
+            case "/searchRequest":
+                action = "searchRequest";
+                request.setAttribute("action", action);
+                requestDispatcher = request.getRequestDispatcher("borrowingProcess");
+                requestDispatcher.forward(request, response);
+                break;
             default:
 
                 break;

@@ -4,6 +4,7 @@ import com.example.LibrarySystemWebApplication.dao.LibraryElementDao;
 import com.example.LibrarySystemWebApplication.dao.RequestDao;
 import com.example.LibrarySystemWebApplication.model.Borrowing;
 import com.example.LibrarySystemWebApplication.model.LibraryElement;
+import com.example.LibrarySystemWebApplication.model.LibraryUser;
 import com.example.LibrarySystemWebApplication.model.Request;
 import com.example.LibrarySystemWebApplication.dao.BorrowingDao;
 
@@ -15,6 +16,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 @WebServlet(name = "borrrowingProcess", value = "/borrowingProcess")
 public class BorrowingProcessServlet extends HttpServlet {
@@ -32,6 +35,12 @@ public class BorrowingProcessServlet extends HttpServlet {
         switch (action) {
             case "borrow":
                 doPost(request, response);
+                break;
+            case "showRequests":
+                showRequestsList(request, response);
+                break;
+            case "searchRequest":
+                searchRequestByUserId(request, response);
                 break;
             default:
 
@@ -117,6 +126,29 @@ public class BorrowingProcessServlet extends HttpServlet {
         libraryElementDao.updateLibraryElementStatus(libraryElementId, 1);
 
         return false;
+
+    }
+
+    private void showRequestsList(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        List<Request> requestsList = new ArrayList<Request>();
+        requestsList = requestDao.getAllRequests();
+        request.setAttribute("requestsList", requestsList);
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("requests.jsp");
+        requestDispatcher.forward(request, response);
+
+    }
+
+    private void searchRequestByUserId(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        int userId = Integer.parseInt(request.getParameter("searchedUserId"));
+        List<Request> requestsList = new ArrayList<Request>();
+        requestsList = requestDao.getRequestsByUserId(userId);
+
+        request.setAttribute("requestsList", requestsList);
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("requests.jsp");
+        requestDispatcher.forward(request, response);
 
     }
 

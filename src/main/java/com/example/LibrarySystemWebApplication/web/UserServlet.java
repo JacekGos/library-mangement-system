@@ -31,7 +31,7 @@ public class UserServlet extends HttpServlet {
                 libraryUserList(request, response);
                 break;
             case "searchUser":
-                searchedResultsLibraryUsers(request, response);
+                searchLibraryUser(request, response);
                 break;
             case "deleteUser":
                 doPost(request, response);
@@ -80,7 +80,7 @@ public class UserServlet extends HttpServlet {
 
     }
 
-    private void searchedResultsLibraryUsers(HttpServletRequest request, HttpServletResponse response)
+    private void searchLibraryUser(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         int userId = Integer.parseInt(request.getParameter("searchedUserId"));
