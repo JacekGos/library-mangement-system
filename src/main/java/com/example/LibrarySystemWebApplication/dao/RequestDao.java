@@ -21,6 +21,9 @@ public class RequestDao {
         }
     }
 
+    public static final String INSERT_REQUEST = "INSERT INTO public.\"Request\""
+            + " (borrowing_id, request_date, status_id) VALUES (?, ?, ?)";
+
     public static final String SELECT_ALL_REQUESTS = "SELECT * FROM public.\"Request\"";
 
     public static final String SELECT_REQUESTS_BY_ID = "SELECT request_id, borrowing_id, request_date, status_id" +
@@ -32,9 +35,27 @@ public class RequestDao {
             " ON r.borrowing_id = b.borrowing_id" +
             " WHERE library_user_id = ?";
 
-    public static final String INSERT_REQUEST = "INSERT INTO public.\"Request\""
-            + " (borrowing_id, request_date, status_id) VALUES (?, ?, ?)";
+    public static final String UPDATE_REQUEST_STATUS = "UPDATE public.\"Request\"" +
+            " SET status_id = ? WHERE request_id = ?";
 
+    public static int insertRequest(Request request) {
+
+        int status = 0;
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(INSERT_REQUEST);
+            preparedStatement.setInt(1, request.getBorrowingId());
+            preparedStatement.setTimestamp(2, request.getRequestDate());
+            preparedStatement.setInt(3, request.getStatusId());
+
+            status = preparedStatement.executeUpdate();
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return status;
+    }
 
     public static List<Request> getAllRequests() {
 
@@ -117,24 +138,23 @@ public class RequestDao {
         return requestList;
     }
 
-    public static int insertRequest(Request request) {
+    public static boolean updateRequestStatus(int requestId, int statusId) {
 
-        int status = 0;
+        boolean rowUpdated = false;
 
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement(INSERT_REQUEST);
-            preparedStatement.setInt(1, request.getBorrowingId());
-            preparedStatement.setTimestamp(2, request.getRequestDate());
-            preparedStatement.setInt(3, request.getStatusId());
 
-            status = preparedStatement.executeUpdate();
+            PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_REQUEST_STATUS);
+            preparedStatement.setInt(1, statusId);
+            preparedStatement.setInt(2, requestId);
+
+            rowUpdated = preparedStatement.executeUpdate() > 0;
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
 
-        return status;
+        return rowUpdated;
     }
-
 
 }

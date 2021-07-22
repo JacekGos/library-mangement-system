@@ -37,6 +37,9 @@ public class BorrowingDao {
     public static final String SELECT_LAST_BORROWING_ID = "SELECT borrowing_id FROM public.\"Borrowings\"" +
             " WHERE library_user_id = ? AND element_id = ? AND borrowing_date = ?";
 
+    public static final String UPDATE_BORROWING_STATUS = "UPDATE public.\"Borrowings\"" +
+            " SET status_id = ? WHERE borrowing_id = ?";
+
     public static final String DELETE_BORROWING = "DELETE FROM public.\"Borrowings\"" +
             " WHERE borrowing_id = ?";
 
@@ -142,5 +145,25 @@ public class BorrowingDao {
 
         return borrowingId;
     }
+
+    public static boolean updateBorrowingStatus(int borrowingId, int statusId) {
+
+        boolean rowUpdated = false;
+
+        try {
+
+            PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_BORROWING_STATUS);
+            preparedStatement.setInt(1, statusId);
+            preparedStatement.setInt(2, borrowingId);
+
+            rowUpdated = preparedStatement.executeUpdate() > 0;
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return rowUpdated;
+    }
+
 
 }

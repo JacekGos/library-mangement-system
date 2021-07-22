@@ -31,6 +31,7 @@
                 <th>Liczba stron</th>
                 <th>Czas trwania</th>
                 <th>Status</th>
+                <th>Opcje</th>
             </tr>
             </thead>
             <tbody>
@@ -57,7 +58,6 @@
                             &nbsp;&nbsp;&nbsp;&nbsp;
                             <a href="delete?libraryElementId=<c:out value='${object.getLibraryElementId()}' />">Usuń</a></td>
                     </c:if>
-
                 </tr>
             </c:forEach>
             </tbody>

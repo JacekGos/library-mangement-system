@@ -64,6 +64,9 @@ public class BorrowingProcessServlet extends HttpServlet {
             case "borrow":
                 sendBorrowingRequest(request, response);
                 break;
+            case "rejectRequest":
+                rejectRequest(request, response);
+                break;
             default:
 
                 break;
@@ -171,8 +174,28 @@ public class BorrowingProcessServlet extends HttpServlet {
 
         request.setAttribute("libraryUser", libraryUser);
         request.setAttribute("libraryElement", libraryElement);
+        request.setAttribute("requestId", requestId);
+        request.setAttribute("borrowingId", borrowingId);
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("requestApproveForm.jsp");
         requestDispatcher.forward(request, response);
+
+    }
+
+    private void rejectRequest(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+
+        int requestId = Integer.parseInt(request.getParameter("requestId"));
+        int borrowingId = Integer.parseInt(request.getParameter("borrowingId"));
+        int libraryElementId = Integer.parseInt(request.getParameter("libraryElementId"));
+
+        requestDao.updateRequestStatus(requestId, 5);
+        borrowingDao.updateBorrowingStatus(borrowingId, 5);
+        libraryElementDao.updateLibraryElementStatus(libraryElementId, 1);
+
+        request.removeAttribute("requestId");
+        request.removeAttribute("borrowingId");
+        request.removeAttribute("libraryElementId");
+
+        showRequestsList(request, response);
 
     }
 

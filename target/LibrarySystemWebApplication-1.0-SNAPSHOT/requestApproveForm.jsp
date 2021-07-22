@@ -75,20 +75,13 @@
                             <td><c:out value="---"/></td>
                             <td><c:out value="${libraryElement.getDurationTime()}"/></td>
                         </c:if>
+                        <td><c:out value="${libraryElement.getStatusName()}"/></td>
                     </tr>
                 </tbody>
         </table>
     </div>
 </div>
 <br>
-<%--<div class="container col-md-5">
-
-</div>--%>
-<%--<div class="card">
-    <div class="card-body" align="centered">
-
-    </div>
-</div>--%>
 <div class="container text-center">
     <form action="acceptRequest" method="post">
         <button type="submit" class="btn btn-success">Akceptuj</button>
@@ -96,6 +89,12 @@
 </div>
 <div class="container text-center">
     <form action="rejectRequest" method="post">
+        <input type="hidden" name="libraryElementId"
+               value="<c:out value='${libraryElement.getLibraryElementId()}' />"/>
+        <input type="hidden" name="requestId"
+               value="<c:out value='${requestId}' />"/>
+        <input type="hidden" name="borrowingId"
+               value="<c:out value='${borrowingId}' />"/>
         <button type="submit" class="btn btn-success"> Odrzuć </button>
     </form>
 </div>

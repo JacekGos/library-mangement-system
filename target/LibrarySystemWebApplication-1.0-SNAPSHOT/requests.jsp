@@ -14,7 +14,7 @@
     response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
 %>
 
-<c:import url="navigationBar.jsp" />
+<c:import url="navigationBar.jsp"/>
 
 <div class="row">
     <div class="container">
@@ -38,8 +38,7 @@
                     <td><c:out value="${object.getBorrowingId()}"/></td>
                     <td><c:out value="${object.getRequestDate()}"/></td>
                     <td><c:out value="${object.getStatusName()}"/></td>
-                    <td><a href="requestApprove?requestId=<c:out value="${object.getRequestId()}" />">Opcje wyboru</a>
-                    </td>
+                    <td><a href="requestApprove?requestId=<c:out value="${object.getRequestId()}" />">Opcje wyboru</a></td>
                 </tr>
             </c:forEach>
             </tbody>
@@ -50,7 +49,8 @@
     <div class="container">
         <form action="searchRequest" method="get">
             <fieldset class="form-group">
-                <input type="text" class="form-control" name="searchedUserId" placeholder="ID Użytkownika" required="required"/>
+                <input type="text" class="form-control" name="searchedUserId" placeholder="ID Użytkownika"
+                       required="required"/>
             </fieldset>
             <div class="container text-center">
                 <button type="submit" class="btn btn-success">Wyszukaj</button>

@@ -89,6 +89,12 @@
 </div>
 <div class="container text-center">
     <form action="rejectRequest" method="post">
+        <input type="hidden" name="libraryElementId"
+               value="<c:out value='${libraryElement.getLibraryElementId()}' />"/>
+        <input type="hidden" name="requestId"
+               value="<c:out value='${requestId}' />"/>
+        <input type="hidden" name="borrowingId"
+               value="<c:out value='${borrowingId}' />"/>
         <button type="submit" class="btn btn-success"> Odrzuć </button>
     </form>
 </div>
