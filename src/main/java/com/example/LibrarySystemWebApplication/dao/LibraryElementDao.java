@@ -50,6 +50,12 @@ public class LibraryElementDao {
     public static final String SELECT_LIBRARY_ELEMENTS_STATUS_BY_ID = "SELECT status_id FROM public.\"Library_element\"" +
             " WHERE library_element_id = ?";
 
+    public static final String SELECT_LIBRARY_ELEMENT_BY_BORROWING_ID = "SELECT library_element_id, title, type_id, sort_id, pages_number, duration_time, le.status_id" +
+            "             FROM public.\"Library_element\" le " +
+            "             INNER JOIN public.\"Borrowings\" b" +
+            "             ON le.library_element_id = b.element_id " +
+            "             WHERE borrowing_id = ?;";
+
     public static final String UPDATE_LIBRARY_ELEMENT = "UPDATE public.\"Library_element\"" +
             " SET title = ?, sort_id = ?, pages_number = ?, duration_time = ?" +
             " WHERE library_element_id = ?";
@@ -207,6 +213,37 @@ public class LibraryElementDao {
         }
 
         return statusId;
+    }
+
+    public static LibraryElement getLibraryElementByBorrowingId(int borrowingId) {
+
+        LibraryElement libraryElement = null;
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(SELECT_LIBRARY_ELEMENT_BY_BORROWING_ID);
+            preparedStatement.setInt(1, borrowingId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+
+                int id = resultSet.getInt("library_element_id");
+                String title = resultSet.getString("title");
+                byte typeId = resultSet.getByte("type_id");
+                int sortId = resultSet.getInt("sort_id");
+                int statusId = resultSet.getInt("status_id");
+                if (typeId == 1) {
+                    int pagesNumber = resultSet.getInt("pages_number");
+                    libraryElement = new Book(id, typeId, title, sortId, statusId, pagesNumber);
+                } else if (typeId == 2) {
+                    int durationTime = resultSet.getInt("duration_time");
+                    libraryElement = new Movie(id, typeId, title, sortId, statusId, durationTime);
+                }
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return libraryElement;
     }
 
     public static boolean updateLibraryElement(LibraryElement libraryElement) {

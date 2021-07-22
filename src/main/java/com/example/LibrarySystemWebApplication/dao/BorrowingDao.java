@@ -30,7 +30,9 @@ public class BorrowingDao {
     public static final String INSERT_BORROWING = "INSERT INTO public.\"Borrowings\""
             + " (element_id, borrowing_date, status_id, library_user_id) VALUES (?, ?, ?, ?)";
 
-    public static final String SELECT_BORROWINGS_BY_ID = "SELECT * FROM public.\"Borrowings\" WHERE library_user_id = ?";
+    public static final String SELECT_BORROWINGS_BY_USER_ID = "SELECT * FROM public.\"Borrowings\" WHERE library_user_id = ?";
+
+    public static final String SELECT_BORROWINGS_BY_ID = "SELECT * FROM public.\"Borrowings\" WHERE borrowing_id = ?";
 
     public static final String SELECT_LAST_BORROWING_ID = "SELECT borrowing_id FROM public.\"Borrowings\"" +
             " WHERE library_user_id = ? AND element_id = ? AND borrowing_date = ?";
@@ -64,7 +66,7 @@ public class BorrowingDao {
         List<Borrowing> borrowingsList = new ArrayList<Borrowing>();
 
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement(SELECT_BORROWINGS_BY_ID);
+            PreparedStatement preparedStatement = connection.prepareStatement(SELECT_BORROWINGS_BY_USER_ID);
             preparedStatement.setInt(1, userId);
 
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -86,6 +88,34 @@ public class BorrowingDao {
         }
 
         return borrowingsList;
+    }
+
+    public static Borrowing getBorrowingById(int searchedBorrowingId) {
+
+        Borrowing borrowing = null;
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(SELECT_BORROWINGS_BY_ID);
+            preparedStatement.setInt(1, searchedBorrowingId);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+
+                int borrowingId = resultSet.getInt(1);
+                int elementId = resultSet.getInt(2);
+                java.sql.Timestamp date = resultSet.getTimestamp(3);
+                int statusId = resultSet.getInt(4);
+                int libraryUserId = resultSet.getInt(5);
+
+                borrowing = new Borrowing(borrowingId, elementId, date, statusId, libraryUserId);
+
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return borrowing;
     }
 
     public static int getLastBorrowingId(Borrowing borrowing) {

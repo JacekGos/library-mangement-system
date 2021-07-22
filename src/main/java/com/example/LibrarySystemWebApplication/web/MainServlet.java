@@ -97,6 +97,12 @@ public class MainServlet extends HttpServlet {
                 requestDispatcher = request.getRequestDispatcher("borrowingProcess");
                 requestDispatcher.forward(request, response);
                 break;
+            case "/requestApprove":
+                action = "requestApprove";
+                request.setAttribute("action", action);
+                requestDispatcher = request.getRequestDispatcher("borrowingProcess");
+                requestDispatcher.forward(request, response);
+                break;
             default:
 
                 break;

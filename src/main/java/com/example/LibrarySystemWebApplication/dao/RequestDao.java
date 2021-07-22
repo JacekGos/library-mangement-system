@@ -22,6 +22,10 @@ public class RequestDao {
     }
 
     public static final String SELECT_ALL_REQUESTS = "SELECT * FROM public.\"Request\"";
+
+    public static final String SELECT_REQUESTS_BY_ID = "SELECT request_id, borrowing_id, request_date, status_id" +
+            " FROM public.\"Request\" WHERE request_id = ?";
+
     public static final String SELECT_REQUESTS_BY_USER_ID = "SELECT request_id, r.borrowing_id, request_date, r.status_id" +
             " FROM public.\"Request\" r" +
             " INNER JOIN public.\"Borrowings\" b" +
@@ -57,6 +61,33 @@ public class RequestDao {
         }
 
         return requestList;
+    }
+
+    public static Request getRequestById(int requestId) {
+
+        Request request = null;
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(SELECT_REQUESTS_BY_ID);
+            preparedStatement.setInt(1, requestId);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+
+                int id = resultSet.getInt("request_id");
+                int borrowingId = resultSet.getInt("borrowing_id");
+                java.sql.Timestamp requestDate = resultSet.getTimestamp("request_date");
+                int statusId = resultSet.getInt("status_id");
+
+                request = new Request(id, borrowingId, requestDate, statusId);
+
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return request;
     }
 
     public static List<Request> getRequestsByUserId(int userId) {

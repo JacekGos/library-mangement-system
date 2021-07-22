@@ -31,7 +31,6 @@
                 <th>Liczba stron</th>
                 <th>Czas trwania</th>
                 <th>Status</th>
-                <th>Opcje</th>
             </tr>
             </thead>
             <tbody>

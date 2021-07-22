@@ -47,6 +47,14 @@ public class LibraryUserDao {
     public static final String SELECT_USER_BY_LOGIN_AND_PASSWORD = "SELECT * FROM public.\"Library_user\"" +
             " WHERE login = ? AND password = ?";
 
+    public static final String SELECT_USER_BY_BORROWING_ID= "SELECT lu.library_user_id, name, surname, login, penalty" +
+            " FROM public.\"Library_user\" lu" +
+            " INNER JOIN public.\"Borrowings\" b" +
+            " ON lu.library_user_id = b.library_user_id" +
+            " WHERE borrowing_id = ?";
+
+
+
     public static final String DELETE_LIBRARY_USER = "DELETE FROM public.\"Library_user\"" +
             " WHERE library_user_id = ?";
 
@@ -177,27 +185,60 @@ public class LibraryUserDao {
         return amount;
     }
 
-    public static LibraryUser getLibraryUserByLoginAndPasword(String login, String password) {
+    public static LibraryUser getLibraryUserByLoginAndPasword(String userLogin, String userPassword) {
 
-        LibraryUser libraryUser = new LibraryUser();
+        LibraryUser libraryUser = null;
 
         try {
 
             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_USER_BY_LOGIN_AND_PASSWORD);
-            preparedStatement.setString(1, login);
-            preparedStatement.setString(2, password);
+            preparedStatement.setString(1, userLogin);
+            preparedStatement.setString(2, userPassword);
 
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
                 //TODO change index number to full column name
-                libraryUser.setUserId(resultSet.getInt(1));
-                libraryUser.setUserName(resultSet.getString(2));
-                libraryUser.setUserSurName(resultSet.getString(3));
-                libraryUser.setLogin(resultSet.getString(4));
-                libraryUser.setPassword(resultSet.getString(5));
-                libraryUser.setPenalty(resultSet.getDouble(6));
-                libraryUser.setAccountType(resultSet.getInt(7));
+                int id = resultSet.getInt("library_user_id");
+                String name = resultSet.getString("name");
+                String surName = resultSet.getString("surName");
+                String login = resultSet.getString("login");
+                String password = resultSet.getString("password");
+                double penalty = resultSet.getDouble("penalty");
+                int accuountType = resultSet.getInt("account_type");
+
+                libraryUser = new LibraryUser(id, name, surName, login, password, accuountType, penalty);
+
+            }
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return libraryUser;
+    }
+
+    public static LibraryUser getLibraryUserByBorrowingId(int borrowingId) {
+
+        LibraryUser libraryUser = null;
+
+        try {
+
+            PreparedStatement preparedStatement = connection.prepareStatement(SELECT_USER_BY_BORROWING_ID);
+            preparedStatement.setInt(1, borrowingId);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                //TODO change index number to full column name
+                int id = resultSet.getInt("library_user_id");
+                String name = resultSet.getString("name");
+                String surName = resultSet.getString("surName");
+                String login = resultSet.getString("login");
+                double penalty = resultSet.getDouble("penalty");
+
+                libraryUser = new LibraryUser(id, name, surName, login, penalty);
+
             }
 
         } catch (SQLException throwables) {

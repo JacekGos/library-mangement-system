@@ -1,6 +1,7 @@
 package com.example.LibrarySystemWebApplication.web;
 
 import com.example.LibrarySystemWebApplication.dao.LibraryElementDao;
+import com.example.LibrarySystemWebApplication.dao.LibraryUserDao;
 import com.example.LibrarySystemWebApplication.dao.RequestDao;
 import com.example.LibrarySystemWebApplication.model.Borrowing;
 import com.example.LibrarySystemWebApplication.model.LibraryElement;
@@ -23,6 +24,7 @@ import java.util.List;
 public class BorrowingProcessServlet extends HttpServlet {
 
     private LibraryElementDao libraryElementDao = new LibraryElementDao();
+    private LibraryUserDao libraryUserDao = new LibraryUserDao();
     private RequestDao requestDao = new RequestDao();
     private BorrowingDao borrowingDao = new BorrowingDao();
 
@@ -41,6 +43,9 @@ public class BorrowingProcessServlet extends HttpServlet {
                 break;
             case "searchRequest":
                 searchRequestByUserId(request, response);
+                break;
+            case "requestApprove":
+                showRequestApproveForm(request, response);
                 break;
             default:
 
@@ -148,6 +153,25 @@ public class BorrowingProcessServlet extends HttpServlet {
 
         request.setAttribute("requestsList", requestsList);
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("requests.jsp");
+        requestDispatcher.forward(request, response);
+
+    }
+
+    private void showRequestApproveForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        int requestId = Integer.parseInt(request.getParameter("requestId"));
+        Request editedRequest = requestDao.getRequestById(requestId);
+
+        int borrowingId = editedRequest.getBorrowingId();
+        Borrowing borrowing = borrowingDao.getBorrowingById(borrowingId);
+
+        LibraryUser libraryUser = libraryUserDao.getLibraryUserByBorrowingId(borrowingId);
+        LibraryElement libraryElement = libraryElementDao.getLibraryElementByBorrowingId(borrowingId);
+
+
+        request.setAttribute("libraryUser", libraryUser);
+        request.setAttribute("libraryElement", libraryElement);
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("requestApproveForm.jsp");
         requestDispatcher.forward(request, response);
 
     }
