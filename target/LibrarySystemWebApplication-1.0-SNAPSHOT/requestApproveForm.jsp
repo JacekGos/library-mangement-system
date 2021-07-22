@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
-    <title>User Management Application</title>
+    <title>Request</title>
     <link rel="stylesheet"
           href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
@@ -23,7 +23,7 @@
         <br>
         <table class="table table-bordered">
             <thead>
-            <tr bgcolor="#68C967">
+            <tr bgcolor="#8edbf9">
                 <th>ID</th>
                 <th>Imie</th>
                 <th>Nazwisko</th>
@@ -51,7 +51,7 @@
         <br>
         <table class="table table-bordered">
             <thead>
-            <tr bgcolor="#68C967">
+            <tr bgcolor="#8edbf9">
                 <th>ID</th>
                 <th>Tytuł</th>
                 <th>Typ</th>
@@ -84,7 +84,13 @@
 <br>
 <div class="container text-center">
     <form action="acceptRequest" method="post">
-        <button type="submit" class="btn btn-success">Akceptuj</button>
+        <input type="hidden" name="libraryElementId"
+               value="<c:out value='${libraryElement.getLibraryElementId()}' />"/>
+        <input type="hidden" name="requestId"
+               value="<c:out value='${requestId}' />"/>
+        <input type="hidden" name="borrowingId"
+               value="<c:out value='${borrowingId}' />"/>
+        <button type="submit" class="btn btn-success" style="background-color: #8edbf9; color: black">Akceptuj</button>
     </form>
 </div>
 <div class="container text-center">
@@ -95,7 +101,7 @@
                value="<c:out value='${requestId}' />"/>
         <input type="hidden" name="borrowingId"
                value="<c:out value='${borrowingId}' />"/>
-        <button type="submit" class="btn btn-success"> Odrzuć </button>
+        <button type="submit" class="btn btn-success" style="background-color: #8edbf9; color: black"> Odrzuć </button>
     </form>
 </div>
 </body>

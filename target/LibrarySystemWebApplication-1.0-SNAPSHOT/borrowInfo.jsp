@@ -25,7 +25,7 @@
                 <h2> Dane pozycji: </h2>
                 <table class="table table-bordered">
                     <thead>
-                    <tr bgcolor="#68C967">
+                    <tr bgcolor="#8edbf9">
                         <th>ID</th>
                         <th>Tytuł</th>
                         <th>Typ</th>

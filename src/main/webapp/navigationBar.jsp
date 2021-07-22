@@ -21,7 +21,7 @@
 </style>
 <header>
     <nav class="navbar navbar-expand-md navbar-dark"
-         style="background-color: #47a0ff">
+         style="background-color: #3364ff">
         <div>
             <a href="<%=request.getContextPath()%>/index.jsp" class="navbar-brand"> Strona główna </a>
         </div>

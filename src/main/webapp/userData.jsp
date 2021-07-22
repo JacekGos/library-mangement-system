@@ -23,7 +23,7 @@
         <br>
         <table class="table table-bordered">
             <thead>
-            <tr bgcolor="#68C967">
+            <tr bgcolor="#8edbf9">
                 <th>ID</th>
                 <th>Id Elementu</th>
                 <th>Data</th>

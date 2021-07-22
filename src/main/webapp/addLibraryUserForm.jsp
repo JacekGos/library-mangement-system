@@ -46,7 +46,7 @@
                                                        name="userPassword" required="required">
                 </fieldset>
 
-                <button type="submit" class="btn btn-success">Zarejestruj</button>
+                <button type="submit" class="btn btn-success" style="background-color: #8edbf9; color: black">Zarejestruj</button>
             </form>
         </div>
     </div>

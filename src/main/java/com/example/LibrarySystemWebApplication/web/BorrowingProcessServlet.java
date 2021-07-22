@@ -67,6 +67,9 @@ public class BorrowingProcessServlet extends HttpServlet {
             case "rejectRequest":
                 rejectRequest(request, response);
                 break;
+            case "acceptRequest":
+                acceptRequest(request, response);
+                break;
             default:
 
                 break;
@@ -190,6 +193,24 @@ public class BorrowingProcessServlet extends HttpServlet {
         requestDao.updateRequestStatus(requestId, 5);
         borrowingDao.updateBorrowingStatus(borrowingId, 5);
         libraryElementDao.updateLibraryElementStatus(libraryElementId, 1);
+
+        request.removeAttribute("requestId");
+        request.removeAttribute("borrowingId");
+        request.removeAttribute("libraryElementId");
+
+        showRequestsList(request, response);
+
+    }
+
+    private void acceptRequest(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+
+        int requestId = Integer.parseInt(request.getParameter("requestId"));
+        int borrowingId = Integer.parseInt(request.getParameter("borrowingId"));
+        int libraryElementId = Integer.parseInt(request.getParameter("libraryElementId"));
+
+        requestDao.updateRequestStatus(requestId, 4);
+        borrowingDao.updateBorrowingStatus(borrowingId, 4);
+        libraryElementDao.updateLibraryElementStatus(libraryElementId, 3);
 
         request.removeAttribute("requestId");
         request.removeAttribute("borrowingId");

@@ -23,7 +23,7 @@
         <br>
         <table class="table table-bordered">
             <thead>
-            <tr bgcolor="#68C967">
+            <tr bgcolor="#8edbf9">
                 <th>ID</th>
                 <th>ID Wypożyczenia</th>
                 <th>Data zapytania</th>
@@ -33,13 +33,16 @@
             </thead>
             <tbody>
             <c:forEach var="object" items="${requestsList}">
-                <tr>
-                    <td><c:out value="${object.getRequestId()}"/></td>
-                    <td><c:out value="${object.getBorrowingId()}"/></td>
-                    <td><c:out value="${object.getRequestDate()}"/></td>
-                    <td><c:out value="${object.getStatusName()}"/></td>
-                    <td><a href="requestApprove?requestId=<c:out value="${object.getRequestId()}" />">Opcje wyboru</a></td>
-                </tr>
+                <c:if test="${object.getStatusId() == 2}" >
+                    <tr>
+                        <td><c:out value="${object.getRequestId()}"/></td>
+                        <td><c:out value="${object.getBorrowingId()}"/></td>
+                        <td><c:out value="${object.getRequestDate()}"/></td>
+                        <td><c:out value="${object.getStatusName()}"/></td>
+                        <td><a href="requestApprove?requestId=<c:out value="${object.getRequestId()}" />">Opcje wyboru</a></td>
+                    </tr>
+                </c:if>
+
             </c:forEach>
             </tbody>
         </table>
@@ -53,7 +56,7 @@
                        required="required"/>
             </fieldset>
             <div class="container text-center">
-                <button type="submit" class="btn btn-success">Wyszukaj</button>
+                <button type="submit" class="btn btn-success" style="background-color: #8edbf9; color: black">Wyszukaj</button>
             </div>
         </form>
     </div>

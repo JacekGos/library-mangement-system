@@ -23,7 +23,7 @@
     <br>
     <table class="table table-bordered">
       <thead>
-      <tr bgcolor="#68C967">
+      <tr bgcolor="#8edbf9">
         <th>ID</th>
         <th>Imie</th>
         <th>Nazwisko</th>
@@ -42,6 +42,7 @@
           <td><c:out value="${object.getPenalty()}"/></td>
 
           <td><a href="userInfo?libraryUserId=<c:out value="${object.getUserId()}" />">Szczegóły</a>
+            &nbsp;&nbsp;&nbsp;&nbsp;
             <a href="deleteUser?libraryUserId=<c:out value="${object.getUserId()}" />">Usuń</a>
           </td>
 
@@ -58,7 +59,7 @@
         <input type="text" class="form-control" name="searchedUserId" placeholder="ID Użytkownika" required="required"/>
       </fieldset>
       <div class="container text-center">
-        <button type="submit" class="btn btn-success">Wyszukaj</button>
+        <button type="submit" class="btn btn-success" style="background-color: #8edbf9; color: black">Wyszukaj</button>
       </div>
     </form>
   </div>

@@ -30,10 +30,10 @@
                         <label>Hasło</label>
                         <input type="password" class="form-control" name="password" required="required">
                     </fieldset>
-                    <button type="submit" class="btn btn-success">Zaloguj</button>
+                    <button type="submit" class="btn btn-success" style="background-color: #8edbf9; color: black">Zaloguj</button>
                 </form>
                 <form action="newUser" method="get">
-                    <button type="submit" class="btn btn-success">Załóż konto</button>
+                    <button type="submit" class="btn btn-success" style="background-color: #8edbf9; color: black">Załóż konto</button>
                 </form>
             </div>
         </div>

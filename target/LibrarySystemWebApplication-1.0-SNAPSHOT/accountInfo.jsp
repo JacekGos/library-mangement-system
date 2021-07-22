@@ -37,7 +37,7 @@
                 </tbody>
             </table>
             <form action="login.jsp" method="get">
-                <button type="submit" class="btn btn-success">Zaloguj się</button>
+                <button type="submit" class="btn btn-success" style="background-color: #8edbf9; color: black">Zaloguj się</button>
             </form>
         </div>
     </div>

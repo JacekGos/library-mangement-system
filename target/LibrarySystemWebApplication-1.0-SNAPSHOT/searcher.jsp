@@ -23,7 +23,7 @@
         <br>
         <table class="table table-bordered">
             <thead>
-            <tr bgcolor="#68C967">
+            <tr bgcolor="#8edbf9">
                 <th>ID</th>
                 <th>Tytuł</th>
                 <th>Typ</th>
@@ -31,6 +31,7 @@
                 <th>Liczba stron</th>
                 <th>Czas trwania</th>
                 <th>Status</th>
+                <th>Opcje</th>
             </tr>
             </thead>
             <tbody>
@@ -57,7 +58,6 @@
                             &nbsp;&nbsp;&nbsp;&nbsp;
                             <a href="delete?libraryElementId=<c:out value='${object.getLibraryElementId()}' />">Usuń</a></td>
                     </c:if>
-
                 </tr>
             </c:forEach>
             </tbody>
@@ -71,7 +71,7 @@
                 <input type="text" class="form-control" name="searchedTitle" placeholder="Tytuł" required="required">
             </fieldset>
             <div class="container text-center">
-                <button type="submit" class="btn btn-success">Wyszukaj</button>
+                <button type="submit" class="btn btn-success" style="background-color: #8edbf9; color: black">Wyszukaj</button>
             </div>
         </form>
     </div>

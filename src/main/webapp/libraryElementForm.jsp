@@ -97,7 +97,7 @@
                                                                class="form-control" name="durationTime">
                         </fieldset>
                     </c:if>
-                    <button type="submit" class="btn btn-success">Zapisz</button>
+                    <button type="submit" class="btn btn-success" style="background-color: #8edbf9; color: black">Zapisz</button>
                 </form>
         </div>
     </div>
