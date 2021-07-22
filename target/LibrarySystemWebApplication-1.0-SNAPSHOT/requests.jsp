@@ -38,7 +38,7 @@
                     <td><c:out value="${object.getBorrowingId()}"/></td>
                     <td><c:out value="${object.getRequestDate()}"/></td>
                     <td><c:out value="${object.getStatusName()}"/></td>
-                    <td><a href="requestApprove?requestId=<c:out value="${object.getRequestId()}" />">Potwierdź</a>
+                    <td><a href="requestApprove?requestId=<c:out value="${object.getRequestId()}" />">Opcje wyboru</a>
                     </td>
                 </tr>
             </c:forEach>

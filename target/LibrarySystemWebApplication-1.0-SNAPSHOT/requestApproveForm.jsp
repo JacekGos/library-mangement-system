@@ -68,18 +68,36 @@
                         <td><c:out value="${libraryElement.getTypeName()}"/></td>
                         <td><c:out value="${libraryElement.getSortName()}"/></td>
                         <c:if test="${libraryElement.getTypeId() == 1}">
-                            <td><c:out value="${object.getPagesNumber()}"/></td>
+                            <td><c:out value="${libraryElement.getPagesNumber()}"/></td>
                             <td><c:out value="---"/></td>
                         </c:if>
                         <c:if test="${libraryElement.getTypeId() == 2}">
                             <td><c:out value="---"/></td>
-                            <td><c:out value="${object.getDurationTime()}"/></td>
+                            <td><c:out value="${libraryElement.getDurationTime()}"/></td>
                         </c:if>
                     </tr>
                 </tbody>
         </table>
     </div>
 </div>
+<br>
+<%--<div class="container col-md-5">
 
+</div>--%>
+<%--<div class="card">
+    <div class="card-body" align="centered">
+
+    </div>
+</div>--%>
+<div class="container text-center">
+    <form action="acceptRequest" method="post">
+        <button type="submit" class="btn btn-success">Akceptuj</button>
+    </form>
+</div>
+<div class="container text-center">
+    <form action="rejectRequest" method="post">
+        <button type="submit" class="btn btn-success"> Odrzuć </button>
+    </form>
+</div>
 </body>
 </html>
