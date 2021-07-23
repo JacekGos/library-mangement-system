@@ -18,7 +18,12 @@
 
 <div class="row">
     <div class="container">
-        <h3 class="text-center">Wypożyczenia użytkownika</h3>
+        <c:if test="${sessionScope.userType == 2}">
+            <h3 class="text-center">Twoje wypożyczenia</h3>
+        </c:if>
+        <c:if test="${sessionScope.userType == 1}">
+            <h3 class="text-center">Wypożyczenia użytkownika</h3>
+        </c:if>
         <hr>
         <br>
         <table class="table table-bordered">
@@ -28,6 +33,9 @@
                 <th>Id Elementu</th>
                 <th>Data</th>
                 <th>Status</th>
+                <c:if test="${sessionScope.userType == 1}">
+                    <th>Opcje</th>
+                </c:if>
             </tr>
             </thead>
             <tbody>
@@ -37,7 +45,11 @@
                     <td><c:out value="${object.getLibraryElementId()}"/></td>
                     <td><c:out value="${object.getBorrowingDate()}"/></td>
                     <td><c:out value="${object.getStatusName()}"/></td>
-
+                    <c:if test="${sessionScope.userType == 1}">
+                        <c:if test="${object.getBorrowingStatusId() == 4}">
+                            <td><a href="endBorrowing?borrowingId=<c:out value='${object.getBorrowingId()}' />">Zakończ wypożyczenie</a>
+                        </c:if>
+                    </c:if>
                 </tr>
             </c:forEach>
             </tbody>

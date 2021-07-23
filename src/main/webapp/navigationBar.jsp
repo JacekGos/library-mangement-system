@@ -36,6 +36,10 @@
                 <li><b><a href="<%=request.getContextPath()%>/requestList"
                           class="nav-link">Zapytania</a></b></li>
             </c:if>
+            <c:if test="${sessionScope.userType == 2}">
+                <li><b><a href="<%=request.getContextPath()%>/borrowingList"
+                          class="nav-link">Wypożyczenia</a></b></li>
+            </c:if>
         </ul>
 
         <div class="loggedUser">

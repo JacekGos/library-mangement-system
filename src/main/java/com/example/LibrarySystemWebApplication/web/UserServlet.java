@@ -1,6 +1,7 @@
 package com.example.LibrarySystemWebApplication.web;
 
 import com.example.LibrarySystemWebApplication.dao.BorrowingDao;
+import com.example.LibrarySystemWebApplication.dao.LibraryElementDao;
 import com.example.LibrarySystemWebApplication.dao.LibraryUserDao;
 import com.example.LibrarySystemWebApplication.model.*;
 
@@ -17,6 +18,7 @@ import java.util.List;
 @WebServlet(name = "libraryUserServlet", value = "/libraryUser")
 public class UserServlet extends HttpServlet {
 
+    private LibraryElementDao libraryElementDao = new LibraryElementDao();
     private LibraryUserDao libraryUserDao = new LibraryUserDao();
     private BorrowingDao borrowingDao = new BorrowingDao();
 
@@ -45,6 +47,9 @@ public class UserServlet extends HttpServlet {
             case "userInfo":
                 userInfoList(request, response);
                 break;
+            case "endBorrowing":
+                doPost(request, response);
+                break;
             default:
 
                 break;
@@ -63,6 +68,9 @@ public class UserServlet extends HttpServlet {
                 break;
             case "insertUser":
                 insertLibraryUser(request, response);
+                break;
+            case "endBorrowing":
+                endBorrowing(request, response);
                 break;
             default:
                 break;
@@ -104,6 +112,7 @@ public class UserServlet extends HttpServlet {
 
         int libraryUserId = Integer.parseInt(request.getParameter("libraryUserId"));
 
+        borrowingDao.deleteALLBorrowings(libraryUserId);
         libraryUserDao.deleteLibraryUser(libraryUserId);
         libraryUserList(request, response);
     }
@@ -159,6 +168,24 @@ public class UserServlet extends HttpServlet {
         }
 
         return login;
+
+    }
+
+    private void endBorrowing(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+
+        int borrowingId = Integer.parseInt(request.getParameter("borrowingId"));
+        Borrowing borrowing = borrowingDao.getBorrowingById(borrowingId);
+        int libraryElementId = borrowing.getLibraryElementId();
+        int libraryUserId = borrowing.getLibraryUserId();
+
+        borrowingDao.updateBorrowingStatus(borrowingId, 6);
+        libraryElementDao.updateLibraryElementStatus(libraryElementId, 1);
+
+        request.setAttribute("libraryUserId", libraryUserId);
+        request.removeAttribute("borrowingId");
+        request.removeAttribute("libraryElementId");
+
+        userInfoList(request, response);
 
     }
 

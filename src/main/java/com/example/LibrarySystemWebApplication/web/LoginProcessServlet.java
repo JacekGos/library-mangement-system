@@ -33,6 +33,7 @@ public class LoginProcessServlet extends HttpServlet {
             LibraryWorker worker = LibraryWorkerDao.getLibraryWorkerByLoginAndPasword(login, password);
 
             userSession = request.getSession();
+            userSession.setAttribute("userId", worker.getUserId());
             userSession.setAttribute("userName", worker.getUserName());
             userSession.setAttribute("userType", worker.getAccountType());
             userSession.setAttribute("userLogin", worker.getLogin());

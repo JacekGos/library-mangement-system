@@ -47,6 +47,9 @@ public class BorrowingProcessServlet extends HttpServlet {
             case "requestApprove":
                 showRequestApproveForm(request, response);
                 break;
+            case "showBorrowings":
+                showBorrowingsList(request, response);
+                break;
             default:
 
                 break;
@@ -217,6 +220,18 @@ public class BorrowingProcessServlet extends HttpServlet {
         request.removeAttribute("libraryElementId");
 
         showRequestsList(request, response);
+
+    }
+
+    private void showBorrowingsList(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        HttpSession session = request.getSession();
+
+        int libraryUserId = (int) session.getAttribute("userId");
+        List<Borrowing> libraryUserBorrowingsList = borrowingDao.getAllBorrowingsByUserId(libraryUserId);
+        request.setAttribute("libraryUserBorrowingsList", libraryUserBorrowingsList);
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("userData.jsp");
+        requestDispatcher.forward(request, response);
 
     }
 

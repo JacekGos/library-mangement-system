@@ -7,7 +7,11 @@
 <body>
     Testowa strona:
     <br>
-    <c:out value="${libraryUserBorrowingsList.get(0)}"/>
+    <c:out value="${borrowing.getBorrowingId()}"/><br>
+    <c:out value="${borrowing.getLibraryElementId()}"/><br>
+    <c:out value="${borrowing.getBorrowingDate()}"/><br>
+    <c:out value="${borrowing.getStatusName()}"/><br>
+
 
 </body>
 </html>

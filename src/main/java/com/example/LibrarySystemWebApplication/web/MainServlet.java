@@ -103,6 +103,15 @@ public class MainServlet extends HttpServlet {
                 requestDispatcher = request.getRequestDispatcher("borrowingProcess");
                 requestDispatcher.forward(request, response);
                 break;
+            case "/borrowingList":
+                action = "showBorrowings";
+                request.setAttribute("action", action);
+                requestDispatcher = request.getRequestDispatcher("borrowingProcess");
+                requestDispatcher.forward(request, response);
+                break;
+            case "/endBorrowing":
+                doPost(request, response);
+                break;
             default:
 
                 break;
@@ -168,6 +177,12 @@ public class MainServlet extends HttpServlet {
                 action = "acceptRequest";
                 request.setAttribute("action", action);
                 requestDispatcher = request.getRequestDispatcher("borrowingProcess");
+                requestDispatcher.forward(request, response);
+                break;
+            case "/endBorrowing":
+                action = "endBorrowing";
+                request.setAttribute("action", action);
+                requestDispatcher = request.getRequestDispatcher("libraryUser");
                 requestDispatcher.forward(request, response);
                 break;
             default:
