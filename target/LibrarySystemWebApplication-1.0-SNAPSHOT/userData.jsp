@@ -63,7 +63,7 @@
                 <input type="text" class="form-control" name="searchedUserId">
             </fieldset>
             <div class="container text-center">
-                <button type="submit" class="btn btn-success">Wyszukaj</button>
+                <button type="submit" class="btn btn-success" style="background-color: #8edbf9; color: black">Wyszukaj</button>
             </div>
         </form>
     </div>

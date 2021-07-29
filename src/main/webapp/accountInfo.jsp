@@ -22,7 +22,7 @@
             <h2> Dane pozycji: </h2>
             <table class="table table-bordered">
                 <thead>
-                <tr bgcolor="#68C967">
+                <tr bgcolor="#8edbf9">
                     <th>Imię</th>
                     <th>Nazwisko</th>
                     <th>Login</th>

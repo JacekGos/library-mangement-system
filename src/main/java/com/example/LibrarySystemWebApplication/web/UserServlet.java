@@ -5,6 +5,7 @@ import com.example.LibrarySystemWebApplication.dao.LibraryElementDao;
 import com.example.LibrarySystemWebApplication.dao.LibraryUserDao;
 import com.example.LibrarySystemWebApplication.model.*;
 
+import javax.jms.Session;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -122,6 +123,7 @@ public class UserServlet extends HttpServlet {
         int libraryUserId = Integer.parseInt(request.getParameter("libraryUserId"));
         List<Borrowing> libraryUserBorrowingsList = borrowingDao.getAllBorrowingsByUserId(libraryUserId);
         request.setAttribute("libraryUserBorrowingsList", libraryUserBorrowingsList);
+
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("userData.jsp");
         requestDispatcher.forward(request, response);
 
@@ -185,8 +187,20 @@ public class UserServlet extends HttpServlet {
         request.removeAttribute("borrowingId");
         request.removeAttribute("libraryElementId");
 
-        userInfoList(request, response);
+        userInfoListAfterEndBorrowing(request, response);
+    }
+
+    private void userInfoListAfterEndBorrowing(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        int libraryUserId = (int) request.getAttribute("libraryUserId");
+        List<Borrowing> libraryUserBorrowingsList = borrowingDao.getAllBorrowingsByUserId(libraryUserId);
+        request.setAttribute("libraryUserBorrowingsList", libraryUserBorrowingsList);
+
+        request.setAttribute("libraryUserId", libraryUserId);
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("userData.jsp");
+        requestDispatcher.forward(request, response);
 
     }
+
 
 }
