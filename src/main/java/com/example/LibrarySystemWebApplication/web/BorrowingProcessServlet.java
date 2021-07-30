@@ -207,12 +207,16 @@ public class BorrowingProcessServlet extends HttpServlet {
 
     private void acceptRequest(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
+        long currentTime = System.currentTimeMillis();
+        java.sql.Timestamp acceptBorrowingDate = new java.sql.Timestamp(currentTime);
+
         int requestId = Integer.parseInt(request.getParameter("requestId"));
         int borrowingId = Integer.parseInt(request.getParameter("borrowingId"));
         int libraryElementId = Integer.parseInt(request.getParameter("libraryElementId"));
 
         requestDao.updateRequestStatus(requestId, 4);
         borrowingDao.updateBorrowingStatus(borrowingId, 4);
+        borrowingDao.updateBorrowingDate(borrowingId, acceptBorrowingDate);
         libraryElementDao.updateLibraryElementStatus(libraryElementId, 3);
 
         request.removeAttribute("requestId");

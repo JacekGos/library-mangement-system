@@ -2,10 +2,7 @@ package com.example.LibrarySystemWebApplication.dao;
 
 import com.example.LibrarySystemWebApplication.model.Borrowing;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,6 +37,9 @@ public class BorrowingDao {
 
     public static final String UPDATE_BORROWING_STATUS = "UPDATE public.\"Borrowings\"" +
             " SET status_id = ? WHERE borrowing_id = ?";
+
+    public static final String UPDATE_BORROWING_DATE = "UPDATE public.\"Borrowings\"" +
+            " SET borrowing_date = ? WHERE borrowing_id = ?";
 
     public static final String DELETE_BORROWING = "DELETE FROM public.\"Borrowings\"" +
             " WHERE borrowing_id = ?";
@@ -180,6 +180,25 @@ public class BorrowingDao {
 
             PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_BORROWING_STATUS);
             preparedStatement.setInt(1, statusId);
+            preparedStatement.setInt(2, borrowingId);
+
+            rowUpdated = preparedStatement.executeUpdate() > 0;
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return rowUpdated;
+    }
+
+    public static boolean updateBorrowingDate(int borrowingId, Timestamp acceptDate) {
+
+        boolean rowUpdated = false;
+
+        try {
+
+            PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_BORROWING_DATE);
+            preparedStatement.setTimestamp(1, acceptDate);
             preparedStatement.setInt(2, borrowingId);
 
             rowUpdated = preparedStatement.executeUpdate() > 0;

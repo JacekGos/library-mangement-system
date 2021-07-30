@@ -14,8 +14,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+
+import static java.lang.Math.abs;
 
 @WebServlet(name = "libraryUserServlet", value = "/libraryUser")
 public class UserServlet extends HttpServlet {
@@ -190,7 +193,9 @@ public class UserServlet extends HttpServlet {
         request.removeAttribute("borrowingId");
         request.removeAttribute("libraryElementId");
 
-        userInfoListAfterEndBorrowing(request, response);
+        checkReturningTime(request, response, borrowing);
+
+//        userInfoListAfterEndBorrowing(request, response);
 
     }
     //@TODO Think about use only one method userInfoList for each action
@@ -202,6 +207,36 @@ public class UserServlet extends HttpServlet {
 
         request.setAttribute("libraryUserId", libraryUserId);
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("userData.jsp");
+        requestDispatcher.forward(request, response);
+
+    }
+
+    private void checkReturningTime(HttpServletRequest request, HttpServletResponse response, Borrowing borrowing)
+            throws ServletException, IOException {
+
+        boolean returningResult = true;
+
+        long currentTime = System.currentTimeMillis();
+        Timestamp returningTime = new java.sql.Timestamp(currentTime);
+        Timestamp borrowingTime = borrowing.getBorrowingDate();
+        long differenceTime = currentTime - borrowingTime.getTime();
+        long timeToReturn = 30000;
+        int seconds = (int)(currentTime) / 1000;
+        int minutes = (seconds % 3600) / 60;
+
+        if (timeToReturn > differenceTime)
+        {
+            returningResult = true;
+        } else {
+            returningResult = false;
+        }
+
+        request.setAttribute("returningResult", returningResult);
+        request.setAttribute("borrowingTime", borrowingTime);
+        request.setAttribute("differenceTime", differenceTime);
+        request.setAttribute("minutes", abs(minutes));
+        request.setAttribute("seconds", abs(seconds));
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("returnInfo.jsp");
         requestDispatcher.forward(request, response);
 
     }
