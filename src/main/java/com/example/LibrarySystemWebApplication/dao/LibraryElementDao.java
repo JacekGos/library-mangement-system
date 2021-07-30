@@ -66,8 +66,6 @@ public class LibraryElementDao {
     public static final String DELETE_LIBRARY_ELEMENT = "DELETE FROM public.\"Library_element\"" +
             " WHERE library_element_id = ?";
 
-
-    //TODO - change this to insert LibraryElement type
     public static boolean insertLibraryElement(LibraryElement libraryElement) {
 
         boolean status = false;

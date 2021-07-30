@@ -11,7 +11,7 @@
 </head>
 <body>
     Testowa strona:
-    <c:out value="${libraryUserId}"/>
+    <c:out value="${salary}"/>
    <%-- <c:set var="enablebtnRelatedDocs" value="${libraryUserId}" scope="request"/>
 
     <c:out value="${requestScope.enablebtnRelatedDocs }"/>--%>

@@ -29,7 +29,7 @@ public class BorrowingDao {
             + " (element_id, borrowing_date, status_id, library_user_id) VALUES (?, ?, ?, ?)";
 
     public static final String SELECT_BORROWINGS_BY_USER_ID = "SELECT * FROM public.\"Borrowings\" " +
-            "WHERE library_user_id = ? ORDER BY status_id ASC LIMIT 5";
+            "WHERE library_user_id = ? ORDER BY status_id ASC LIMIT 10";
 
     public static final String SELECT_BORROWING_BY_ID = "SELECT * FROM public.\"Borrowings\" WHERE borrowing_id = ?";
 

@@ -53,8 +53,6 @@ public class LibraryUserDao {
             " ON lu.library_user_id = b.library_user_id" +
             " WHERE borrowing_id = ?";
 
-
-
     public static final String DELETE_LIBRARY_USER = "DELETE FROM public.\"Library_user\"" +
             " WHERE library_user_id = ?";
 
@@ -249,7 +247,6 @@ public class LibraryUserDao {
 
     }
 
-    //TODO - Add delete User's borrowings first
     public static boolean deleteLibraryUser(int libraryUserId) {
 
         boolean rowDeleted = false;

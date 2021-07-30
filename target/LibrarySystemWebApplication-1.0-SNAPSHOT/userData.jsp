@@ -39,6 +39,7 @@
             </tr>
             </thead>
             <tbody>
+            <c:set var = "salary" scope = "session" value = "${2000}"/>
             <c:forEach var="object" items="${libraryUserBorrowingsList}">
                 <tr>
                     <td><c:out value="${object.getBorrowingId()}"/></td>

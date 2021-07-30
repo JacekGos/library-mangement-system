@@ -191,7 +191,6 @@ public class MainServlet extends HttpServlet {
 
     }
 
-    //TODO add register form for new users
     //TODO Search LibraryElements by fragments of title
 
   /*  PrintWriter out = response.getWriter();

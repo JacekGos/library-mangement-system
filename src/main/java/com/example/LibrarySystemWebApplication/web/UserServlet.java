@@ -3,6 +3,7 @@ package com.example.LibrarySystemWebApplication.web;
 import com.example.LibrarySystemWebApplication.dao.BorrowingDao;
 import com.example.LibrarySystemWebApplication.dao.LibraryElementDao;
 import com.example.LibrarySystemWebApplication.dao.LibraryUserDao;
+import com.example.LibrarySystemWebApplication.dao.RequestDao;
 import com.example.LibrarySystemWebApplication.model.*;
 
 import javax.jms.Session;
@@ -22,6 +23,7 @@ public class UserServlet extends HttpServlet {
     private LibraryElementDao libraryElementDao = new LibraryElementDao();
     private LibraryUserDao libraryUserDao = new LibraryUserDao();
     private BorrowingDao borrowingDao = new BorrowingDao();
+    private RequestDao requestDao = new RequestDao();
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -113,6 +115,7 @@ public class UserServlet extends HttpServlet {
 
         int libraryUserId = Integer.parseInt(request.getParameter("libraryUserId"));
 
+        requestDao.deleteALLRequests(libraryUserId);
         borrowingDao.deleteALLBorrowings(libraryUserId);
         libraryUserDao.deleteLibraryUser(libraryUserId);
         libraryUserList(request, response);
@@ -188,8 +191,9 @@ public class UserServlet extends HttpServlet {
         request.removeAttribute("libraryElementId");
 
         userInfoListAfterEndBorrowing(request, response);
-    }
 
+    }
+    //@TODO Think about use only one method userInfoList for each action
     private void userInfoListAfterEndBorrowing(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         int libraryUserId = (int) request.getAttribute("libraryUserId");

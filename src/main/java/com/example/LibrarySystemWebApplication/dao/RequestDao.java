@@ -38,6 +38,11 @@ public class RequestDao {
     public static final String UPDATE_REQUEST_STATUS = "UPDATE public.\"Request\"" +
             " SET status_id = ? WHERE request_id = ?";
 
+    public static final String DELETE_REQUEST_BY_USER_ID = "DELETE FROM public.\"Request\" r" +
+            " USING public.\"Borrowings\" b" +
+            " WHERE r.borrowing_id = b.borrowing_id" +
+            " AND b.library_user_id = ?";
+
     public static int insertRequest(Request request) {
 
         int status = 0;
@@ -155,6 +160,25 @@ public class RequestDao {
         }
 
         return rowUpdated;
+    }
+
+    public static boolean deleteALLRequests(int libraryUserId) {
+
+        boolean rowsDeleted = false;
+
+        try {
+
+            PreparedStatement preparedStatement = connection.prepareStatement(DELETE_REQUEST_BY_USER_ID);
+
+            preparedStatement.setInt(1, libraryUserId);
+
+            rowsDeleted = preparedStatement.executeUpdate() > 0;
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return rowsDeleted;
     }
 
 }
