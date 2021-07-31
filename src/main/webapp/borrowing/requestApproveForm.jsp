@@ -14,7 +14,7 @@
     response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
 %>
 
-<c:import url="navigationBar.jsp" />
+<c:import url="../navigationBar.jsp" />
 
 <div class="row">
     <div class="container">
@@ -83,7 +83,7 @@
 </div>
 <br>
 <div class="container text-center">
-    <form action="acceptRequest" method="post">
+    <form action="<c:out value="${pageContext.servletContext.contextPath}"/>/acceptRequest" method="post">
         <input type="hidden" name="libraryElementId"
                value="<c:out value='${libraryElement.getLibraryElementId()}' />"/>
         <input type="hidden" name="requestId"
@@ -94,7 +94,7 @@
     </form>
 </div>
 <div class="container text-center">
-    <form action="rejectRequest" method="post">
+    <form action="<c:out value="${pageContext.servletContext.contextPath}"/>/rejectRequest" method="post">
         <input type="hidden" name="libraryElementId"
                value="<c:out value='${libraryElement.getLibraryElementId()}' />"/>
         <input type="hidden" name="requestId"

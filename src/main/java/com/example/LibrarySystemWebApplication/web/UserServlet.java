@@ -204,7 +204,7 @@ public class UserServlet extends HttpServlet {
 
         request.setAttribute("libraryUserId", libraryUserId);
         request.setAttribute("userPenalty", userPenalty);
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("penaltyMenu.jsp");
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("user/penaltyMenu.jsp");
         requestDispatcher.forward(request, response);
     }
 

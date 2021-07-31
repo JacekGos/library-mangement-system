@@ -48,7 +48,7 @@
                     <td><c:out value="${object.getStatusName()}"/></td>
                     <c:if test="${sessionScope.userType == 1}">
                         <c:if test="${object.getBorrowingStatusId() == 4}">
-                            <td><a href="endBorrowing?borrowingId=<c:out value='${object.getBorrowingId()}' />">Zakończ wypożyczenie</a>
+                            <td><a href="<c:out value="${pageContext.servletContext.contextPath}"/>/endBorrowing?borrowingId=<c:out value='${object.getBorrowingId()}' />">Zakończ wypożyczenie</a>
                         </c:if>
                     </c:if>
                 </tr>

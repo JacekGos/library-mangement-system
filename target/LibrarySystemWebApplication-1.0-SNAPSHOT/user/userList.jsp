@@ -41,11 +41,11 @@
           <td><c:out value="${object.getLogin()}"/></td>
           <td><c:out value="${object.getPenalty()}"/> [zł]</td>
 
-          <td><a href="userInfo?libraryUserId=<c:out value="${object.getUserId()}" />">Szczegóły</a>
+          <td><a href="<c:out value="${pageContext.servletContext.contextPath}"/>/userInfo?libraryUserId=<c:out value="${object.getUserId()}" />">Szczegóły</a>
             &nbsp;&nbsp;&nbsp;&nbsp;
-            <a href="deleteUser?libraryUserId=<c:out value="${object.getUserId()}" />">Usuń</a>
+            <a href="<c:out value="${pageContext.servletContext.contextPath}"/>/deleteUser?libraryUserId=<c:out value="${object.getUserId()}" />">Usuń</a>
             &nbsp;&nbsp;&nbsp;&nbsp;
-            <a href="userPenalty?libraryUserId=<c:out value="${object.getUserId()}" />">Kary</a>
+            <a href="<c:out value="${pageContext.servletContext.contextPath}"/>/userPenalty?libraryUserId=<c:out value="${object.getUserId()}" />">Kary</a>
           </td>
 
         </tr>

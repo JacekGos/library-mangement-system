@@ -51,7 +51,7 @@
                     </c:if>
                     <td><c:out value="${object.getStatusName()}"/></td>
                     <c:if test="${sessionScope.userType == 2 && object.getStatusId() == 1}">
-                        <td><a href="borrow?libraryElementId=<c:out value='${object.getLibraryElementId()}' />">Wypożycz</a></td>
+                        <td><a href="borrowLibraryElement?libraryElementId=<c:out value='${object.getLibraryElementId()}' />">Wypożycz</a></td>
                     </c:if>
                     <c:if test="${sessionScope.userType == 1}">
                         <td><a href="editLibraryElement?libraryElementId=<c:out value='${object.getLibraryElementId()}' />">Edytuj</a>

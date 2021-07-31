@@ -121,7 +121,7 @@ public class MainServlet extends HttpServlet {
                 requestDispatcher = request.getRequestDispatcher("borrowingProcess");
                 requestDispatcher.forward(request, response);
                 break;
-            case "/borrow":
+            case "/borrowLibraryElement":
                 doPost(request, response);
                 break;
             case "/endBorrowing":
@@ -185,8 +185,8 @@ public class MainServlet extends HttpServlet {
                 requestDispatcher.forward(request, response);
                 break;
             //BorrowingProcessServlet
-            case "/borrow":
-                action = "borrow";
+            case "/borrowLibraryElement":
+                action = "borrowLibraryElement";
                 request.setAttribute("action", action);
                 requestDispatcher = request.getRequestDispatcher("borrowingProcess");
                 requestDispatcher.forward(request, response);

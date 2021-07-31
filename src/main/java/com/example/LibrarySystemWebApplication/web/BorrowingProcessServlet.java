@@ -38,7 +38,7 @@ public class BorrowingProcessServlet extends HttpServlet {
         String action = (String)request.getAttribute("action");
 
         switch (action) {
-            case "borrow":
+            case "borrowLibraryElement":
                 doPost(request, response);
                 break;
             case "showRequests":
@@ -69,7 +69,7 @@ public class BorrowingProcessServlet extends HttpServlet {
         String action = (String)request.getAttribute("action");
 
         switch (action) {
-            case "borrow":
+            case "borrowLibraryElement":
                 sendBorrowingRequest(request, response);
                 break;
             case "rejectRequest":
@@ -104,14 +104,14 @@ public class BorrowingProcessServlet extends HttpServlet {
                 borrowingResult = true;
                 request.setAttribute("borrowingResult", borrowingResult);
                 request.setAttribute("libraryElement", libraryElement);
-                RequestDispatcher requestDispatcher = request.getRequestDispatcher("borrowInfo.jsp");
+                RequestDispatcher requestDispatcher = request.getRequestDispatcher("borrowing/borrowInfo.jsp");
                 requestDispatcher.forward(request, response);
 
             } else {
 
                 borrowingResult = false;
                 request.setAttribute("borrowingResult", borrowingResult);
-                RequestDispatcher requestDispatcher = request.getRequestDispatcher("borrowInfo.jsp");
+                RequestDispatcher requestDispatcher = request.getRequestDispatcher("borrowing/borrowInfo.jsp");
                 requestDispatcher.forward(request, response);
 
             }
@@ -120,7 +120,7 @@ public class BorrowingProcessServlet extends HttpServlet {
 
             borrowingResult = false;
             request.setAttribute("borrowingResult", borrowingResult);
-            RequestDispatcher requestDispatcher = request.getRequestDispatcher("borrowInfo.jsp");
+            RequestDispatcher requestDispatcher = request.getRequestDispatcher("borrowing/borrowInfo.jsp");
             requestDispatcher.forward(request, response);
 
         }
@@ -156,7 +156,7 @@ public class BorrowingProcessServlet extends HttpServlet {
         List<Request> requestsList = new ArrayList<Request>();
         requestsList = requestDao.getAllRequests();
         request.setAttribute("requestsList", requestsList);
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("requests.jsp");
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("borrowing/requests.jsp");
         requestDispatcher.forward(request, response);
 
     }
@@ -169,7 +169,7 @@ public class BorrowingProcessServlet extends HttpServlet {
         requestsList = requestDao.getRequestsByUserId(userId);
 
         request.setAttribute("requestsList", requestsList);
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("requests.jsp");
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("borrowing/requests.jsp");
         requestDispatcher.forward(request, response);
 
     }
@@ -190,7 +190,7 @@ public class BorrowingProcessServlet extends HttpServlet {
         request.setAttribute("libraryElement", libraryElement);
         request.setAttribute("requestId", requestId);
         request.setAttribute("borrowingId", borrowingId);
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("requestApproveForm.jsp");
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("borrowing/requestApproveForm.jsp");
         requestDispatcher.forward(request, response);
 
     }
@@ -242,7 +242,7 @@ public class BorrowingProcessServlet extends HttpServlet {
         int libraryUserId = (int) session.getAttribute("userId");
         List<Borrowing> libraryUserBorrowingsList = borrowingDao.getAllBorrowingsByUserId(libraryUserId);
         request.setAttribute("libraryUserBorrowingsList", libraryUserBorrowingsList);
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("userData.jsp");
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("user/userData.jsp");
         requestDispatcher.forward(request, response);
 
     }
@@ -304,7 +304,7 @@ public class BorrowingProcessServlet extends HttpServlet {
         request.setAttribute("penalty", abs(penalty));
         request.setAttribute("libraryUserId", libraryUserId);
 
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("returnInfo.jsp");
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("borrowing/returnInfo.jsp");
         requestDispatcher.forward(request, response);
 
     }
