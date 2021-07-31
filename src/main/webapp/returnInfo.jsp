@@ -39,7 +39,10 @@
                 <tbody>
                 <tr>
                     <c:if test="${returningResult == false}" >
-                        <td><c:out value="${minutes}"/> [minuty] <c:out value="${seconds}"/> [sekundy] </td>
+                        <td><c:out value="${days}"/> [dni]
+                            <c:out value="${hours}"/> [godziny]
+                            <c:out value="${minutes}"/> [minuty]
+                            <c:out value="${seconds}"/> [sekundy] </td>
                     </c:if>
                     <c:if test="${returningResult == true}" >
                         <td> Oddano w terminie </td>
