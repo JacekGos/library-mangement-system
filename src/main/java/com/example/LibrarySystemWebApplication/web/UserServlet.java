@@ -192,11 +192,10 @@ public class UserServlet extends HttpServlet {
         borrowingDao.updateBorrowingStatus(borrowingId, 6);
         libraryElementDao.updateLibraryElementStatus(libraryElementId, 1);
 
-        request.setAttribute("libraryUserId", libraryUserId);
         request.removeAttribute("borrowingId");
         request.removeAttribute("libraryElementId");
 
-        checkReturningTime(request, response, borrowing);
+        checkReturningTime(request, response, borrowing, libraryUserId);
 
 //        userInfoListAfterEndBorrowing(request, response);
 
@@ -215,11 +214,12 @@ public class UserServlet extends HttpServlet {
 
     }
 
-    private void checkReturningTime(HttpServletRequest request, HttpServletResponse response, Borrowing borrowing)
+    private void checkReturningTime(HttpServletRequest request, HttpServletResponse response, Borrowing borrowing, int libraryUserId)
             throws ServletException, IOException {
 
         boolean returningResult = true;
-        float penalty = 0;
+        double penalty = 0;
+        double currentUserPenalty = 0;
 
         long currentTime = System.currentTimeMillis();
         Timestamp borrowingTime = borrowing.getBorrowingDate();
@@ -236,8 +236,13 @@ public class UserServlet extends HttpServlet {
         {
             returningResult = true;
         } else {
+
             returningResult = false;
             penalty = calculatePenalty(differenceTime);
+            currentUserPenalty = libraryUserDao.getLibraryUserPenalty(libraryUserId);
+            currentUserPenalty += penalty;
+            libraryUserDao.updateLibraryUserPenalty(currentUserPenalty, libraryUserId);
+
         }
 
         request.setAttribute("returningResult", returningResult);
@@ -247,20 +252,21 @@ public class UserServlet extends HttpServlet {
         request.setAttribute("minutes", abs(minutes));
         request.setAttribute("seconds", abs(seconds));
         request.setAttribute("penalty", abs(penalty));
+        request.setAttribute("libraryUserId", libraryUserId);
 
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("returnInfo.jsp");
         requestDispatcher.forward(request, response);
 
     }
 
-    private float calculatePenalty(long differenceTime) {
+    private double calculatePenalty(long differenceTime) {
 
-        float penalty = 0.0f;
+        double penalty = 0.0f;
 
         int calculatedSeconds = (int) (differenceTime / 1000);
         int minutes = calculatedSeconds / 60;
 
-        penalty = (float) (0.01 * minutes);
+        penalty = (double) (0.01 * minutes);
 
         return penalty;
     }

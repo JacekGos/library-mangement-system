@@ -39,7 +39,7 @@
           <td><c:out value="${object.getUserName()}"/></td>
           <td><c:out value="${object.getUserSurName()}"/></td>
           <td><c:out value="${object.getLogin()}"/></td>
-          <td><c:out value="${object.getPenalty()}"/></td>
+          <td><c:out value="${object.getPenalty()}"/> [zł]</td>
 
           <td><a href="userInfo?libraryUserId=<c:out value="${object.getUserId()}" />">Szczegóły</a>
             &nbsp;&nbsp;&nbsp;&nbsp;

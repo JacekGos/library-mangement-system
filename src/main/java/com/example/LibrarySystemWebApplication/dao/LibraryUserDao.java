@@ -36,7 +36,8 @@ public class LibraryUserDao {
     public static final String INSERT_LIBRARY_USER = "INSERT INTO public.\"Library_user\""
             + " (name, surname, login, password, penalty, account_type) VALUES (?, ?, ?, ?, ?, ?)";
 
-    public static final String SELECT_ALL_LIBRARY_USERS = "SELECT * FROM public.\"Library_user\"";
+    public static final String SELECT_ALL_LIBRARY_USERS = "SELECT * FROM public.\"Library_user\"" +
+            " ORDER BY library_user_id ASC";
 
     public static final String SELECT_LIBRARY_USERS_BY_ID = "SELECT * FROM public.\"Library_user\"" +
             " WHERE library_user_id = ?";
@@ -53,8 +54,16 @@ public class LibraryUserDao {
             " ON lu.library_user_id = b.library_user_id" +
             " WHERE borrowing_id = ?";
 
+    public static final String SELECT_LIBRARY_USER_PENALTY = "SELECT penalty FROM public.\"Library_user\"" +
+            " WHERE library_user_id = ? ";
+
+    public static final String UPDATE_LIBRARY_USER_PENALTY = "UPDATE public.\"Library_user\"" +
+            " SET penalty = ? WHERE library_user_id = ?";
+
     public static final String DELETE_LIBRARY_USER = "DELETE FROM public.\"Library_user\"" +
             " WHERE library_user_id = ?";
+
+
 
     public static int insertLibraryUser(LibraryUser libraryUser) {
 
@@ -246,6 +255,49 @@ public class LibraryUserDao {
         return libraryUser;
 
     }
+
+    public static double getLibraryUserPenalty(int libraryUserId) {
+
+        double penalty = 0;
+
+        try {
+
+            PreparedStatement preparedStatement = connection.prepareStatement(SELECT_LIBRARY_USER_PENALTY);
+            preparedStatement.setInt(1, libraryUserId);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                //TODO change index number to full column name
+                penalty = resultSet.getDouble("penalty");
+            }
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return penalty;
+    }
+
+    public static boolean updateLibraryUserPenalty(double penalty, int libraryUserId) {
+
+        boolean rowUpdated = false;
+
+        try {
+
+            PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_LIBRARY_USER_PENALTY);
+            preparedStatement.setDouble(1, penalty);
+            preparedStatement.setInt(2, libraryUserId);
+
+            rowUpdated = preparedStatement.executeUpdate() > 0;
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return rowUpdated;
+    }
+
 
     public static boolean deleteLibraryUser(int libraryUserId) {
 
