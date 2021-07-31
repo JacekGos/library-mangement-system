@@ -44,6 +44,8 @@
           <td><a href="userInfo?libraryUserId=<c:out value="${object.getUserId()}" />">Szczegóły</a>
             &nbsp;&nbsp;&nbsp;&nbsp;
             <a href="deleteUser?libraryUserId=<c:out value="${object.getUserId()}" />">Usuń</a>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <a href="userPenalty?libraryUserId=<c:out value="${object.getUserId()}" />">Kary</a>
           </td>
 
         </tr>

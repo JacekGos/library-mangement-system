@@ -56,6 +56,12 @@ public class UserServlet extends HttpServlet {
             case "userInfoAfterEndBorrowing":
                 userInfoListAfterEndBorrowing(request, response);
                 break;
+            case "userPenalty":
+                showPenaltyMenu(request, response);
+                break;
+            case "regulatePenalty":
+                doPost(request, response);
+                break;
             case "endBorrowing":
                 doPost(request, response);
                 break;
@@ -80,6 +86,9 @@ public class UserServlet extends HttpServlet {
                 break;
             case "endBorrowing":
                 endBorrowing(request, response);
+                break;
+            case "regulatePenalty":
+                regulatePenalty(request, response);
                 break;
             default:
                 break;
@@ -203,7 +212,6 @@ public class UserServlet extends HttpServlet {
     //@TODO Think about use only one method userInfoList for each action
     private void userInfoListAfterEndBorrowing(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-//        int libraryUserId = (int) request.getAttribute("libraryUserId");
         int libraryUserId = Integer.parseInt(request.getParameter("libraryUserId"));
         List<Borrowing> libraryUserBorrowingsList = borrowingDao.getAllBorrowingsByUserIdAndStatus(libraryUserId);
         request.setAttribute("libraryUserBorrowingsList", libraryUserBorrowingsList);
@@ -271,4 +279,31 @@ public class UserServlet extends HttpServlet {
         return penalty;
     }
 
+
+    private void showPenaltyMenu(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        int libraryUserId = Integer.parseInt(request.getParameter("libraryUserId"));
+        double userPenalty = libraryUserDao.getLibraryUserPenalty(libraryUserId);
+
+        request.setAttribute("libraryUserId", libraryUserId);
+        request.setAttribute("userPenalty", userPenalty);
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("penaltyMenu.jsp");
+        requestDispatcher.forward(request, response);
+    }
+
+    private void regulatePenalty(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        int libraryUserId = Integer.parseInt(request.getParameter("libraryUserId"));
+        double userPenalty = libraryUserDao.getLibraryUserPenalty(libraryUserId);
+        double returnedAmount = Double.parseDouble(request.getParameter("returnedAmount"));
+        if (userPenalty <=  returnedAmount) {
+            userPenalty = 0;
+        } else {
+            userPenalty -= returnedAmount;
+        }
+
+        libraryUserDao.updateLibraryUserPenalty(userPenalty, libraryUserId);
+        libraryUserList(request, response);
+
+    }
 }

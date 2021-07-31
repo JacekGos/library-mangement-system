@@ -88,6 +88,15 @@ public class MainServlet extends HttpServlet {
                 requestDispatcher = request.getRequestDispatcher("libraryUser");
                 requestDispatcher.forward(request, response);
                 break;
+            case "/userPenalty":
+                action = "userPenalty";
+                request.setAttribute("action", action);
+                requestDispatcher = request.getRequestDispatcher("libraryUser");
+                requestDispatcher.forward(request, response);
+                break;
+            case "/regulatePenalty":
+                doPost(request, response);
+                break;
             case "/borrow":
                 doPost(request, response);
                 break;
@@ -163,6 +172,12 @@ public class MainServlet extends HttpServlet {
                 break;
             case "/insertUser":
                 action = "insertUser";
+                request.setAttribute("action", action);
+                requestDispatcher = request.getRequestDispatcher("libraryUser");
+                requestDispatcher.forward(request, response);
+                break;
+            case "/regulatePenalty":
+                action = "regulatePenalty";
                 request.setAttribute("action", action);
                 requestDispatcher = request.getRequestDispatcher("libraryUser");
                 requestDispatcher.forward(request, response);
