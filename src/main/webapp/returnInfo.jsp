@@ -59,7 +59,7 @@
                 <tbody>
                 <tr>
                     <c:if test="${returningResult == false}" >
-                        <td> </td>
+                        <td> <c:out value="${penalty}"/> [zł] </td>
                     </c:if>
                     <c:if test="${returningResult == true}" >
                         <td> 0 [zł] </td>
@@ -67,9 +67,18 @@
                 </tr>
                 </tbody>
             </table>
-            <form action="login.jsp" method="get">
-                <button type="submit" class="btn btn-success" style="background-color: #8edbf9; color: black">Powrót</button>
+            <form action="userInfoAfterEndBorrowing" method="get">
+                <input type="hidden" name="libraryUserId"
+                       value="<c:out value='${libraryUserId}' />"/>
+                <div class="container text-center">
+                    <button type="submit" class="btn btn-success" style="background-color: #8edbf9; color: black">Powrót</button>
+                </div>
             </form>
+
+
+          <%--  <form action="userInfoAfterEndBorrowing?libraryUserId=<c:out value="${libraryUserId}" />" method="get">
+                <button type="submit" class="btn btn-success" style="background-color: #8edbf9; color: black">Powrót</button>
+            </form>--%>
         </div>
     </div>
 </div>

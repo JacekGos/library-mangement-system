@@ -82,6 +82,12 @@ public class MainServlet extends HttpServlet {
                 requestDispatcher = request.getRequestDispatcher("libraryUser");
                 requestDispatcher.forward(request, response);
                 break;
+            case "/userInfoAfterEndBorrowing":
+                action = "userInfoAfterEndBorrowing";
+                request.setAttribute("action", action);
+                requestDispatcher = request.getRequestDispatcher("libraryUser");
+                requestDispatcher.forward(request, response);
+                break;
             case "/borrow":
                 doPost(request, response);
                 break;

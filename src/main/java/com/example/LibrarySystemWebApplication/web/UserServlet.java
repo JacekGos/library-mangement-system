@@ -53,6 +53,9 @@ public class UserServlet extends HttpServlet {
             case "userInfo":
                 userInfoList(request, response);
                 break;
+            case "userInfoAfterEndBorrowing":
+                userInfoListAfterEndBorrowing(request, response);
+                break;
             case "endBorrowing":
                 doPost(request, response);
                 break;
@@ -201,7 +204,8 @@ public class UserServlet extends HttpServlet {
     //@TODO Think about use only one method userInfoList for each action
     private void userInfoListAfterEndBorrowing(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        int libraryUserId = (int) request.getAttribute("libraryUserId");
+//        int libraryUserId = (int) request.getAttribute("libraryUserId");
+        int libraryUserId = Integer.parseInt(request.getParameter("libraryUserId"));
         List<Borrowing> libraryUserBorrowingsList = borrowingDao.getAllBorrowingsByUserId(libraryUserId);
         request.setAttribute("libraryUserBorrowingsList", libraryUserBorrowingsList);
 
@@ -215,14 +219,7 @@ public class UserServlet extends HttpServlet {
             throws ServletException, IOException {
 
         boolean returningResult = true;
-
-        /*long currentTime = System.currentTimeMillis();
-        Timestamp returningTime = new java.sql.Timestamp(currentTime);
-        Timestamp borrowingTime = borrowing.getBorrowingDate();
-        long differenceTime = currentTime - borrowingTime.getTime();
-        long timeToReturn = 30000;
-        int seconds = (int)(currentTime) / 1000;
-        int minutes = (seconds % 3600) / 60;*/
+        float penalty = 0;
 
         long currentTime = System.currentTimeMillis();
         Timestamp borrowingTime = borrowing.getBorrowingDate();
@@ -240,18 +237,32 @@ public class UserServlet extends HttpServlet {
             returningResult = true;
         } else {
             returningResult = false;
+            penalty = calculatePenalty(differenceTime);
         }
 
         request.setAttribute("returningResult", returningResult);
         request.setAttribute("borrowingTime", borrowingTime);
-        request.setAttribute("differenceTime", differenceTime);
         request.setAttribute("days", abs(days));
         request.setAttribute("hours", abs(hours));
         request.setAttribute("minutes", abs(minutes));
         request.setAttribute("seconds", abs(seconds));
+        request.setAttribute("penalty", abs(penalty));
+
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("returnInfo.jsp");
         requestDispatcher.forward(request, response);
 
+    }
+
+    private float calculatePenalty(long differenceTime) {
+
+        float penalty = 0.0f;
+
+        int calculatedSeconds = (int) (differenceTime / 1000);
+        int minutes = calculatedSeconds / 60;
+
+        penalty = (float) (0.01 * minutes);
+
+        return penalty;
     }
 
 }
