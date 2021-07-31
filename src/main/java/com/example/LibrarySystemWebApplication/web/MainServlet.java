@@ -25,6 +25,7 @@ public class MainServlet extends HttpServlet {
         RequestDispatcher requestDispatcher;
 
         switch (option) {
+            //LibraryElementServlet
             case "/libraryElementList":
                 action = "showList";
                 request.setAttribute("action", action);
@@ -37,11 +38,14 @@ public class MainServlet extends HttpServlet {
                 requestDispatcher = request.getRequestDispatcher("libraryElement");
                 requestDispatcher.forward(request, response);
                 break;
-            case "/login":
-                doPost(request, response);
-                break;
             case "/edit":
                 action = "edit";
+                request.setAttribute("action", action);
+                requestDispatcher = request.getRequestDispatcher("libraryElement");
+                requestDispatcher.forward(request, response);
+                break;
+            case "/new":
+                action = "new";
                 request.setAttribute("action", action);
                 requestDispatcher = request.getRequestDispatcher("libraryElement");
                 requestDispatcher.forward(request, response);
@@ -49,6 +53,7 @@ public class MainServlet extends HttpServlet {
             case "/delete":
                 doPost(request, response);
                 break;
+            //UserServlet
             case "/userList":
                 action = "showUserList";
                 request.setAttribute("action", action);
@@ -68,12 +73,6 @@ public class MainServlet extends HttpServlet {
                 action = "newUser";
                 request.setAttribute("action", action);
                 requestDispatcher = request.getRequestDispatcher("libraryUser");
-                requestDispatcher.forward(request, response);
-                break;
-            case "/new":
-                action = "new";
-                request.setAttribute("action", action);
-                requestDispatcher = request.getRequestDispatcher("libraryElement");
                 requestDispatcher.forward(request, response);
                 break;
             case "/userInfo":
@@ -97,9 +96,7 @@ public class MainServlet extends HttpServlet {
             case "/regulatePenalty":
                 doPost(request, response);
                 break;
-            case "/borrow":
-                doPost(request, response);
-                break;
+            //BorrowingProcessServlet
             case "/requestList":
                 action = "showRequests";
                 request.setAttribute("action", action);
@@ -124,7 +121,14 @@ public class MainServlet extends HttpServlet {
                 requestDispatcher = request.getRequestDispatcher("borrowingProcess");
                 requestDispatcher.forward(request, response);
                 break;
+            case "/borrow":
+                doPost(request, response);
+                break;
             case "/endBorrowing":
+                doPost(request, response);
+                break;
+            //LoginProcessServlet
+            case "/login":
                 doPost(request, response);
                 break;
             default:
@@ -142,10 +146,7 @@ public class MainServlet extends HttpServlet {
         RequestDispatcher requestDispatcher;
 
         switch (option) {
-            case "/login":
-                requestDispatcher = request.getRequestDispatcher("login.jsp");
-                requestDispatcher.forward(request, response);
-                break;
+            //LibraryElementServlet
             case "/update":
                 action = "update";
                 request.setAttribute("action", action);
@@ -164,6 +165,7 @@ public class MainServlet extends HttpServlet {
                 requestDispatcher = request.getRequestDispatcher("libraryElement");
                 requestDispatcher.forward(request, response);
                 break;
+            //UserServlet
             case "/deleteUser":
                 action = "deleteUser";
                 request.setAttribute("action", action);
@@ -182,6 +184,7 @@ public class MainServlet extends HttpServlet {
                 requestDispatcher = request.getRequestDispatcher("libraryUser");
                 requestDispatcher.forward(request, response);
                 break;
+            //BorrowingProcessServlet
             case "/borrow":
                 action = "borrow";
                 request.setAttribute("action", action);
@@ -203,7 +206,12 @@ public class MainServlet extends HttpServlet {
             case "/endBorrowing":
                 action = "endBorrowing";
                 request.setAttribute("action", action);
-                requestDispatcher = request.getRequestDispatcher("libraryUser");
+                requestDispatcher = request.getRequestDispatcher("borrowingProcess");
+                requestDispatcher.forward(request, response);
+                break;
+            //LoginProcessServlet
+            case "/login":
+                requestDispatcher = request.getRequestDispatcher("login.jsp");
                 requestDispatcher.forward(request, response);
                 break;
             default:
@@ -214,6 +222,4 @@ public class MainServlet extends HttpServlet {
 
     //TODO Search LibraryElements by fragments of title
 
-  /*  PrintWriter out = response.getWriter();
-                out.println(request.getParameter("title"));*/
 }

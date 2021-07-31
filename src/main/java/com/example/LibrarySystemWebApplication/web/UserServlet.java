@@ -62,9 +62,6 @@ public class UserServlet extends HttpServlet {
             case "regulatePenalty":
                 doPost(request, response);
                 break;
-            case "endBorrowing":
-                doPost(request, response);
-                break;
             default:
 
                 break;
@@ -83,9 +80,6 @@ public class UserServlet extends HttpServlet {
                 break;
             case "insertUser":
                 insertLibraryUser(request, response);
-                break;
-            case "endBorrowing":
-                endBorrowing(request, response);
                 break;
             case "regulatePenalty":
                 regulatePenalty(request, response);
@@ -191,24 +185,6 @@ public class UserServlet extends HttpServlet {
 
     }
 
-    private void endBorrowing(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-
-        int borrowingId = Integer.parseInt(request.getParameter("borrowingId"));
-        Borrowing borrowing = borrowingDao.getBorrowingById(borrowingId);
-        int libraryElementId = borrowing.getLibraryElementId();
-        int libraryUserId = borrowing.getLibraryUserId();
-
-        borrowingDao.updateBorrowingStatus(borrowingId, 6);
-        libraryElementDao.updateLibraryElementStatus(libraryElementId, 1);
-
-        request.removeAttribute("borrowingId");
-        request.removeAttribute("libraryElementId");
-
-        checkReturningTime(request, response, borrowing, libraryUserId);
-
-//        userInfoListAfterEndBorrowing(request, response);
-
-    }
     //@TODO Think about use only one method userInfoList for each action
     private void userInfoListAfterEndBorrowing(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -221,64 +197,6 @@ public class UserServlet extends HttpServlet {
         requestDispatcher.forward(request, response);
 
     }
-
-    private void checkReturningTime(HttpServletRequest request, HttpServletResponse response, Borrowing borrowing, int libraryUserId)
-            throws ServletException, IOException {
-
-        boolean returningResult = true;
-        double penalty = 0;
-        double currentUserPenalty = 0;
-
-        long currentTime = System.currentTimeMillis();
-        Timestamp borrowingTime = borrowing.getBorrowingDate();
-        long timeToReturn = 30000;
-
-        long differenceTime = currentTime - borrowingTime.getTime();
-        int calculatedSeconds = (int) (differenceTime / 1000);
-        int minutes = (calculatedSeconds % 3600) / 60;
-        int hours = (calculatedSeconds / 3600) % 24;
-        int days = calculatedSeconds / 86400;
-        int seconds = (calculatedSeconds % 3600) % 60;
-
-        if (timeToReturn > differenceTime)
-        {
-            returningResult = true;
-        } else {
-
-            returningResult = false;
-            penalty = calculatePenalty(differenceTime);
-            currentUserPenalty = libraryUserDao.getLibraryUserPenalty(libraryUserId);
-            currentUserPenalty += penalty;
-            libraryUserDao.updateLibraryUserPenalty(currentUserPenalty, libraryUserId);
-
-        }
-
-        request.setAttribute("returningResult", returningResult);
-        request.setAttribute("borrowingTime", borrowingTime);
-        request.setAttribute("days", abs(days));
-        request.setAttribute("hours", abs(hours));
-        request.setAttribute("minutes", abs(minutes));
-        request.setAttribute("seconds", abs(seconds));
-        request.setAttribute("penalty", abs(penalty));
-        request.setAttribute("libraryUserId", libraryUserId);
-
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("returnInfo.jsp");
-        requestDispatcher.forward(request, response);
-
-    }
-
-    private double calculatePenalty(long differenceTime) {
-
-        double penalty = 0.0f;
-
-        int calculatedSeconds = (int) (differenceTime / 1000);
-        int minutes = calculatedSeconds / 60;
-
-        penalty = (double) (0.01 * minutes);
-
-        return penalty;
-    }
-
 
     private void showPenaltyMenu(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 

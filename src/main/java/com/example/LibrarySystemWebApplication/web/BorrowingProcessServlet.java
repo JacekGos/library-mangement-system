@@ -17,16 +17,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+
+import static java.lang.Math.abs;
 
 @WebServlet(name = "borrrowingProcess", value = "/borrowingProcess")
 public class BorrowingProcessServlet extends HttpServlet {
 
     private LibraryElementDao libraryElementDao = new LibraryElementDao();
     private LibraryUserDao libraryUserDao = new LibraryUserDao();
-    private RequestDao requestDao = new RequestDao();
     private BorrowingDao borrowingDao = new BorrowingDao();
+    private RequestDao requestDao = new RequestDao();
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -50,8 +53,10 @@ public class BorrowingProcessServlet extends HttpServlet {
             case "showBorrowings":
                 showBorrowingsList(request, response);
                 break;
+            case "endBorrowing":
+                doPost(request, response);
+                break;
             default:
-
                 break;
         }
 
@@ -72,6 +77,9 @@ public class BorrowingProcessServlet extends HttpServlet {
                 break;
             case "acceptRequest":
                 acceptRequest(request, response);
+                break;
+            case "endBorrowing":
+                endBorrowing(request, response);
                 break;
             default:
 
@@ -239,4 +247,78 @@ public class BorrowingProcessServlet extends HttpServlet {
 
     }
 
+    private void endBorrowing(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+
+        int borrowingId = Integer.parseInt(request.getParameter("borrowingId"));
+        Borrowing borrowing = borrowingDao.getBorrowingById(borrowingId);
+        int libraryElementId = borrowing.getLibraryElementId();
+        int libraryUserId = borrowing.getLibraryUserId();
+
+        borrowingDao.updateBorrowingStatus(borrowingId, 6);
+        libraryElementDao.updateLibraryElementStatus(libraryElementId, 1);
+
+        request.removeAttribute("borrowingId");
+        request.removeAttribute("libraryElementId");
+
+        checkReturningTime(request, response, borrowing, libraryUserId);
+
+    }
+
+    private void checkReturningTime(HttpServletRequest request, HttpServletResponse response, Borrowing borrowing, int libraryUserId)
+            throws ServletException, IOException {
+
+        boolean returningResult = true;
+        double penalty = 0;
+        double currentUserPenalty = 0;
+
+        long currentTime = System.currentTimeMillis();
+        Timestamp borrowingTime = borrowing.getBorrowingDate();
+        long timeToReturn = 30000;
+
+        long differenceTime = currentTime - borrowingTime.getTime();
+        int calculatedSeconds = (int) (differenceTime / 1000);
+        int minutes = (calculatedSeconds % 3600) / 60;
+        int hours = (calculatedSeconds / 3600) % 24;
+        int days = calculatedSeconds / 86400;
+        int seconds = (calculatedSeconds % 3600) % 60;
+
+        if (timeToReturn > differenceTime)
+        {
+            returningResult = true;
+        } else {
+
+            returningResult = false;
+            penalty = calculatePenalty(differenceTime);
+            currentUserPenalty = libraryUserDao.getLibraryUserPenalty(libraryUserId);
+            currentUserPenalty += penalty;
+            libraryUserDao.updateLibraryUserPenalty(currentUserPenalty, libraryUserId);
+
+        }
+
+        request.setAttribute("returningResult", returningResult);
+        request.setAttribute("borrowingTime", borrowingTime);
+        request.setAttribute("days", abs(days));
+        request.setAttribute("hours", abs(hours));
+        request.setAttribute("minutes", abs(minutes));
+        request.setAttribute("seconds", abs(seconds));
+        request.setAttribute("penalty", abs(penalty));
+        request.setAttribute("libraryUserId", libraryUserId);
+
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("returnInfo.jsp");
+        requestDispatcher.forward(request, response);
+
+    }
+
+    private double calculatePenalty(long differenceTime) {
+
+        double penalty = 0.0f;
+
+        int calculatedSeconds = (int) (differenceTime / 1000);
+        int minutes = calculatedSeconds / 60;
+
+        penalty = (double) (0.01 * minutes);
+
+        return penalty;
+    }
+    
 }
