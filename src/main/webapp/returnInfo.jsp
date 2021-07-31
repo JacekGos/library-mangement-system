@@ -74,11 +74,6 @@
                     <button type="submit" class="btn btn-success" style="background-color: #8edbf9; color: black">Powrót</button>
                 </div>
             </form>
-
-
-          <%--  <form action="userInfoAfterEndBorrowing?libraryUserId=<c:out value="${libraryUserId}" />" method="get">
-                <button type="submit" class="btn btn-success" style="background-color: #8edbf9; color: black">Powrót</button>
-            </form>--%>
         </div>
     </div>
 </div>

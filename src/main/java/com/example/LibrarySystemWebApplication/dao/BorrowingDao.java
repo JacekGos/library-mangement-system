@@ -25,8 +25,11 @@ public class BorrowingDao {
     public static final String INSERT_BORROWING = "INSERT INTO public.\"Borrowings\""
             + " (element_id, borrowing_date, status_id, library_user_id) VALUES (?, ?, ?, ?)";
 
-    public static final String SELECT_BORROWINGS_BY_USER_ID = "SELECT * FROM public.\"Borrowings\" " +
+    public static final String SELECT_BORROWINGS_BY_USER_ID_AND_STATUS = "SELECT * FROM public.\"Borrowings\" " +
             "WHERE library_user_id = ? ORDER BY status_id ASC LIMIT 10";
+
+    public static final String SELECT_BORROWINGS_BY_USER_ID = "SELECT * FROM public.\"Borrowings\" " +
+            "WHERE library_user_id = ? ORDER BY borrowing_id DESC LIMIT 10";
 
     public static final String SELECT_BORROWING_BY_ID = "SELECT * FROM public.\"Borrowings\" WHERE borrowing_id = ?";
 
@@ -67,6 +70,35 @@ public class BorrowingDao {
         return status;
     }
     
+    public static List<Borrowing> getAllBorrowingsByUserIdAndStatus(int userId) {
+
+        List<Borrowing> borrowingsList = new ArrayList<Borrowing>();
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(SELECT_BORROWINGS_BY_USER_ID_AND_STATUS);
+            preparedStatement.setInt(1, userId);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+
+                int borrowingId = resultSet.getInt(1);
+                int elementId = resultSet.getInt(2);
+                java.sql.Timestamp date = resultSet.getTimestamp(3);
+                int statusId = resultSet.getInt(4);
+                int libraryUserId = resultSet.getInt(5);
+
+                Borrowing borrowing = new Borrowing(borrowingId, elementId, date, statusId, libraryUserId);
+                borrowingsList.add(borrowing);
+
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return borrowingsList;
+    }
+
     public static List<Borrowing> getAllBorrowingsByUserId(int userId) {
 
         List<Borrowing> borrowingsList = new ArrayList<Borrowing>();

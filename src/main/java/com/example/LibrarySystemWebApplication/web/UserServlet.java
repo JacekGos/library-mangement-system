@@ -206,7 +206,7 @@ public class UserServlet extends HttpServlet {
 
 //        int libraryUserId = (int) request.getAttribute("libraryUserId");
         int libraryUserId = Integer.parseInt(request.getParameter("libraryUserId"));
-        List<Borrowing> libraryUserBorrowingsList = borrowingDao.getAllBorrowingsByUserId(libraryUserId);
+        List<Borrowing> libraryUserBorrowingsList = borrowingDao.getAllBorrowingsByUserIdAndStatus(libraryUserId);
         request.setAttribute("libraryUserBorrowingsList", libraryUserBorrowingsList);
 
         request.setAttribute("libraryUserId", libraryUserId);
