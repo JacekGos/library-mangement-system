@@ -67,12 +67,12 @@ public class LibraryWorkerDao {
 
             while (resultSet.next()) {
 
-                libraryWorker.setUserId(resultSet.getInt(1));
-                libraryWorker.setUserName(resultSet.getString(2));
-                libraryWorker.setUserSurName(resultSet.getString(3));
-                libraryWorker.setLogin(resultSet.getString(4));
-                libraryWorker.setPassword(resultSet.getString(5));
-                libraryWorker.setAccountType(resultSet.getInt(6));
+                libraryWorker.setUserId(resultSet.getInt("librarian_id"));
+                libraryWorker.setUserName(resultSet.getString("name"));
+                libraryWorker.setUserSurName(resultSet.getString("surname"));
+                libraryWorker.setLogin(resultSet.getString("login"));
+                libraryWorker.setPassword(resultSet.getString("password"));
+                libraryWorker.setAccountType(resultSet.getInt("account_type"));
             }
 
         } catch (SQLException throwables) {
