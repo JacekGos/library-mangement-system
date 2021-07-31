@@ -237,7 +237,7 @@ public class LibraryUserDao {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                //TODO change index number to full column name
+
                 int id = resultSet.getInt("library_user_id");
                 String name = resultSet.getString("name");
                 String surName = resultSet.getString("surName");

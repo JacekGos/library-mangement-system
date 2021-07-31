@@ -42,7 +42,7 @@ public class LibraryElementDao {
     public static final String SELECT_ALL_LIBRARY_ELEMENTS = "SELECT * FROM public.\"Library_element\"";
 
     public static final String SELECT_LIBRARY_ELEMENTS_BY_TITLE = "SELECT * FROM public.\"Library_element\"" +
-            " WHERE title = ?";
+            " WHERE title LIKE ?";
 
     public static final String SELECT_LIBRARY_ELEMENTS_BY_ID = "SELECT * FROM public.\"Library_element\"" +
             " WHERE library_element_id = ?";
@@ -131,6 +131,8 @@ public class LibraryElementDao {
     public static List<LibraryElement> getLibraryElementsByTitle(String searchedTitle) {
 
         List<LibraryElement> libraryElementsList = new ArrayList<LibraryElement>();
+
+        searchedTitle = "%" + searchedTitle + "%";
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_LIBRARY_ELEMENTS_BY_TITLE);

@@ -185,7 +185,6 @@ public class UserServlet extends HttpServlet {
 
     }
 
-    //@TODO Think about use only one method userInfoList for each action
     private void userInfoListAfterEndBorrowing(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         int libraryUserId = Integer.parseInt(request.getParameter("libraryUserId"));

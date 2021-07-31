@@ -219,7 +219,5 @@ public class MainServlet extends HttpServlet {
         }
 
     }
-
-    //TODO Search LibraryElements by fragments of title
-
+    
 }
