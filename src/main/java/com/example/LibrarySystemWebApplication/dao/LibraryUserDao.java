@@ -308,7 +308,6 @@ public class LibraryUserDao {
             PreparedStatement preparedStatement = connection.prepareStatement(DELETE_LIBRARY_USER);
 
             preparedStatement.setInt(1, libraryUserId);
-
             rowDeleted = preparedStatement.executeUpdate() > 0;
 
         } catch (SQLException throwables) {

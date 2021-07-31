@@ -50,6 +50,7 @@ public class BorrowingDao {
     public static final String DELETE_ALL_USER_BORROWINGS = "DELETE FROM public.\"Borrowings\"" +
             " WHERE library_user_id = ?";
 
+
     public static int insertBorrowing(Borrowing borrowing) {
 
         int status = 0;
@@ -82,11 +83,11 @@ public class BorrowingDao {
 
             while (resultSet.next()) {
 
-                int borrowingId = resultSet.getInt(1);
-                int elementId = resultSet.getInt(2);
-                java.sql.Timestamp date = resultSet.getTimestamp(3);
-                int statusId = resultSet.getInt(4);
-                int libraryUserId = resultSet.getInt(5);
+                int borrowingId = resultSet.getInt("borrowing_id");
+                int elementId = resultSet.getInt("element_id");
+                java.sql.Timestamp date = resultSet.getTimestamp("borrowing_date");
+                int statusId = resultSet.getInt("status_id");
+                int libraryUserId = resultSet.getInt("library_user_id");
 
                 Borrowing borrowing = new Borrowing(borrowingId, elementId, date, statusId, libraryUserId);
                 borrowingsList.add(borrowing);
@@ -111,11 +112,11 @@ public class BorrowingDao {
 
             while (resultSet.next()) {
 
-                int borrowingId = resultSet.getInt(1);
-                int elementId = resultSet.getInt(2);
-                java.sql.Timestamp date = resultSet.getTimestamp(3);
-                int statusId = resultSet.getInt(4);
-                int libraryUserId = resultSet.getInt(5);
+                int borrowingId = resultSet.getInt("borrowing_id");
+                int elementId = resultSet.getInt("element_id");
+                java.sql.Timestamp date = resultSet.getTimestamp("borrowing_date");
+                int statusId = resultSet.getInt("status_id");
+                int libraryUserId = resultSet.getInt("library_user_id");
 
                 Borrowing borrowing = new Borrowing(borrowingId, elementId, date, statusId, libraryUserId);
                 borrowingsList.add(borrowing);
@@ -140,11 +141,11 @@ public class BorrowingDao {
 
             while (resultSet.next()) {
 
-                int borrowingId = resultSet.getInt(1);
-                int elementId = resultSet.getInt(2);
-                java.sql.Timestamp date = resultSet.getTimestamp(3);
-                int statusId = resultSet.getInt(4);
-                int libraryUserId = resultSet.getInt(5);
+                int borrowingId = resultSet.getInt("borrowing_id");
+                int elementId = resultSet.getInt("element_id");
+                java.sql.Timestamp date = resultSet.getTimestamp("borrowing_date");
+                int statusId = resultSet.getInt("status_id");
+                int libraryUserId = resultSet.getInt("library_user_id");
 
                 borrowing = new Borrowing(borrowingId, elementId, date, statusId, libraryUserId);
 
@@ -170,8 +171,7 @@ public class BorrowingDao {
 
             while (resultSet.next()) {
 
-                borrowingId = resultSet.getInt(1);
-
+                borrowingId = resultSet.getInt("borrowing_id");
 
             }
         } catch (SQLException throwables) {
@@ -193,7 +193,7 @@ public class BorrowingDao {
 
             while (resultSet.next()) {
 
-                libraryElementId = resultSet.getInt(1);
+                libraryElementId = resultSet.getInt("element_id");
 
 
             }

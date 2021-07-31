@@ -320,5 +320,5 @@ public class BorrowingProcessServlet extends HttpServlet {
 
         return penalty;
     }
-    
+
 }
