@@ -17,6 +17,8 @@ import java.sql.SQLException;
 @WebServlet(name = "loginProcess", value = "/loginProcess")
 public class LoginProcessServlet extends HttpServlet {
 
+    LoginDao loginDao = new LoginDao();
+
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         request.setCharacterEncoding("UTF-8");
@@ -27,7 +29,7 @@ public class LoginProcessServlet extends HttpServlet {
         boolean status = false;
         HttpSession userSession;
 
-        status = LoginDao.validateWorker(login, password);
+        status = loginDao.validateWorker(login, password);
 
         if (status == true) {
             LibraryWorker worker = LibraryWorkerDao.getLibraryWorkerByLoginAndPasword(login, password);
@@ -53,7 +55,7 @@ public class LoginProcessServlet extends HttpServlet {
                 response.sendRedirect("index.jsp");
 
             } else {
-                response.sendRedirect("login.jsp");
+                response.sendRedirect("account/login.jsp");
             }
         }
     }

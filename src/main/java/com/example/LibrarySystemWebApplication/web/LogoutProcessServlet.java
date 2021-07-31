@@ -19,7 +19,7 @@ public class LogoutProcessServlet extends HttpServlet {
         HttpSession userSession = request.getSession();
         userSession.setAttribute("userName", null);
         userSession.invalidate();
-        response.sendRedirect("login.jsp");
+        response.sendRedirect("account/login.jsp");
     }
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

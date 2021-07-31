@@ -211,7 +211,7 @@ public class MainServlet extends HttpServlet {
                 break;
             //LoginProcessServlet
             case "/login":
-                requestDispatcher = request.getRequestDispatcher("login.jsp");
+                requestDispatcher = request.getRequestDispatcher("account/login.jsp");
                 requestDispatcher.forward(request, response);
                 break;
             default:
@@ -219,5 +219,5 @@ public class MainServlet extends HttpServlet {
         }
 
     }
-    
+
 }

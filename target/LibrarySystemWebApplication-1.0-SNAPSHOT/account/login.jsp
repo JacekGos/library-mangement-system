@@ -13,12 +13,12 @@
 <%
     response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
 %>
-<c:import url="navigationBar.jsp" />
+<c:import url="../navigationBar.jsp" />
     <br>
     <div class="container col-md-5">
         <div class="card">
             <div class="card-body">
-                <form action="loginProcess" method="post">
+                <form action="<c:out value="${pageContext.servletContext.contextPath}"/>/loginProcess" method="post">
                     <caption>
                         <h2> Panel Logowania </h2>
                     </caption>
@@ -32,7 +32,7 @@
                     </fieldset>
                     <button type="submit" class="btn btn-success" style="background-color: #8edbf9; color: black">Zaloguj</button>
                 </form>
-                <form action="newUser" method="get">
+                <form action="<c:out value="${pageContext.servletContext.contextPath}"/>/newUser" method="get">
                     <button type="submit" class="btn btn-success" style="background-color: #8edbf9; color: black">Załóż konto</button>
                 </form>
             </div>

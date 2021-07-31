@@ -17,7 +17,7 @@ public class LoginDao {
             " FROM public.\"Librarian\" WHERE login = ? AND password = ?";
 
     private static final String SELECT_USER_BY_LOGIN_AND_PASS = "SELECT * FROM public.\"Library_user\"" +
-            "WHERE login = ? AND password = ?";
+            " WHERE login = ? AND password = ?";
 
 
     static Connection connection;

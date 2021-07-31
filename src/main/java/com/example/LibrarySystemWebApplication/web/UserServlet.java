@@ -115,7 +115,7 @@ public class UserServlet extends HttpServlet {
 
     private void addLibraryUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("addLibraryUserForm.jsp");
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("account/addLibraryUserForm.jsp");
         requestDispatcher.forward(request, response);
 
     }
@@ -156,7 +156,7 @@ public class UserServlet extends HttpServlet {
 
         request.setAttribute("libraryUser", libraryUser);
 
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("accountInfo.jsp");
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("account/accountInfo.jsp");
         requestDispatcher.forward(request, response);
     }
 
