@@ -56,7 +56,7 @@
 </div>
 <div class="row">
   <div class="container">
-    <form action="searchUser" method="get">
+    <form action="<c:out value="${pageContext.servletContext.contextPath}"/>/searchUser" method="get">
       <fieldset class="form-group">
         <input type="text" class="form-control" name="searchedUserId" placeholder="ID Użytkownika" required="required"/>
       </fieldset>

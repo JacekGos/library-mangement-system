@@ -108,7 +108,7 @@ public class UserServlet extends HttpServlet {
         libraryUserList = libraryUserDao.getLibraryUsersById(userId);
 
         request.setAttribute("libraryUserList", libraryUserList);
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("userList.jsp");
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("user/userList.jsp");
         requestDispatcher.forward(request, response);
 
     }
@@ -136,7 +136,7 @@ public class UserServlet extends HttpServlet {
         List<Borrowing> libraryUserBorrowingsList = borrowingDao.getAllBorrowingsByUserId(libraryUserId);
         request.setAttribute("libraryUserBorrowingsList", libraryUserBorrowingsList);
 
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("userData.jsp");
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("user/userData.jsp");
         requestDispatcher.forward(request, response);
 
     }
@@ -192,7 +192,7 @@ public class UserServlet extends HttpServlet {
         request.setAttribute("libraryUserBorrowingsList", libraryUserBorrowingsList);
 
         request.setAttribute("libraryUserId", libraryUserId);
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("userData.jsp");
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("user/userData.jsp");
         requestDispatcher.forward(request, response);
 
     }

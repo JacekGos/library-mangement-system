@@ -14,7 +14,7 @@
     response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
 %>
 
-<c:import url="navigationBar.jsp" />
+<c:import url="../navigationBar.jsp" />
 
 <div class="row">
     <div class="container">
@@ -57,17 +57,5 @@
         </table>
     </div>
 </div>
-<%--<div class="row">
-    <div class="container">
-        <form action="searchUser" method="get">
-            <fieldset class="form-group">
-                <input type="text" class="form-control" name="searchedUserId">
-            </fieldset>
-            <div class="container text-center">
-                <button type="submit" class="btn btn-success" style="background-color: #8edbf9; color: black">Wyszukaj</button>
-            </div>
-        </form>
-    </div>
-</div>--%>
 </body>
 </html>
