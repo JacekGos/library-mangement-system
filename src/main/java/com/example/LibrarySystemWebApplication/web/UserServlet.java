@@ -150,6 +150,12 @@ public class UserServlet extends HttpServlet {
         String login = loginGenerator(userName, userSurname);
         String password = request.getParameter("userPassword");
 
+        if (validateUserData(userName, userSurname, password) == false) {
+
+            addLibraryUser(request, response);
+            return;
+        }
+
         libraryUser = new LibraryUser(0, userName, userSurname, login, password, 2, 0.0);
 
         libraryUserDao.insertLibraryUser(libraryUser);
@@ -158,6 +164,18 @@ public class UserServlet extends HttpServlet {
 
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("account/accountInfo.jsp");
         requestDispatcher.forward(request, response);
+    }
+
+    private boolean validateUserData(String userName, String userSurname, String password) {
+
+        if (userName.equals(" ") || userSurname.equals(" ")
+                || userName.length() > 10 || userSurname.length() > 10
+                || password.equals(" ") || password.length() > 10) {
+
+            return false;
+        }
+
+        return true;
     }
 
     private String loginGenerator(String name, String surname) {
