@@ -14,7 +14,7 @@
     response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
 %>
 
-<c:import url="navigationBar.jsp" />
+<c:import url="../navigationBar.jsp" />
 
 <div class="row">
     <div class="container">
@@ -54,7 +54,7 @@
                         <td><a href="borrow?libraryElementId=<c:out value='${object.getLibraryElementId()}' />">Wypożycz</a></td>
                     </c:if>
                     <c:if test="${sessionScope.userType == 1}">
-                        <td><a href="edit?libraryElementId=<c:out value='${object.getLibraryElementId()}' />">Edytuj</a>
+                        <td><a href="editLibraryElement?libraryElementId=<c:out value='${object.getLibraryElementId()}' />">Edytuj</a>
                             &nbsp;&nbsp;&nbsp;&nbsp;
                             <a href="delete?libraryElementId=<c:out value='${object.getLibraryElementId()}' />">Usuń</a></td>
                     </c:if>

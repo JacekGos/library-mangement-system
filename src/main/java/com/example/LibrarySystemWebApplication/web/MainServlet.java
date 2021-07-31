@@ -38,14 +38,14 @@ public class MainServlet extends HttpServlet {
                 requestDispatcher = request.getRequestDispatcher("libraryElement");
                 requestDispatcher.forward(request, response);
                 break;
-            case "/edit":
-                action = "edit";
+            case "/editLibraryElement":
+                action = "editLibraryElement";
                 request.setAttribute("action", action);
                 requestDispatcher = request.getRequestDispatcher("libraryElement");
                 requestDispatcher.forward(request, response);
                 break;
-            case "/new":
-                action = "new";
+            case "/newLibraryElement":
+                action = "newLibraryElement";
                 request.setAttribute("action", action);
                 requestDispatcher = request.getRequestDispatcher("libraryElement");
                 requestDispatcher.forward(request, response);

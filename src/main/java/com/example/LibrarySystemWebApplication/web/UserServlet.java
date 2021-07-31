@@ -95,7 +95,7 @@ public class UserServlet extends HttpServlet {
         List<LibraryUser> libraryUserList = new ArrayList<LibraryUser>();
         libraryUserList = libraryUserDao.getAllLibraryUsers();
         request.setAttribute("libraryUserList", libraryUserList);
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("userList.jsp");
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("user/userList.jsp");
         requestDispatcher.forward(request, response);
 
     }

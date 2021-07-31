@@ -23,21 +23,21 @@
     <nav class="navbar navbar-expand-md navbar-dark"
          style="background-color: #3364ff">
         <div>
-            <a href="<%=request.getContextPath()%>/index.jsp" class="navbar-brand"> Strona główna </a>
+            <a href="<c:out value="${pageContext.servletContext.contextPath}"/>/index.jsp" class="navbar-brand"> Strona główna </a>
         </div>
         <ul class="navbar-nav">
-            <li><b><a href="<%=request.getContextPath()%>/libraryElementList"
+            <li><b><a href="<c:out value="${pageContext.servletContext.contextPath}"/>/libraryElementList"
                       class="nav-link">Wyszukaj w zbiorze</a></b></li>
             <c:if test="${sessionScope.userType == 1}">
-                <li><b><a href="<%=request.getContextPath()%>/new"
+                <li><b><a href="<c:out value="${pageContext.servletContext.contextPath}"/>/newLibraryElement"
                           class="nav-link">Dodaj pozycję zbioru</a></b></li>
-                <li><b><a href="<%=request.getContextPath()%>/userList"
+                <li><b><a href="<c:out value="${pageContext.servletContext.contextPath}"/>/userList"
                           class="nav-link">Opcje użytkowników</a></b></li>
-                <li><b><a href="<%=request.getContextPath()%>/requestList"
+                <li><b><a href="<c:out value="${pageContext.servletContext.contextPath}"/>/requestList"
                           class="nav-link">Zapytania</a></b></li>
             </c:if>
             <c:if test="${sessionScope.userType == 2}">
-                <li><b><a href="<%=request.getContextPath()%>/borrowingList"
+                <li><b><a href="<c:out value="${pageContext.servletContext.contextPath}"/>/borrowingList"
                           class="nav-link">Wypożyczenia</a></b></li>
             </c:if>
         </ul>

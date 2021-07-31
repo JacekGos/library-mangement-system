@@ -34,13 +34,13 @@ public class LibraryElementServlet extends HttpServlet {
             case "search":
                 searchedResultsLibraryElements(request, response);
                 break;
-            case "edit":
+            case "editLibraryElement":
                 showEditFrom(request, response);
                 break;
             case "delete":
                 doPost(request, response);
                 break;
-            case "new":
+            case "newLibraryElement":
                 addLibraryElement(request, response);
                 break;
             default:
@@ -76,7 +76,7 @@ public class LibraryElementServlet extends HttpServlet {
         List<LibraryElement> libraryElementsList = new ArrayList<LibraryElement>();
         libraryElementsList = libraryElementDao.getAllLibraryElements();
         request.setAttribute("libraryElementList", libraryElementsList);
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("searcher.jsp");
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("libraryElement/searcher.jsp");
         requestDispatcher.forward(request, response);
 
     }
@@ -87,7 +87,7 @@ public class LibraryElementServlet extends HttpServlet {
         String title = request.getParameter("searchedTitle");
         List<LibraryElement> libraryElementList = libraryElementDao.getLibraryElementsByTitle(title);
         request.setAttribute("libraryElementList", libraryElementList);
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("searcher.jsp");
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("libraryElement/searcher.jsp");
         requestDispatcher.forward(request, response);
 
     }
@@ -96,7 +96,7 @@ public class LibraryElementServlet extends HttpServlet {
 
         int libraryElementId = Integer.parseInt(request.getParameter("libraryElementId"));
         LibraryElement libraryElement = libraryElementDao.getLibraryElementById(libraryElementId);
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("libraryElementForm.jsp");
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("libraryElement/libraryElementForm.jsp");
         request.setAttribute("libraryElement", libraryElement);
         requestDispatcher.forward(request, response);
 
@@ -134,7 +134,7 @@ public class LibraryElementServlet extends HttpServlet {
 
     private void addLibraryElement(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("libraryElementForm.jsp");
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("libraryElement/libraryElementForm.jsp");
         requestDispatcher.forward(request, response);
 
     }
