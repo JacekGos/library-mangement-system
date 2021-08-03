@@ -52,16 +52,16 @@
                 <button type="submit" class="btn btn-success" style="background-color: #8edbf9; color: black">Zarejestruj</button>
             </form>
         </div>
-    </div>
-    <c:if test="${isDataIncorrect}">
-        <div class="card text-white bg-danger mb-3">
-            <div class="card-body">
-                <c:forEach var="message" items="${errorMessageList}">
-                    <c:out value="${message}"/><br>
-                </c:forEach>
+        <c:if test="${isDataIncorrect}">
+            <div class="card text-white bg-danger mb-3">
+                <div class="card-body">
+                    <c:forEach var="message" items="${errorMessageList}">
+                        <c:out value="${message}"/><br>
+                    </c:forEach>
+                </div>
             </div>
-        </div>
-    </c:if>
+        </c:if>
+    </div>
 </div>
 </body>
 </html>

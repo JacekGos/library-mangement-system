@@ -106,18 +106,44 @@ public class LibraryElementServlet extends HttpServlet implements DataInputHelpe
 
     private void updateLibraryElement(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+        List<String> errorMessageList = new ArrayList<>();
+        boolean isDataIncorrect = false;
         LibraryElement libraryElement = null;
+
         int libraryElementId = Integer.parseInt(request.getParameter("libraryElementId"));
         String title = request.getParameter("title");
         int sortId = Integer.parseInt(request.getParameter("sortId"));
         int statusId = Integer.parseInt(request.getParameter("statusId"));
         byte typeId = Byte.parseByte(request.getParameter("typeId"));
-        if (typeId == 1) {
-            int pagesNumber = Integer.parseInt(request.getParameter("pagesNumber"));
-            libraryElement = new Book(libraryElementId, typeId, title, sortId, statusId, pagesNumber);
-        } else if (typeId == 2) {
-            int durationTime = Integer.parseInt(request.getParameter("durationTime"));
-            libraryElement = new Movie(libraryElementId, typeId, title, sortId, statusId, durationTime);
+        String detailedInfo = request.getParameter("detailedInfo");
+
+        if (validateIntData(detailedInfo)) {
+            if (typeId == 1) {
+                int pagesNumber = Integer.parseInt(detailedInfo);
+                libraryElement = new Book(libraryElementId, typeId, title, sortId, statusId, pagesNumber);
+            } else if (typeId == 2) {
+                int durationTime = Integer.parseInt(detailedInfo);
+                libraryElement = new Movie(libraryElementId, typeId, title, sortId, statusId, durationTime);
+            }
+        }
+
+        if (!validateIntData(detailedInfo)) {
+            detailedInfo = "";
+        }
+        if (!validateStringData(title)) {
+            title = "";
+        }
+
+        errorMessageList = getErrorMessages(title, detailedInfo);
+
+        if (!errorMessageList.isEmpty()) {
+            isDataIncorrect = true;
+            request.setAttribute("isDataIncorrect", isDataIncorrect);
+            request.setAttribute("title", title);
+            request.setAttribute("detailedInfo", detailedInfo);
+            request.setAttribute("errorMessageList", errorMessageList);
+            showEditFrom(request, response);
+            return;
         }
 
         LibraryElementDao.updateLibraryElement(libraryElement);

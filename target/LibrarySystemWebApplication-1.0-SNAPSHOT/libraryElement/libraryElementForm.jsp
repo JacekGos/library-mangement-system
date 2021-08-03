@@ -45,29 +45,13 @@
                                value="<c:out value='${libraryElement.getTypeId()}' />"/>
                     </c:if>
 
+                    <fieldset class="form-group" accept-charset="utf-8">
+                        <label>Tytuł</label> <input type="text"
+                                                    value="<c:out value='${libraryElement.getTitle()}' />"
+                                                    class="form-control"
+                                                    name="title" required="required">
+                    </fieldset>
 
-                        <fieldset class="form-group" accept-charset="utf-8">
-                            <label>Tytuł</label> <input type="text"
-                                                        value="<c:out value='${libraryElement.getTitle()}' />"
-                                                        class="form-control"
-                                                        name="title" required="required">
-                        </fieldset>
-                    <%--<c:if test="${isDataIncorrect}">
-                        <fieldset class="form-group" accept-charset="utf-8">
-                            <label>Tytuł</label> <input type="text"
-                                                        value="<c:out value='${title}' />"
-                                                        class="form-control"
-                                                        name="title" required="required">
-                        </fieldset>
-                    </c:if>
-                    <c:if test="${!isDataIncorrect}">
-                        <fieldset class="form-group" accept-charset="utf-8">
-                            <label>Tytuł</label> <input type="text"
-                                                        value="<c:out value='${libraryElement.getTitle()}' />"
-                                                        class="form-control"
-                                                        name="title" required="required">
-                        </fieldset>
-                    </c:if>--%>
                     <c:if test="${libraryElement == null}">
                         <fieldset class="form-group">
                             <label for="typeId">Typ</label>
@@ -103,14 +87,14 @@
                         <fieldset class="form-group">
                             <label>Liczba stron</label> <input type="text"
                                                                value="<c:out value='${libraryElement.getPagesNumber()}' />"
-                                                               class="form-control" name="pagesNumber">
+                                                               class="form-control" name="detailedInfo">
                         </fieldset>
                     </c:if>
                     <c:if test="${libraryElement.getTypeId() == 2}">
                         <fieldset class="form-group">
                             <label>Czas trwania</label> <input type="text"
                                                                value="<c:out value='${libraryElement.getDurationTime()}' />"
-                                                               class="form-control" name="durationTime">
+                                                               class="form-control" name="detailedInfo">
                         </fieldset>
                     </c:if>
                     <button type="submit" class="btn btn-success" style="background-color: #8edbf9; color: black">
