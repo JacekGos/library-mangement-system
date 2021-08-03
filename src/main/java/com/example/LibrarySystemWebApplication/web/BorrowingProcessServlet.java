@@ -164,9 +164,30 @@ public class BorrowingProcessServlet extends HttpServlet {
     private void searchRequestByUserId(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        int userId = Integer.parseInt(request.getParameter("searchedUserId"));
+        List<String> errorMessageList = new ArrayList<>();
         List<Request> requestsList = new ArrayList<Request>();
-        requestsList = requestDao.getRequestsByUserId(userId);
+        boolean isDataIncorrect = false;
+
+        String searchedUserId = request.getParameter("searchedUserId");
+        if (validateIntData(searchedUserId)) {
+            int userId = Integer.parseInt(searchedUserId);
+            requestsList = requestDao.getRequestsByUserId(userId);
+        }
+
+        if (!validateIntData(searchedUserId)) {
+            searchedUserId = "";
+        }
+
+        errorMessageList = getErrorMessages(searchedUserId);
+
+        if (!errorMessageList.isEmpty()) {
+            isDataIncorrect = true;
+            request.setAttribute("isDataIncorrect", isDataIncorrect);
+            request.setAttribute("searchedUserId", searchedUserId);
+            request.setAttribute("errorMessageList", errorMessageList);
+            showRequestsList(request, response);
+            return;
+        }
 
         request.setAttribute("requestsList", requestsList);
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("borrowing/requests.jsp");
@@ -319,6 +340,25 @@ public class BorrowingProcessServlet extends HttpServlet {
         penalty = (double) (0.01 * minutes);
 
         return penalty;
+    }
+
+    private List<String> getErrorMessages(String searchedUserId) {
+
+        List<String> errorMessageList = new ArrayList<>();
+
+        if (!DataInputHelper.isConvertableToInt(searchedUserId)) {
+            errorMessageList.add("Nieprawdiłowy ID Użytkownika!");
+        }
+
+        return errorMessageList;
+    }
+
+    private boolean validateIntData(String userData) {
+
+        if (DataInputHelper.isConvertableToInt(userData)) {
+            return true;
+        }
+        return false;
     }
 
 }

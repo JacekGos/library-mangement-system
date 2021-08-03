@@ -41,7 +41,11 @@
                 </table>
             </div>
         </div>
-        <h2> Udaj się do punktu wypożyczeń </h2>
+        <div class="card text-white bg-primary mb-3">
+            <div class="card-body">
+                <h4> Udaj się do punktu wypożyczeń </h4>
+            </div>
+        </div>
     </c:if>
 
 </div>

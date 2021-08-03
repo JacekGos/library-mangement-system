@@ -125,6 +125,7 @@ public class UserServlet extends HttpServlet implements DataInputHelper {
             libraryUserList(request, response);
             return;
         }
+
         request.setAttribute("libraryUserList", libraryUserList);
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("user/userList.jsp");
         requestDispatcher.forward(request, response);
@@ -204,6 +205,70 @@ public class UserServlet extends HttpServlet implements DataInputHelper {
 
     }
 
+
+    private void userInfoListAfterEndBorrowing(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        int libraryUserId = Integer.parseInt(request.getParameter("libraryUserId"));
+        List<Borrowing> libraryUserBorrowingsList = borrowingDao.getAllBorrowingsByUserIdAndStatus(libraryUserId);
+        request.setAttribute("libraryUserBorrowingsList", libraryUserBorrowingsList);
+
+        request.setAttribute("libraryUserId", libraryUserId);
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("user/userData.jsp");
+        requestDispatcher.forward(request, response);
+
+    }
+
+    private void showPenaltyMenu(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        int libraryUserId = Integer.parseInt(request.getParameter("libraryUserId"));
+        double userPenalty = libraryUserDao.getLibraryUserPenalty(libraryUserId);
+
+        request.setAttribute("libraryUserId", libraryUserId);
+        request.setAttribute("userPenalty", userPenalty);
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("user/penaltyMenu.jsp");
+        requestDispatcher.forward(request, response);
+    }
+
+    private void regulatePenalty(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        List<String> errorMessageList = new ArrayList<>();
+        boolean isDataIncorrect = false;
+
+        int libraryUserId = Integer.parseInt(request.getParameter("libraryUserId"));
+        double userPenalty = libraryUserDao.getLibraryUserPenalty(libraryUserId);
+
+        Double returnedAmount = null;
+        String returnedAmountParam = request.getParameter("returnedAmount");
+        if (validateDoubleData(returnedAmountParam)) {
+            returnedAmount = Double.parseDouble(returnedAmountParam);
+        }
+
+        if (!validateDoubleData(returnedAmountParam) || !validateSignDoubleData(returnedAmount)) {
+            returnedAmountParam = "";
+        }
+
+        errorMessageList = getErrorMessages(returnedAmountParam, returnedAmount);
+
+        if (!errorMessageList.isEmpty()) {
+            isDataIncorrect = true;
+            request.setAttribute("isDataIncorrect", isDataIncorrect);
+            request.setAttribute("returnedAmountParam", returnedAmountParam);
+            request.setAttribute("errorMessageList", errorMessageList);
+            showPenaltyMenu(request, response);
+            return;
+        }
+
+        if (userPenalty <=  returnedAmount) {
+            userPenalty = 0;
+        } else {
+            userPenalty -= returnedAmount;
+        }
+
+        libraryUserDao.updateLibraryUserPenalty(userPenalty, libraryUserId);
+        libraryUserList(request, response);
+
+    }
+
     private List<String> getErrorMessages(String userName, String userSurname, String password) {
 
         List<String> errorMessageList = new ArrayList<>();
@@ -224,16 +289,30 @@ public class UserServlet extends HttpServlet implements DataInputHelper {
         return errorMessageList;
     }
 
-    private List<String> getErrorMessages(String searchedUserId) {
+    private List<String> getErrorMessages(String userData) {
 
         List<String> errorMessageList = new ArrayList<>();
 
-        if (!DataInputHelper.isConvertableToInt(searchedUserId)) {
+        if (!DataInputHelper.isConvertableToInt(userData)) {
             errorMessageList.add("Nieprawdiłowy ID Użytkownika!");
         }
 
         return errorMessageList;
     }
+
+    private List<String> getErrorMessages(String userData, Double userDoubleData) {
+
+        List<String> errorMessageList = new ArrayList<>();
+
+        if (!DataInputHelper.isConvertableToDouble(userData) || userDoubleData < 0) {
+            errorMessageList.add("Nieprawdiłowa kwota!");
+        }
+
+        return errorMessageList;
+    }
+
+
+
 
     private boolean validateStringData(String userData) {
 
@@ -247,6 +326,22 @@ public class UserServlet extends HttpServlet implements DataInputHelper {
     private boolean validateIntData(String userData) {
 
         if (DataInputHelper.isConvertableToInt(userData)) {
+            return true;
+        }
+        return false;
+    }
+
+    private boolean validateDoubleData(String userData) {
+
+        if (DataInputHelper.isConvertableToDouble(userData)) {
+            return true;
+        }
+        return false;
+    }
+
+    private boolean validateSignDoubleData(Double userData) {
+
+        if (userData >= 0) {
             return true;
         }
         return false;
@@ -277,42 +372,5 @@ public class UserServlet extends HttpServlet implements DataInputHelper {
 
     }
 
-    private void userInfoListAfterEndBorrowing(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        int libraryUserId = Integer.parseInt(request.getParameter("libraryUserId"));
-        List<Borrowing> libraryUserBorrowingsList = borrowingDao.getAllBorrowingsByUserIdAndStatus(libraryUserId);
-        request.setAttribute("libraryUserBorrowingsList", libraryUserBorrowingsList);
-
-        request.setAttribute("libraryUserId", libraryUserId);
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("user/userData.jsp");
-        requestDispatcher.forward(request, response);
-
-    }
-
-    private void showPenaltyMenu(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-        int libraryUserId = Integer.parseInt(request.getParameter("libraryUserId"));
-        double userPenalty = libraryUserDao.getLibraryUserPenalty(libraryUserId);
-
-        request.setAttribute("libraryUserId", libraryUserId);
-        request.setAttribute("userPenalty", userPenalty);
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("user/penaltyMenu.jsp");
-        requestDispatcher.forward(request, response);
-    }
-
-    private void regulatePenalty(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-        int libraryUserId = Integer.parseInt(request.getParameter("libraryUserId"));
-        double userPenalty = libraryUserDao.getLibraryUserPenalty(libraryUserId);
-        double returnedAmount = Double.parseDouble(request.getParameter("returnedAmount"));
-        if (userPenalty <=  returnedAmount) {
-            userPenalty = 0;
-        } else {
-            userPenalty -= returnedAmount;
-        }
-
-        libraryUserDao.updateLibraryUserPenalty(userPenalty, libraryUserId);
-        libraryUserList(request, response);
-
-    }
 }

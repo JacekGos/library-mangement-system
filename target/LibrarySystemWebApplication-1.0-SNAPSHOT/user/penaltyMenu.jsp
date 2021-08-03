@@ -30,18 +30,27 @@
                 </tr>
                 </tbody>
             </table>
-                <form action="regulatePenalty" method="post">
-                    <input type="hidden" name="libraryUserId"
-                           value="<c:out value='${libraryUserId}' />"/>
-                    <fieldset class="form-group">
-                        <label>Kwota oddana</label> <input type="text"
-                                                   class="form-control"
-                                                   name="returnedAmount" required="required">
-                    </fieldset>
-                    <div class="container text-center">
-                        <button type="submit" class="btn btn-success" style="background-color: #8edbf9; color: black">Potwierdź</button>
+            <form action="regulatePenalty" method="post">
+                <input type="hidden" name="libraryUserId"
+                       value="<c:out value='${libraryUserId}' />"/>
+                <fieldset class="form-group">
+                    <label>Kwota oddana</label> <input type="text"
+                                               class="form-control"
+                                               name="returnedAmount" required="required">
+                </fieldset>
+                <div class="container text-center">
+                    <button type="submit" class="btn btn-success" style="background-color: #8edbf9; color: black">Potwierdź</button>
+                </div>
+            </form>
+            <c:if test="${isDataIncorrect}">
+                <div class="card text-white bg-danger mb-3">
+                    <div class="card-body">
+                        <c:forEach var="message" items="${errorMessageList}">
+                            <c:out value="${message}"/><br>
+                        </c:forEach>
                     </div>
-                </form>
+                </div>
+            </c:if>
         </div>
     </div>
 </div>

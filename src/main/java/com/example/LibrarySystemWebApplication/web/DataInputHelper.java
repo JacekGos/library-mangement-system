@@ -40,4 +40,15 @@ public interface DataInputHelper {
         }
 
     }
+
+    static boolean isConvertableToDouble(String stringData) {
+
+        try {
+            Double.parseDouble(stringData);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+
+    }
 }
