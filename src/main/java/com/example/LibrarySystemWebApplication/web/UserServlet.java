@@ -21,7 +21,7 @@ import java.util.List;
 import static java.lang.Math.abs;
 
 @WebServlet(name = "libraryUserServlet", value = "/libraryUser")
-public class UserServlet extends HttpServlet {
+public class UserServlet extends HttpServlet implements dataInputHelper{
 
     private LibraryElementDao libraryElementDao = new LibraryElementDao();
     private LibraryUserDao libraryUserDao = new LibraryUserDao();
@@ -144,14 +144,20 @@ public class UserServlet extends HttpServlet {
     private void insertLibraryUser(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
 
+        List<String> errorMessageList = new ArrayList<>();
+        boolean isDataCorrect = true;
         LibraryUser libraryUser = null;
         String userName = request.getParameter("userName");
         String userSurname = request.getParameter("userSurname");
         String login = loginGenerator(userName, userSurname);
         String password = request.getParameter("userPassword");
 
-        if (validateUserData(userName, userSurname, password) == false) {
+        errorMessageList = validateUserData(userName, userSurname, password);
 
+        if (!errorMessageList.isEmpty()) {
+            isDataCorrect = false;
+            request.setAttribute("isDataCorrect", isDataCorrect);
+            request.setAttribute("errorMessageList", errorMessageList);
             addLibraryUser(request, response);
             return;
         }
@@ -161,21 +167,29 @@ public class UserServlet extends HttpServlet {
         libraryUserDao.insertLibraryUser(libraryUser);
 
         request.setAttribute("libraryUser", libraryUser);
-
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("account/accountInfo.jsp");
         requestDispatcher.forward(request, response);
+
     }
 
-    private boolean validateUserData(String userName, String userSurname, String password) {
+    private List<String> validateUserData(String userName, String userSurname, String password) {
 
-        if (userName.equals(" ") || userSurname.equals(" ")
-                || userName.length() > 10 || userSurname.length() > 10
-                || password.equals(" ") || password.length() > 10) {
+        List<String> errorMessageList = new ArrayList<>();
 
-            return false;
+        if (dataInputHelper.checkEmpty(userName) || dataInputHelper.isFirstCharEmpty(userName)
+                || dataInputHelper.checkLength(userName)) {
+            errorMessageList.add("Nieprawdiłowe imię!");
+        }
+        if (dataInputHelper.checkEmpty(userSurname) || dataInputHelper.isFirstCharEmpty(userSurname)
+                || dataInputHelper.checkLength(userSurname)) {
+            errorMessageList.add("Nieprawdiłowe nazwisko!");
+        }
+        if (dataInputHelper.checkEmpty(password) || dataInputHelper.isFirstCharEmpty(password)
+                || dataInputHelper.checkLength(password)) {
+            errorMessageList.add("Nieprawdiłowe hasło!");
         }
 
-        return true;
+        return errorMessageList;
     }
 
     private String loginGenerator(String name, String surname) {

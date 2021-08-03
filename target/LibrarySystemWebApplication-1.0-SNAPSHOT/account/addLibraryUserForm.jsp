@@ -30,8 +30,9 @@
 
                 <fieldset class="form-group">
                     <label>Imię</label> <input type="text"
-                                                    class="form-control"
-                                                    name="userName" required="required">
+                                               class="form-control"
+                                               name="userName" required="required"
+                                               size="20">
                 </fieldset>
 
                 <fieldset class="form-group">
@@ -50,6 +51,15 @@
             </form>
         </div>
     </div>
+    <c:if test="${!isDataCorrect}">
+        <div class="card text-white bg-danger mb-3">
+            <div class="card-body" bac>
+                <c:forEach var="message" items="${errorMessageList}">
+                    <c:out value="${message}"/><br>
+                </c:forEach>
+            </div>
+        </div>
+    </c:if>
 </div>
 </body>
 </html>

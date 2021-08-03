@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet(name = "libraryElementServlet", value = "/libraryElement")
-public class LibraryElementServlet extends HttpServlet {
+public class LibraryElementServlet extends HttpServlet implements dataInputHelper {
 
     private LibraryElementDao libraryElementDao = new LibraryElementDao();
 

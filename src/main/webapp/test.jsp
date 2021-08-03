@@ -11,10 +11,9 @@
 </head>
 <body>
     Testowa strona:
-    <c:out value="${salary}"/>
-   <%-- <c:set var="enablebtnRelatedDocs" value="${libraryUserId}" scope="request"/>
-
-    <c:out value="${requestScope.enablebtnRelatedDocs }"/>--%>
+    <c:forEach var="message" items="${errorMessageList}">
+        <c:out value="${message}"/> <br>
+    </c:forEach>
 
 </body>
 </html>
