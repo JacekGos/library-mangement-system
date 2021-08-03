@@ -19,7 +19,7 @@ import java.util.List;
 import static java.lang.Math.abs;
 
 @WebServlet(name = "libraryUserServlet", value = "/libraryUser")
-public class UserServlet extends HttpServlet implements dataInputHelper{
+public class UserServlet extends HttpServlet implements DataInputHelper {
 
     private LibraryElementDao libraryElementDao = new LibraryElementDao();
     private LibraryUserDao libraryUserDao = new LibraryUserDao();
@@ -144,9 +144,6 @@ public class UserServlet extends HttpServlet implements dataInputHelper{
 
         List<String> errorMessageList = new ArrayList<>();
         boolean isDataIncorrect = false;
-      /*  boolean isNameIncorrect = false;
-        boolean isSurnameIncorrect = false;
-        boolean isPaswordIncorrect = false;*/
         LibraryUser libraryUser = null;
         String userName = request.getParameter("userName");
         String userSurname = request.getParameter("userSurname");
@@ -154,13 +151,13 @@ public class UserServlet extends HttpServlet implements dataInputHelper{
 
         errorMessageList = getErrorMessages(userName, userSurname, userPassword);
 
-        if (validateUserData(userName)) {
+        if (!validateStringData(userName)) {
             userName = "";
         }
-        if (validateUserData(userSurname)) {
+        if (!validateStringData(userSurname)) {
             userSurname = "";
         }
-        if (validateUserData(userPassword)) {
+        if (!validateStringData(userPassword)) {
             userPassword = "";
         }
 
@@ -191,29 +188,29 @@ public class UserServlet extends HttpServlet implements dataInputHelper{
 
         List<String> errorMessageList = new ArrayList<>();
 
-        if (dataInputHelper.checkEmpty(userName) || dataInputHelper.isFirstCharEmpty(userName)
-                || dataInputHelper.checkLength(userName)) {
+        if (DataInputHelper.checkEmpty(userName) || DataInputHelper.isFirstCharEmpty(userName)
+                || DataInputHelper.checkLength(userName)) {
             errorMessageList.add("Nieprawdiłowe imię!");
         }
-        if (dataInputHelper.checkEmpty(userSurname) || dataInputHelper.isFirstCharEmpty(userSurname)
-                || dataInputHelper.checkLength(userSurname)) {
+        if (DataInputHelper.checkEmpty(userSurname) || DataInputHelper.isFirstCharEmpty(userSurname)
+                || DataInputHelper.checkLength(userSurname)) {
             errorMessageList.add("Nieprawdiłowe nazwisko!");
         }
-        if (dataInputHelper.checkEmpty(password) || dataInputHelper.isFirstCharEmpty(password)
-                || dataInputHelper.checkLength(password)) {
+        if (DataInputHelper.checkEmpty(password) || DataInputHelper.isFirstCharEmpty(password)
+                || DataInputHelper.checkLength(password)) {
             errorMessageList.add("Nieprawdiłowe hasło!");
         }
 
         return errorMessageList;
     }
 
-    private boolean validateUserData(String userData) {
+    private boolean validateStringData(String userData) {
 
-        if (dataInputHelper.checkEmpty(userData) || dataInputHelper.isFirstCharEmpty(userData)
-                || dataInputHelper.checkLength(userData)) {
-            return true;
+        if (DataInputHelper.checkEmpty(userData) || DataInputHelper.isFirstCharEmpty(userData)
+                || DataInputHelper.checkLength(userData)) {
+            return false;
         }
-        return false;
+        return true;
     }
 
 

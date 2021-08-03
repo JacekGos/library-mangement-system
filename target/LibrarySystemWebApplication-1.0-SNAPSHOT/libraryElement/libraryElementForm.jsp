@@ -15,7 +15,7 @@
 <%
     response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
 %>
-<c:import url="../navigationBar.jsp" />
+<c:import url="../navigationBar.jsp"/>
 <div class="container col-md-5">
     <div class="card">
         <div class="card-body">
@@ -45,13 +45,29 @@
                                value="<c:out value='${libraryElement.getTypeId()}' />"/>
                     </c:if>
 
-                    <fieldset class="form-group" accept-charset="utf-8">
-                        <label>Tytuł</label> <input type="text"
-                                                    value="<c:out value='${libraryElement.getTitle()}' />"
-                                                    class="form-control"
-                                                    name="title" required="required">
-                    </fieldset>
 
+                        <fieldset class="form-group" accept-charset="utf-8">
+                            <label>Tytuł</label> <input type="text"
+                                                        value="<c:out value='${libraryElement.getTitle()}' />"
+                                                        class="form-control"
+                                                        name="title" required="required">
+                        </fieldset>
+                    <%--<c:if test="${isDataIncorrect}">
+                        <fieldset class="form-group" accept-charset="utf-8">
+                            <label>Tytuł</label> <input type="text"
+                                                        value="<c:out value='${title}' />"
+                                                        class="form-control"
+                                                        name="title" required="required">
+                        </fieldset>
+                    </c:if>
+                    <c:if test="${!isDataIncorrect}">
+                        <fieldset class="form-group" accept-charset="utf-8">
+                            <label>Tytuł</label> <input type="text"
+                                                        value="<c:out value='${libraryElement.getTitle()}' />"
+                                                        class="form-control"
+                                                        name="title" required="required">
+                        </fieldset>
+                    </c:if>--%>
                     <c:if test="${libraryElement == null}">
                         <fieldset class="form-group">
                             <label for="typeId">Typ</label>
@@ -78,10 +94,10 @@
                     <c:if test="${libraryElement == null}">
                         <fieldset class="form-group">
                             <label>Liczba stron / Czas trwania[min]</label>
-                            <input type="text" class="form-control" name="detailedInfo">
+                            <input type="text" value="<c:out value='${detailedInfo}' />"
+                                   class="form-control" name="detailedInfo" required="required">
                         </fieldset>
                     </c:if>
-
 
                     <c:if test="${libraryElement.getTypeId() == 1}">
                         <fieldset class="form-group">
@@ -97,8 +113,19 @@
                                                                class="form-control" name="durationTime">
                         </fieldset>
                     </c:if>
-                    <button type="submit" class="btn btn-success" style="background-color: #8edbf9; color: black">Zapisz</button>
+                    <button type="submit" class="btn btn-success" style="background-color: #8edbf9; color: black">
+                        Zapisz
+                    </button>
                 </form>
+                <c:if test="${isDataIncorrect}">
+                    <div class="card text-white bg-danger mb-3">
+                        <div class="card-body">
+                            <c:forEach var="message" items="${errorMessageList}">
+                                <c:out value="${message}"/><br>
+                            </c:forEach>
+                        </div>
+                    </div>
+                </c:if>
         </div>
     </div>
 </div>

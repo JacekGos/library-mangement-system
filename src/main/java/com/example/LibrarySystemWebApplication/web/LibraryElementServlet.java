@@ -12,12 +12,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet(name = "libraryElementServlet", value = "/libraryElement")
-public class LibraryElementServlet extends HttpServlet implements dataInputHelper {
+public class LibraryElementServlet extends HttpServlet implements DataInputHelper {
 
     private LibraryElementDao libraryElementDao = new LibraryElementDao();
 
@@ -143,23 +142,79 @@ public class LibraryElementServlet extends HttpServlet implements dataInputHelpe
     }
 
     private void insertLibraryElement(HttpServletRequest request, HttpServletResponse response)
-            throws  IOException {
+            throws IOException, ServletException {
 
+        List<String> errorMessageList = new ArrayList<>();
+        boolean isDataIncorrect = false;
         LibraryElement libraryElement = null;
+
+        String detailedInfo = request.getParameter("detailedInfo");
         String title = request.getParameter("title");
         byte typeId = Byte.parseByte(request.getParameter("typeId"));
         int sortId = Integer.parseInt(request.getParameter("sortId"));
+        if (validateIntData(detailedInfo)) {
+            if (typeId == 1) {
+                int pagesNumber = Integer.parseInt(detailedInfo);
+                libraryElement = new Book(0, typeId, title, sortId, 1, pagesNumber);
+            } else if (typeId == 2) {
+                int durationTime = Integer.parseInt(detailedInfo);
+                libraryElement = new Movie(0, typeId, title, sortId, 1, durationTime);
+            }
+        }
 
-        if (typeId == 1) {
-            int pagesNumber = Integer.parseInt(request.getParameter("detailedInfo"));
-            libraryElement = new Book(0, typeId, title, sortId, 1, pagesNumber);
-        } else if (typeId == 2) {
-            int durationTime = Integer.parseInt(request.getParameter("detailedInfo"));
-            libraryElement = new Movie(0, typeId, title, sortId, 1, durationTime);
+        if (!validateIntData(detailedInfo)) {
+            detailedInfo = "";
+        }
+        if (!validateStringData(title)) {
+            title = "";
+        }
+
+        errorMessageList = getErrorMessages(title, detailedInfo);
+
+        if (!errorMessageList.isEmpty()) {
+            isDataIncorrect = true;
+            request.setAttribute("isDataIncorrect", isDataIncorrect);
+            request.setAttribute("title", title);
+            request.setAttribute("detailedInfo", detailedInfo);
+            request.setAttribute("errorMessageList", errorMessageList);
+            addLibraryElement(request, response);
+            return;
         }
 
         libraryElementDao.insertLibraryElement(libraryElement);
         response.sendRedirect("index.jsp");
     }
+
+    public List<String> getErrorMessages(String title, String detailedInfo) {
+
+        List<String> errorMessageList = new ArrayList<>();
+
+        if (DataInputHelper.checkEmpty(title) || DataInputHelper.isFirstCharEmpty(title)
+                || DataInputHelper.checkLength(title)) {
+            errorMessageList.add("Nieprawdiłowy tytuł!");
+        }
+        if (!DataInputHelper.isConvertableToInt(detailedInfo)) {
+            errorMessageList.add("Nieprawdiłowy Liczba stron / Czas trwania!");
+        }
+        return errorMessageList;
+    }
+
+    private boolean validateIntData(String detailedInfo) {
+
+        if (DataInputHelper.isConvertableToInt(detailedInfo)) {
+            return true;
+        }
+        return false;
+    }
+
+    private boolean validateStringData(String userData) {
+
+        if (DataInputHelper.checkEmpty(userData) || DataInputHelper.isFirstCharEmpty(userData)
+                || DataInputHelper.checkLength(userData)) {
+            return false;
+        }
+        return true;
+    }
+
 
 }

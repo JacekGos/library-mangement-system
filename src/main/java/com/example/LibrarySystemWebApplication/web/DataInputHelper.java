@@ -1,6 +1,8 @@
 package com.example.LibrarySystemWebApplication.web;
 
-public interface dataInputHelper {
+import java.util.List;
+
+public interface DataInputHelper {
 
     static boolean checkEmpty(String inputString) {
 
@@ -28,4 +30,14 @@ public interface dataInputHelper {
         return false;
     }
 
+    static boolean isConvertableToInt(String stringData) {
+
+        try {
+            Integer.parseInt(stringData);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+
+    }
 }
