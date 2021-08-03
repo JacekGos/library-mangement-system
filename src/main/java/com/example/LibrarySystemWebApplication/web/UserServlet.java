@@ -101,10 +101,30 @@ public class UserServlet extends HttpServlet implements DataInputHelper {
     private void searchLibraryUser(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        int userId = Integer.parseInt(request.getParameter("searchedUserId"));
+        List<String> errorMessageList = new ArrayList<>();
         List<LibraryUser> libraryUserList = new ArrayList<LibraryUser>();
-        libraryUserList = libraryUserDao.getLibraryUsersById(userId);
+        boolean isDataIncorrect = false;
 
+        String searchedUserId = request.getParameter("searchedUserId");
+        if (validateIntData(searchedUserId)) {
+            int userId = Integer.parseInt(searchedUserId);
+            libraryUserList = libraryUserDao.getLibraryUsersById(userId);
+        }
+
+        if (!validateIntData(searchedUserId)) {
+            searchedUserId = "";
+        }
+
+        errorMessageList = getErrorMessages(searchedUserId);
+
+        if (!errorMessageList.isEmpty()) {
+            isDataIncorrect = true;
+            request.setAttribute("isDataIncorrect", isDataIncorrect);
+            request.setAttribute("searchedUserId", searchedUserId);
+            request.setAttribute("errorMessageList", errorMessageList);
+            libraryUserList(request, response);
+            return;
+        }
         request.setAttribute("libraryUserList", libraryUserList);
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("user/userList.jsp");
         requestDispatcher.forward(request, response);
@@ -204,6 +224,17 @@ public class UserServlet extends HttpServlet implements DataInputHelper {
         return errorMessageList;
     }
 
+    private List<String> getErrorMessages(String searchedUserId) {
+
+        List<String> errorMessageList = new ArrayList<>();
+
+        if (!DataInputHelper.isConvertableToInt(searchedUserId)) {
+            errorMessageList.add("Nieprawdiłowy ID Użytkownika!");
+        }
+
+        return errorMessageList;
+    }
+
     private boolean validateStringData(String userData) {
 
         if (DataInputHelper.checkEmpty(userData) || DataInputHelper.isFirstCharEmpty(userData)
@@ -213,6 +244,13 @@ public class UserServlet extends HttpServlet implements DataInputHelper {
         return true;
     }
 
+    private boolean validateIntData(String userData) {
+
+        if (DataInputHelper.isConvertableToInt(userData)) {
+            return true;
+        }
+        return false;
+    }
 
     private String loginGenerator(String name, String surname) {
 

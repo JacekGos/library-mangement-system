@@ -211,7 +211,7 @@ public class LibraryElementServlet extends HttpServlet implements DataInputHelpe
         response.sendRedirect("index.jsp");
     }
 
-    public List<String> getErrorMessages(String title, String detailedInfo) {
+    private List<String> getErrorMessages(String title, String detailedInfo) {
 
         List<String> errorMessageList = new ArrayList<>();
 
@@ -225,9 +225,9 @@ public class LibraryElementServlet extends HttpServlet implements DataInputHelpe
         return errorMessageList;
     }
 
-    private boolean validateIntData(String detailedInfo) {
+    private boolean validateIntData(String userData) {
 
-        if (DataInputHelper.isConvertableToInt(detailedInfo)) {
+        if (DataInputHelper.isConvertableToInt(userData)) {
             return true;
         }
         return false;
