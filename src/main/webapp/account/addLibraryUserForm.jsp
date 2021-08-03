@@ -28,6 +28,7 @@
                     </h2>
                 </caption>
 
+                <c:if test="${isDataIncorrect}">
                 <fieldset class="form-group">
                     <label>Imię</label> <input type="text"
                                                class="form-control"
@@ -51,9 +52,9 @@
             </form>
         </div>
     </div>
-    <c:if test="${!isDataCorrect}">
+    <c:if test="${isDataIncorrect}">
         <div class="card text-white bg-danger mb-3">
-            <div class="card-body" bac>
+            <div class="card-body">
                 <c:forEach var="message" items="${errorMessageList}">
                     <c:out value="${message}"/><br>
                 </c:forEach>

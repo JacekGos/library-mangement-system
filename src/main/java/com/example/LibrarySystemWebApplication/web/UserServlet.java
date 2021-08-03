@@ -145,7 +145,7 @@ public class UserServlet extends HttpServlet implements dataInputHelper{
             throws IOException, ServletException {
 
         List<String> errorMessageList = new ArrayList<>();
-        boolean isDataCorrect = true;
+        boolean isDataIncorrect = false;
         LibraryUser libraryUser = null;
         String userName = request.getParameter("userName");
         String userSurname = request.getParameter("userSurname");
@@ -155,8 +155,8 @@ public class UserServlet extends HttpServlet implements dataInputHelper{
         errorMessageList = validateUserData(userName, userSurname, password);
 
         if (!errorMessageList.isEmpty()) {
-            isDataCorrect = false;
-            request.setAttribute("isDataCorrect", isDataCorrect);
+            isDataIncorrect = true;
+            request.setAttribute("isDataIncorrect", isDataIncorrect);
             request.setAttribute("errorMessageList", errorMessageList);
             addLibraryUser(request, response);
             return;

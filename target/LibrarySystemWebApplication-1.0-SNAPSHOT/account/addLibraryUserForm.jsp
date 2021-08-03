@@ -51,9 +51,9 @@
             </form>
         </div>
     </div>
-    <c:if test="${!isDataCorrect}">
+    <c:if test="${isDataCorrect}">
         <div class="card text-white bg-danger mb-3">
-            <div class="card-body" bac>
+            <div class="card-body">
                 <c:forEach var="message" items="${errorMessageList}">
                     <c:out value="${message}"/><br>
                 </c:forEach>
