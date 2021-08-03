@@ -12,7 +12,7 @@ public interface dataInputHelper {
 
     static boolean checkLength(String inputString) {
 
-        if (inputString.length() > 20) {
+        if (inputString.length() > 30) {
             return true;
         }
         return false;

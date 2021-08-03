@@ -6,7 +6,6 @@ import com.example.LibrarySystemWebApplication.dao.LibraryUserDao;
 import com.example.LibrarySystemWebApplication.dao.RequestDao;
 import com.example.LibrarySystemWebApplication.model.*;
 
-import javax.jms.Session;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,7 +13,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -146,23 +144,40 @@ public class UserServlet extends HttpServlet implements dataInputHelper{
 
         List<String> errorMessageList = new ArrayList<>();
         boolean isDataIncorrect = false;
+      /*  boolean isNameIncorrect = false;
+        boolean isSurnameIncorrect = false;
+        boolean isPaswordIncorrect = false;*/
         LibraryUser libraryUser = null;
         String userName = request.getParameter("userName");
         String userSurname = request.getParameter("userSurname");
-        String login = loginGenerator(userName, userSurname);
-        String password = request.getParameter("userPassword");
+        String userPassword = request.getParameter("userPassword");
 
-        errorMessageList = validateUserData(userName, userSurname, password);
+        errorMessageList = getErrorMessages(userName, userSurname, userPassword);
+
+        if (validateUserData(userName)) {
+            userName = "";
+        }
+        if (validateUserData(userSurname)) {
+            userSurname = "";
+        }
+        if (validateUserData(userPassword)) {
+            userPassword = "";
+        }
 
         if (!errorMessageList.isEmpty()) {
             isDataIncorrect = true;
             request.setAttribute("isDataIncorrect", isDataIncorrect);
+            request.setAttribute("userName", userName);
+            request.setAttribute("userSurname", userSurname);
+            request.setAttribute("userPassword", userPassword);
             request.setAttribute("errorMessageList", errorMessageList);
             addLibraryUser(request, response);
             return;
         }
 
-        libraryUser = new LibraryUser(0, userName, userSurname, login, password, 2, 0.0);
+        String login = loginGenerator(userName, userSurname);
+
+        libraryUser = new LibraryUser(0, userName, userSurname, login, userPassword, 2, 0.0);
 
         libraryUserDao.insertLibraryUser(libraryUser);
 
@@ -172,7 +187,7 @@ public class UserServlet extends HttpServlet implements dataInputHelper{
 
     }
 
-    private List<String> validateUserData(String userName, String userSurname, String password) {
+    private List<String> getErrorMessages(String userName, String userSurname, String password) {
 
         List<String> errorMessageList = new ArrayList<>();
 
@@ -191,6 +206,16 @@ public class UserServlet extends HttpServlet implements dataInputHelper{
 
         return errorMessageList;
     }
+
+    private boolean validateUserData(String userData) {
+
+        if (dataInputHelper.checkEmpty(userData) || dataInputHelper.isFirstCharEmpty(userData)
+                || dataInputHelper.checkLength(userData)) {
+            return true;
+        }
+        return false;
+    }
+
 
     private String loginGenerator(String name, String surname) {
 

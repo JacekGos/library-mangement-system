@@ -85,6 +85,9 @@ public class LibraryElementServlet extends HttpServlet implements dataInputHelpe
             throws ServletException, IOException {
 
         String title = request.getParameter("searchedTitle");
+
+
+
         List<LibraryElement> libraryElementList = libraryElementDao.getLibraryElementsByTitle(title);
         request.setAttribute("libraryElementList", libraryElementList);
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("libraryElement/searcher.jsp");
@@ -160,6 +163,3 @@ public class LibraryElementServlet extends HttpServlet implements dataInputHelpe
     }
 
 }
-
-   /* PrintWriter out = response.getWriter();
-                out.println("action");*/

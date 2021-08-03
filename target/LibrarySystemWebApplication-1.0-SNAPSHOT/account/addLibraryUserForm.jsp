@@ -30,28 +30,30 @@
 
                 <fieldset class="form-group">
                     <label>Imię</label> <input type="text"
+                                               value="<c:out value='${userName}' />"
                                                class="form-control"
                                                name="userName" required="required"
                                                size="20">
                 </fieldset>
-
                 <fieldset class="form-group">
                     <label>Nazwisko</label> <input type="text"
-                                                     class="form-control"
-                                                     name="userSurname" required="required">
+                                                   value="<c:out value='${userSurname}' />"
+                                                   class="form-control"
+                                                   name="userSurname" required="required">
                 </fieldset>
 
                 <fieldset class="form-group">
                     <label>Hasło</label> <input type="password"
-                                                       class="form-control"
-                                                       name="userPassword" required="required">
+                                                value="<c:out value='${userPassword}' />"
+                                                class="form-control"
+                                                name="userPassword" required="required">
                 </fieldset>
 
                 <button type="submit" class="btn btn-success" style="background-color: #8edbf9; color: black">Zarejestruj</button>
             </form>
         </div>
     </div>
-    <c:if test="${isDataCorrect}">
+    <c:if test="${isDataIncorrect}">
         <div class="card text-white bg-danger mb-3">
             <div class="card-body">
                 <c:forEach var="message" items="${errorMessageList}">
