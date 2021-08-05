@@ -99,6 +99,7 @@ public class LibraryElementServlet extends HttpServlet implements DataInputHelpe
         int libraryElementId = Integer.parseInt(request.getParameter("libraryElementId"));
         LibraryElement libraryElement = libraryElementDao.getLibraryElementById(libraryElementId);
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("libraryElement/libraryElementForm.jsp");
+        request.setAttribute("isDataUpdating", true);
         request.setAttribute("libraryElement", libraryElement);
         requestDispatcher.forward(request, response);
 
@@ -139,6 +140,7 @@ public class LibraryElementServlet extends HttpServlet implements DataInputHelpe
         if (!errorMessageList.isEmpty()) {
             isDataIncorrect = true;
             request.setAttribute("isDataIncorrect", isDataIncorrect);
+            request.setAttribute("isDataUpdating", true);
             request.setAttribute("title", title);
             request.setAttribute("detailedInfo", detailedInfo);
             request.setAttribute("errorMessageList", errorMessageList);

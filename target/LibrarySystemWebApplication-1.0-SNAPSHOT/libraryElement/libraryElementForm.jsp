@@ -45,12 +45,30 @@
                                value="<c:out value='${libraryElement.getTypeId()}' />"/>
                     </c:if>
 
-                    <fieldset class="form-group" accept-charset="utf-8">
-                        <label>Tytuł</label> <input type="text"
-                                                    value="<c:out value='${libraryElement.getTitle()}' />"
-                                                    class="form-control"
-                                                    name="title" required="required">
-                    </fieldset>
+                    <c:if test="${isDataIncorrect && !isDataUpdating}">
+                        <fieldset class="form-group" accept-charset="utf-8">
+                            <label>Tytuł</label> <input type="text"
+                                                        value="<c:out value='${title}' />"
+                                                        class="form-control"
+                                                        name="title" required="required">
+                        </fieldset>
+                    </c:if>
+                    <c:if test="${isDataIncorrect && isDataUpdating}">
+                        <fieldset class="form-group" accept-charset="utf-8">
+                            <label>Tytuł</label> <input type="text"
+                                                        value="<c:out value='${libraryElement.getTitle()}' />"
+                                                        class="form-control"
+                                                        name="title" required="required">
+                        </fieldset>
+                    </c:if>
+                    <c:if test="${!isDataIncorrect}">
+                        <fieldset class="form-group" accept-charset="utf-8">
+                            <label>Tytuł</label> <input type="text"
+                                                        value="<c:out value='${libraryElement.getTitle()}' />"
+                                                        class="form-control"
+                                                        name="title" required="required">
+                        </fieldset>
+                    </c:if>
 
                     <c:if test="${libraryElement == null}">
                         <fieldset class="form-group">
