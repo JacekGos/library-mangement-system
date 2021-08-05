@@ -11,12 +11,7 @@
 </head>
 <body>
     Testowa strona: <br>
-    <c:out value="${isDataIncorrect}"/> <br>
-    <c:out value="${title}"/> <br>
-    <c:out value="${detailedInfo}"/> <br>
-    <c:forEach var="message" items="${errorMessageList}">
-        <c:out value="${message}"/> <br>
-    </c:forEach>
+
 
 </body>
 </html>

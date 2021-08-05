@@ -17,6 +17,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -332,12 +334,16 @@ public class BorrowingProcessServlet extends HttpServlet {
 
     private double calculatePenalty(long differenceTime) {
 
-        double penalty = 0.0f;
+        double penaltyToBeTruncated = 0.0f;
 
         int calculatedSeconds = (int) (differenceTime / 1000);
         int minutes = calculatedSeconds / 60;
 
-        penalty = (double) (0.01 * minutes);
+        penaltyToBeTruncated = (double) (0.01 * minutes);
+
+        Double penalty = BigDecimal.valueOf(penaltyToBeTruncated)
+                .setScale(2, RoundingMode.HALF_UP)
+                .doubleValue();
 
         return penalty;
     }
