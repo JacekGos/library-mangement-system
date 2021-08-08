@@ -10,10 +10,10 @@
           crossorigin="anonymous">
 </head>
 <body>
+
 <%
     response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
 %>
-
 <c:import url="../navigationBar.jsp" />
 
 <div class="row">

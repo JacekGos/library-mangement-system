@@ -18,6 +18,9 @@ public class LogoutProcessServlet extends HttpServlet {
 
         HttpSession userSession = request.getSession();
         userSession.setAttribute("userName", null);
+        userSession.setAttribute("userId", null);
+        userSession.setAttribute("userType", null);
+        userSession.setAttribute("userLogin", null);
         userSession.invalidate();
         response.sendRedirect("account/login.jsp");
     }
