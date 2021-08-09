@@ -1,6 +1,5 @@
 package com.example.LibrarySystemWebApplication.web;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -14,19 +13,20 @@ public class LogoutProcessServlet extends HttpServlet {
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-
-
         request.setCharacterEncoding("UTF-8");
 
         System.out.println("in LogoutProcess");
 
-        HttpSession userSession = request.getSession();
+        HttpSession userSession = request.getSession(false);
         userSession.setAttribute("userName", null);
-        userSession.setAttribute("userId", null);
-        userSession.setAttribute("userType", null);
+        userSession.setAttribute("userId", 0);
+        userSession.setAttribute("userType", 0);
         userSession.setAttribute("userLogin", null);
         userSession.invalidate();
         response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+
+
+
         response.sendRedirect("account/login.jsp");
     }
 
