@@ -94,7 +94,7 @@ public class BorrowingProcessServlet extends HttpServlet {
 
         HttpSession session = request.getSession();
 
-        if (session.getAttribute("userType") == null) {
+        if (!checkUserSession(session)) {
             response.sendRedirect("account/login.jsp");
             return;
         }
@@ -267,11 +267,11 @@ public class BorrowingProcessServlet extends HttpServlet {
 
         HttpSession session = request.getSession(false);
 
-        if (session.getAttribute("userType") == null) {
-            System.out.println("session is null");
+        if (!checkUserSession(session)) {
             response.sendRedirect("account/login.jsp");
             return;
         }
+
 
         int libraryUserId = (int) session.getAttribute("userId");
         List<Borrowing> libraryUserBorrowingsList = borrowingDao.getAllBorrowingsByUserId(libraryUserId);
@@ -376,6 +376,14 @@ public class BorrowingProcessServlet extends HttpServlet {
             return true;
         }
         return false;
+    }
+
+    private boolean checkUserSession(HttpSession session ) {
+
+        if (session.getAttribute("userType") == null) {
+            return false;
+        }
+        return true;
     }
 
 }
