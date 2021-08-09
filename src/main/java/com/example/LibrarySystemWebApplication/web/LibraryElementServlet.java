@@ -26,6 +26,10 @@ public class LibraryElementServlet extends HttpServlet implements DataInputHelpe
 
         String action = (String)request.getAttribute("action");
 
+        response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+        response.setHeader("Pragma","no-cache");
+        response.setDateHeader ("Expires", 0);
+
         switch (action) {
             case "showList":
                 libraryElementList(request, response);
@@ -53,6 +57,10 @@ public class LibraryElementServlet extends HttpServlet implements DataInputHelpe
         request.setCharacterEncoding("UTF-8");
 
         String action = (String)request.getAttribute("action");
+
+        response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+        response.setHeader("Pragma","no-cache");
+        response.setDateHeader ("Expires", 0);
 
         switch (action) {
             case "update":

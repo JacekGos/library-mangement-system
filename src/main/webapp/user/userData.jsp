@@ -12,6 +12,9 @@
 <body>
 <%
     response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+    if (session.getAttribute("userName") == null) {
+        response.sendRedirect("account/login.jsp");
+    }
 %>
 <c:import url="../navigationBar.jsp" />
 

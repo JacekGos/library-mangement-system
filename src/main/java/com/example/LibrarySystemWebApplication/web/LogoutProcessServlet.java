@@ -14,7 +14,11 @@ public class LogoutProcessServlet extends HttpServlet {
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+
+
         request.setCharacterEncoding("UTF-8");
+
+        System.out.println("in LogoutProcess");
 
         HttpSession userSession = request.getSession();
         userSession.setAttribute("userName", null);
@@ -22,6 +26,7 @@ public class LogoutProcessServlet extends HttpServlet {
         userSession.setAttribute("userType", null);
         userSession.setAttribute("userLogin", null);
         userSession.invalidate();
+        response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
         response.sendRedirect("account/login.jsp");
     }
 

@@ -16,15 +16,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static java.lang.Math.abs;
-
 @WebServlet(name = "libraryUserServlet", value = "/libraryUser")
 public class UserServlet extends HttpServlet implements DataInputHelper {
 
-    private LibraryElementDao libraryElementDao = new LibraryElementDao();
-    private LibraryUserDao libraryUserDao = new LibraryUserDao();
-    private BorrowingDao borrowingDao = new BorrowingDao();
-    private RequestDao requestDao = new RequestDao();
+    private final LibraryElementDao libraryElementDao = new LibraryElementDao();
+    private final LibraryUserDao libraryUserDao = new LibraryUserDao();
+    private final BorrowingDao borrowingDao = new BorrowingDao();
+    private final RequestDao requestDao = new RequestDao();
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 

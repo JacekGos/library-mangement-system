@@ -14,31 +14,33 @@
 <%
     response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
 %>
-<c:import url="../navigationBar.jsp" />
-    <br>
-    <div class="container col-md-5">
-        <div class="card">
-            <div class="card-body">
-                <form action="<c:out value="${pageContext.servletContext.contextPath}"/>/loginProcess" method="post">
-                    <caption>
-                        <h2> Panel Logowania </h2>
-                    </caption>
-                    <fieldset class="form-group">
-                        <label>Login</label>
-                        <input type="text" class="form-control" name="login" required="required">
-                    </fieldset>
-                    <fieldset class="form-group">
-                        <label>Hasło</label>
-                        <input type="password" class="form-control" name="password" required="required">
-                    </fieldset>
-                    <button type="submit" class="btn btn-success" style="background-color: #8edbf9; color: black">Zaloguj</button>
-                </form>
-                <form action="<c:out value="${pageContext.servletContext.contextPath}"/>/newUser" method="get">
-                    <button type="submit" class="btn btn-success" style="background-color: #8edbf9; color: black">Załóż konto</button>
-                </form>
-            </div>
+<c:import url="../navigationBar.jsp"/>
+<div class="container col-md-5">
+    <div class="card">
+        <div class="card-body">
+            <form action="<c:out value="${pageContext.servletContext.contextPath}"/>/loginProcess" method="post">
+                <caption>
+                    <h2> Panel Logowania </h2>
+                </caption>
+                <fieldset class="form-group">
+                    <label>Login</label>
+                    <input type="text" class="form-control" name="login" required="required">
+                </fieldset>
+                <fieldset class="form-group">
+                    <label>Hasło</label>
+                    <input type="password" class="form-control" name="password" required="required">
+                </fieldset>
+                <button type="submit" class="btn btn-success" style="background-color: #8edbf9; color: black">Zaloguj
+                </button>
+            </form>
+            <form action="<c:out value="${pageContext.servletContext.contextPath}"/>/newUser" method="get">
+                <button type="submit" class="btn btn-success" style="background-color: #8edbf9; color: black">Załóż
+                    konto
+                </button>
+            </form>
         </div>
     </div>
+</div>
 
 </body>
 </html>
