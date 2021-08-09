@@ -1,13 +1,14 @@
 package com.example.LibrarySystemWebApplication.model;
+import java.sql.Timestamp;
 
 public class Request {
 
     private int requestId;
     private int borrowingId;
-    private java.sql.Timestamp requestDate;
+    private Timestamp requestDate;
     private int statusId;
 
-    public Request(int requestId, int borrowingId, java.sql.Timestamp requestDate, int statusId) {
+    public Request(int requestId, int borrowingId, Timestamp requestDate, int statusId) {
 
         this.setRequestId(requestId);
         this.setBorrowingId(borrowingId);
@@ -16,7 +17,7 @@ public class Request {
 
     }
 
-    public Request(int borrowingId, java.sql.Timestamp requestDate, int statusId) {
+    public Request(int borrowingId, Timestamp requestDate, int statusId) {
 
         this.setBorrowingId(borrowingId);
         this.setRequestDate(requestDate);
@@ -40,7 +41,7 @@ public class Request {
         this.borrowingId = borrowingId;
     }
 
-    public java.sql.Timestamp getRequestDate() {
+    public Timestamp getRequestDate() {
         return requestDate;
     }
 

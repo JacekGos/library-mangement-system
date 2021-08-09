@@ -5,6 +5,7 @@ import com.example.LibrarySystemWebApplication.model.Borrowing;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.sql.Timestamp;
 
 public class BorrowingDao {
 
@@ -85,7 +86,7 @@ public class BorrowingDao {
 
                 int borrowingId = resultSet.getInt("borrowing_id");
                 int elementId = resultSet.getInt("element_id");
-                java.sql.Timestamp date = resultSet.getTimestamp("borrowing_date");
+                Timestamp date = resultSet.getTimestamp("borrowing_date");
                 int statusId = resultSet.getInt("status_id");
                 int libraryUserId = resultSet.getInt("library_user_id");
 
@@ -114,7 +115,7 @@ public class BorrowingDao {
 
                 int borrowingId = resultSet.getInt("borrowing_id");
                 int elementId = resultSet.getInt("element_id");
-                java.sql.Timestamp date = resultSet.getTimestamp("borrowing_date");
+                Timestamp date = resultSet.getTimestamp("borrowing_date");
                 int statusId = resultSet.getInt("status_id");
                 int libraryUserId = resultSet.getInt("library_user_id");
 
@@ -143,7 +144,7 @@ public class BorrowingDao {
 
                 int borrowingId = resultSet.getInt("borrowing_id");
                 int elementId = resultSet.getInt("element_id");
-                java.sql.Timestamp date = resultSet.getTimestamp("borrowing_date");
+                Timestamp date = resultSet.getTimestamp("borrowing_date");
                 int statusId = resultSet.getInt("status_id");
                 int libraryUserId = resultSet.getInt("library_user_id");
 

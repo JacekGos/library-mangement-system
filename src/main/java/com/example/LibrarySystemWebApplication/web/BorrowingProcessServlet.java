@@ -25,6 +25,7 @@ import java.util.List;
 
 import static java.lang.Math.abs;
 
+
 @WebServlet(name = "borrrowingProcess", value = "/borrowingProcess")
 public class BorrowingProcessServlet extends HttpServlet {
 
@@ -137,8 +138,8 @@ public class BorrowingProcessServlet extends HttpServlet {
     private boolean validateBorrowingProcess(int libraryElementId, int libraryUserId) {
 
         long currentTime = System.currentTimeMillis();
-        java.sql.Timestamp borrowingDate = new java.sql.Timestamp(currentTime);
-        java.sql.Timestamp requestDate = new java.sql.Timestamp(currentTime);
+        Timestamp borrowingDate = new Timestamp(currentTime);
+        Timestamp requestDate = new Timestamp(currentTime);
 
         Borrowing borrowing = new Borrowing(libraryElementId, borrowingDate, 2, libraryUserId);
         borrowingDao.insertBorrowing(borrowing);
@@ -244,7 +245,7 @@ public class BorrowingProcessServlet extends HttpServlet {
     private void acceptRequest(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
         long currentTime = System.currentTimeMillis();
-        java.sql.Timestamp acceptBorrowingDate = new java.sql.Timestamp(currentTime);
+        Timestamp acceptBorrowingDate = new Timestamp(currentTime);
 
         int requestId = Integer.parseInt(request.getParameter("requestId"));
         int borrowingId = Integer.parseInt(request.getParameter("borrowingId"));

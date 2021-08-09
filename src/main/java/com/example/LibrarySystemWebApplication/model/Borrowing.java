@@ -1,10 +1,11 @@
 package com.example.LibrarySystemWebApplication.model;
+import java.sql.Timestamp;
 
 public class Borrowing {
 
     private int borrowingId;
     private int libraryElementId;
-    private java.sql.Timestamp borrowingDate;
+    private Timestamp borrowingDate;
     private int borrowingStatusId;
     private int libraryUserId;
 
@@ -46,7 +47,7 @@ public class Borrowing {
         this.libraryElementId = libraryElementId;
     }
 
-    public java.sql.Timestamp getBorrowingDate() {
+    public Timestamp getBorrowingDate() {
         return borrowingDate;
     }
 

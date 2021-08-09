@@ -1,12 +1,9 @@
 package com.example.LibrarySystemWebApplication.model;
 
-import java.util.ArrayList;
-import java.util.List;
 
 public class LibraryUser extends User implements DataDisplayHelper {
 
     private double penalty;
-//    private List<Borrowing> userBorrowingsList = new ArrayList<Borrowing>();
 
     public LibraryUser(int userId, String userName, String userSurName, String login, String password, int accountType, double penalty) {
         super(userId, userName, userSurName, login, password, accountType);

@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -75,7 +76,7 @@ public class RequestDao {
 
                 int id = resultSet.getInt("request_id");
                 int borrowingId = resultSet.getInt("borrowing_id");
-                java.sql.Timestamp requestDate = resultSet.getTimestamp("request_date");
+                Timestamp requestDate = resultSet.getTimestamp("request_date");
                 int statusId = resultSet.getInt("status_id");
 
                 Request request = new Request(id, borrowingId, requestDate, statusId);
@@ -103,7 +104,7 @@ public class RequestDao {
 
                 int id = resultSet.getInt("request_id");
                 int borrowingId = resultSet.getInt("borrowing_id");
-                java.sql.Timestamp requestDate = resultSet.getTimestamp("request_date");
+                Timestamp requestDate = resultSet.getTimestamp("request_date");
                 int statusId = resultSet.getInt("status_id");
 
                 request = new Request(id, borrowingId, requestDate, statusId);
@@ -129,7 +130,7 @@ public class RequestDao {
 
                 int id = resultSet.getInt("request_id");
                 int borrowingId = resultSet.getInt("borrowing_id");
-                java.sql.Timestamp requestDate = resultSet.getTimestamp("request_date");
+                Timestamp requestDate = resultSet.getTimestamp("request_date");
                 int statusId = resultSet.getInt("status_id");
 
                 Request request = new Request(id, borrowingId, requestDate, statusId);
