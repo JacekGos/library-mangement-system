@@ -1,5 +1,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+<%
+    response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+%>
+<c:import url="../navigationBar.jsp" />
+
 <html>
 <head>
     <title>Panel logowania</title>
@@ -11,10 +17,6 @@
 
 </head>
 <body>
-<%
-    response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
-%>
-<c:import url="../navigationBar.jsp"/>
 <div class="container col-md-5">
     <div class="card">
         <div class="card-body">

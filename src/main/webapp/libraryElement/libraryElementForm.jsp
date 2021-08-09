@@ -1,12 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<html>
-<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+
 <%
     response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
 %>
-<c:import url="../navigationBar.jsp"/>
+<c:import url="../navigationBar.jsp" />
+<c:if test="${sessionScope.userType == null}">
+    <c:redirect url = "/account/login.jsp"/>
+</c:if>
+
+<html>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 <head>
     <title>Edycja elementu</title>
     <link rel="stylesheet"
