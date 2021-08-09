@@ -57,13 +57,19 @@ public class BorrowingDao {
         int status = 0;
 
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement(INSERT_BORROWING);
+            PreparedStatement preparedStatement = connection.prepareStatement(INSERT_BORROWING, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setInt(1, borrowing.getLibraryElementId());
             preparedStatement.setTimestamp(2, borrowing.getBorrowingDate());
             preparedStatement.setInt(3, borrowing.getBorrowingStatusId());
             preparedStatement.setInt(4, borrowing.getLibraryUserId());
 
             status = preparedStatement.executeUpdate();
+
+            try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    borrowing.setBorrowingId(generatedKeys.getInt(1));
+                }
+            }
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();

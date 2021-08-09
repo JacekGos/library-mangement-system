@@ -143,7 +143,8 @@ public class BorrowingProcessServlet extends HttpServlet {
 
         Borrowing borrowing = new Borrowing(libraryElementId, borrowingDate, 2, libraryUserId);
         borrowingDao.insertBorrowing(borrowing);
-        int borrowingId = borrowingDao.getLastBorrowingId(borrowing);
+        int borrowingId = borrowing.getBorrowingId();
+        System.out.println(borrowingId);
 
         if (borrowingId > 0 ) {
             Request newRequest = new Request(borrowingId, requestDate, 2);
