@@ -57,6 +57,7 @@ public class BorrowingDao {
         int status = 0;
 
         try {
+            connection.setAutoCommit(false);
             PreparedStatement preparedStatement = connection.prepareStatement(INSERT_BORROWING, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setInt(1, borrowing.getLibraryElementId());
             preparedStatement.setTimestamp(2, borrowing.getBorrowingDate());
@@ -70,8 +71,14 @@ public class BorrowingDao {
                     borrowing.setBorrowingId(generatedKeys.getInt(1));
                 }
             }
+            connection.commit();
 
         } catch (SQLException throwables) {
+            try {
+                connection.rollback();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
             throwables.printStackTrace();
         }
 
@@ -80,7 +87,7 @@ public class BorrowingDao {
     
     public static List<Borrowing> getAllBorrowingsByUserIdAndStatus(int userId) {
 
-        List<Borrowing> borrowingsList = new ArrayList<Borrowing>();
+        List<Borrowing> borrowingsList = new ArrayList<>();
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_BORROWINGS_BY_USER_ID_AND_STATUS);

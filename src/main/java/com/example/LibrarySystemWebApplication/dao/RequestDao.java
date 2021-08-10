@@ -12,6 +12,9 @@ import java.util.List;
 
 public class RequestDao {
 
+    private static LibraryElementDao libraryElementDao = new LibraryElementDao();
+    private static BorrowingDao borrowingDao = new BorrowingDao();
+
     static Connection connection;
 
     static {
@@ -161,6 +164,45 @@ public class RequestDao {
         }
 
         return rowUpdated;
+    }
+
+    public static boolean rejectRequestProcess(int requestId, int borrowingId, int libraryElementId) {
+
+        try {
+            connection.setAutoCommit(false);
+            updateRequestStatus(requestId, 5);
+            borrowingDao.updateBorrowingStatus(borrowingId, 5);
+            libraryElementDao.updateLibraryElementStatus(libraryElementId, 1);
+            connection.commit();
+        } catch (SQLException e) {
+            try {
+                connection.rollback();
+            } catch (SQLException ex) {
+                ex.getMessage();
+            }
+        }
+
+        return true;
+    }
+
+    public static boolean acceptRequestProcess(int requestId, int borrowingId, Timestamp acceptBorrowingDate, int libraryElementId) {
+
+        try {
+            connection.setAutoCommit(false);
+            updateRequestStatus(requestId, 4);
+            borrowingDao.updateBorrowingStatus(borrowingId, 4);
+            borrowingDao.updateBorrowingDate(borrowingId, acceptBorrowingDate);
+            libraryElementDao.updateLibraryElementStatus(libraryElementId, 3);
+            connection.commit();
+        } catch (SQLException e) {
+            try {
+                connection.rollback();
+            } catch (SQLException ex) {
+                ex.getMessage();
+            }
+        }
+
+        return true;
     }
 
     public static boolean deleteALLRequests(int libraryUserId) {

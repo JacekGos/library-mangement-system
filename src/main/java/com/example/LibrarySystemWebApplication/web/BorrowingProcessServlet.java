@@ -19,6 +19,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -65,7 +66,8 @@ public class BorrowingProcessServlet extends HttpServlet {
 
     }
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException{
 
         request.setCharacterEncoding("UTF-8");
 
@@ -91,7 +93,8 @@ public class BorrowingProcessServlet extends HttpServlet {
 
     }
 
-    private void sendBorrowingRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    private void sendBorrowingRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
 
         HttpSession session = request.getSession();
 
@@ -144,7 +147,6 @@ public class BorrowingProcessServlet extends HttpServlet {
         Borrowing borrowing = new Borrowing(libraryElementId, borrowingDate, 2, libraryUserId);
         borrowingDao.insertBorrowing(borrowing);
         int borrowingId = borrowing.getBorrowingId();
-        System.out.println(borrowingId);
 
         if (borrowingId > 0 ) {
             Request newRequest = new Request(borrowingId, requestDate, 2);
@@ -231,9 +233,7 @@ public class BorrowingProcessServlet extends HttpServlet {
         int borrowingId = Integer.parseInt(request.getParameter("borrowingId"));
         int libraryElementId = Integer.parseInt(request.getParameter("libraryElementId"));
 
-        requestDao.updateRequestStatus(requestId, 5);
-        borrowingDao.updateBorrowingStatus(borrowingId, 5);
-        libraryElementDao.updateLibraryElementStatus(libraryElementId, 1);
+        requestDao.rejectRequestProcess(requestId, borrowingId, libraryElementId);
 
         request.removeAttribute("requestId");
         request.removeAttribute("borrowingId");
@@ -252,10 +252,7 @@ public class BorrowingProcessServlet extends HttpServlet {
         int borrowingId = Integer.parseInt(request.getParameter("borrowingId"));
         int libraryElementId = Integer.parseInt(request.getParameter("libraryElementId"));
 
-        requestDao.updateRequestStatus(requestId, 4);
-        borrowingDao.updateBorrowingStatus(borrowingId, 4);
-        borrowingDao.updateBorrowingDate(borrowingId, acceptBorrowingDate);
-        libraryElementDao.updateLibraryElementStatus(libraryElementId, 3);
+        requestDao.acceptRequestProcess(requestId, borrowingId, acceptBorrowingDate, libraryElementId);
 
         request.removeAttribute("requestId");
         request.removeAttribute("borrowingId");
