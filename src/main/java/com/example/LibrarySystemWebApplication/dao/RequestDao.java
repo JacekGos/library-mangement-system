@@ -1,6 +1,7 @@
 package com.example.LibrarySystemWebApplication.dao;
 
 import com.example.LibrarySystemWebApplication.model.*;
+import com.example.LibrarySystemWebApplication.Utility;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -170,9 +171,9 @@ public class RequestDao {
 
         try {
             connection.setAutoCommit(false);
-            updateRequestStatus(requestId, 5);
-            borrowingDao.updateBorrowingStatus(borrowingId, 5);
-            libraryElementDao.updateLibraryElementStatus(libraryElementId, 1);
+            updateRequestStatus(requestId, Utility.STATUS_REJECTED);
+            borrowingDao.updateBorrowingStatus(borrowingId, Utility.STATUS_REJECTED);
+            libraryElementDao.updateLibraryElementStatus(libraryElementId, Utility.STATUS_AVAILABLE);
             connection.commit();
         } catch (SQLException e) {
             try {
@@ -189,10 +190,10 @@ public class RequestDao {
 
         try {
             connection.setAutoCommit(false);
-            updateRequestStatus(requestId, 4);
-            borrowingDao.updateBorrowingStatus(borrowingId, 4);
+            updateRequestStatus(requestId, Utility.STATUS_APPROVED);
+            borrowingDao.updateBorrowingStatus(borrowingId, Utility.STATUS_APPROVED);
             borrowingDao.updateBorrowingDate(borrowingId, acceptBorrowingDate);
-            libraryElementDao.updateLibraryElementStatus(libraryElementId, 3);
+            libraryElementDao.updateLibraryElementStatus(libraryElementId, Utility.STATUS_BORROWED);
             connection.commit();
         } catch (SQLException e) {
             try {

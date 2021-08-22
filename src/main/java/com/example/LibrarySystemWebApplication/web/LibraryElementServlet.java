@@ -4,6 +4,7 @@ import com.example.LibrarySystemWebApplication.dao.LibraryElementDao;
 import com.example.LibrarySystemWebApplication.model.Book;
 import com.example.LibrarySystemWebApplication.model.LibraryElement;
 import com.example.LibrarySystemWebApplication.model.Movie;
+import com.example.LibrarySystemWebApplication.Utility;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -93,8 +94,6 @@ public class LibraryElementServlet extends HttpServlet implements DataInputHelpe
 
         String title = request.getParameter("searchedTitle");
 
-
-
         List<LibraryElement> libraryElementList = libraryElementDao.getLibraryElementsByTitle(title);
         request.setAttribute("libraryElementList", libraryElementList);
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("libraryElement/searcher.jsp");
@@ -127,10 +126,10 @@ public class LibraryElementServlet extends HttpServlet implements DataInputHelpe
         String detailedInfo = request.getParameter("detailedInfo");
 
         if (validateIntData(detailedInfo)) {
-            if (typeId == 1) {
+            if (typeId == Utility.TYPE_BOOK) {
                 int pagesNumber = Integer.parseInt(detailedInfo);
                 libraryElement = new Book(libraryElementId, typeId, title, sortId, statusId, pagesNumber);
-            } else if (typeId == 2) {
+            } else if (typeId == Utility.TYPE_MOVIE) {
                 int durationTime = Integer.parseInt(detailedInfo);
                 libraryElement = new Movie(libraryElementId, typeId, title, sortId, statusId, durationTime);
             }
@@ -189,12 +188,12 @@ public class LibraryElementServlet extends HttpServlet implements DataInputHelpe
         byte typeId = Byte.parseByte(request.getParameter("typeId"));
         int sortId = Integer.parseInt(request.getParameter("sortId"));
         if (validateIntData(detailedInfo)) {
-            if (typeId == 1) {
+            if (typeId == Utility.TYPE_BOOK) {
                 int pagesNumber = Integer.parseInt(detailedInfo);
-                libraryElement = new Book(0, typeId, title, sortId, 1, pagesNumber);
-            } else if (typeId == 2) {
+                libraryElement = new Book(0, typeId, title, sortId, Utility.STATUS_AVAILABLE, pagesNumber);
+            } else if (typeId == Utility.TYPE_MOVIE) {
                 int durationTime = Integer.parseInt(detailedInfo);
-                libraryElement = new Movie(0, typeId, title, sortId, 1, durationTime);
+                libraryElement = new Movie(0, typeId, title, sortId, Utility.STATUS_AVAILABLE, durationTime);
             }
         }
 

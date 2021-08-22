@@ -19,10 +19,10 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import com.example.LibrarySystemWebApplication.Utility;
 
 import static java.lang.Math.abs;
 
@@ -144,19 +144,19 @@ public class BorrowingProcessServlet extends HttpServlet {
         Timestamp borrowingDate = new Timestamp(currentTime);
         Timestamp requestDate = new Timestamp(currentTime);
 
-        Borrowing borrowing = new Borrowing(libraryElementId, borrowingDate, 2, libraryUserId);
+        Borrowing borrowing = new Borrowing(libraryElementId, borrowingDate, Utility.STATUS_IS_WAITING, libraryUserId);
         borrowingDao.insertBorrowing(borrowing);
         int borrowingId = borrowing.getBorrowingId();
 
         if (borrowingId > 0 ) {
-            Request newRequest = new Request(borrowingId, requestDate, 2);
+            Request newRequest = new Request(borrowingId, requestDate, Utility.STATUS_IS_WAITING);
 
             if (requestDao.insertRequest(newRequest) > 0  && libraryElementDao.updateLibraryElementStatus(libraryElementId, 2) == true) {
                 return true;
             }
         }
 
-        libraryElementDao.updateLibraryElementStatus(libraryElementId, 1);
+        libraryElementDao.updateLibraryElementStatus(libraryElementId, Utility.STATUS_AVAILABLE);
 
         return false;
 
@@ -287,8 +287,8 @@ public class BorrowingProcessServlet extends HttpServlet {
         int libraryElementId = borrowing.getLibraryElementId();
         int libraryUserId = borrowing.getLibraryUserId();
 
-        borrowingDao.updateBorrowingStatus(borrowingId, 6);
-        libraryElementDao.updateLibraryElementStatus(libraryElementId, 1);
+        borrowingDao.updateBorrowingStatus(borrowingId, Utility.STATUS_FINISHED);
+        libraryElementDao.updateLibraryElementStatus(libraryElementId, Utility.STATUS_AVAILABLE);
 
         request.removeAttribute("borrowingId");
         request.removeAttribute("libraryElementId");
