@@ -11,115 +11,74 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 @WebServlet(name = "mainServlet", value = "/")
 public class MainServlet extends HttpServlet {
+
+    private RequestDispatcher requestDispatcher;
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         request.setCharacterEncoding("UTF-8");
 
         String option = request.getServletPath();
-        String action = "default";
-        RequestDispatcher requestDispatcher;
 
         switch (option) {
             //LibraryElementServlet
             case "/libraryElementList":
-                action = "showList";
-                request.setAttribute("action", action);
-                requestDispatcher = request.getRequestDispatcher("libraryElement");
-                requestDispatcher.forward(request, response);
+                doRedirect(request, response ,"showList", "libraryElement");
                 break;
             case "/search":
-                action = "search";
-                request.setAttribute("action", action);
-                requestDispatcher = request.getRequestDispatcher("libraryElement");
-                requestDispatcher.forward(request, response);
+                doRedirect(request, response ,"search", "libraryElement");
                 break;
             case "/editLibraryElement":
-                action = "editLibraryElement";
-                request.setAttribute("action", action);
-                requestDispatcher = request.getRequestDispatcher("libraryElement");
-                requestDispatcher.forward(request, response);
+                doRedirect(request, response ,"editLibraryElement", "libraryElement");
                 break;
             case "/newLibraryElement":
-                action = "newLibraryElement";
-                request.setAttribute("action", action);
-                requestDispatcher = request.getRequestDispatcher("libraryElement");
-                requestDispatcher.forward(request, response);
+                doRedirect(request, response ,"newLibraryElement", "libraryElement");
                 break;
             case "/delete":
                 doPost(request, response);
                 break;
             //UserServlet
             case "/userList":
-                action = "showUserList";
-                request.setAttribute("action", action);
-                requestDispatcher = request.getRequestDispatcher("libraryUser");
-                requestDispatcher.forward(request, response);
+                doRedirect(request, response ,"showUserList", "libraryUser");
                 break;
             case "/searchUser":
-                action = "searchUser";
-                request.setAttribute("action", action);
-                requestDispatcher = request.getRequestDispatcher("libraryUser");
-                requestDispatcher.forward(request, response);
+                doRedirect(request, response ,"searchUser", "libraryUser");
                 break;
             case "/deleteUser":
                 doPost(request, response);
                 break;
             case "/newUser":
-                action = "newUser";
-                request.setAttribute("action", action);
-                requestDispatcher = request.getRequestDispatcher("libraryUser");
-                requestDispatcher.forward(request, response);
+                doRedirect(request, response ,"newUser", "libraryUser");
                 break;
             case "/userInfo":
-                action = "userInfo";
-                request.setAttribute("action", action);
-                requestDispatcher = request.getRequestDispatcher("libraryUser");
-                requestDispatcher.forward(request, response);
+                doRedirect(request, response ,"userInfo", "libraryUser");
                 break;
             case "/userInfoAfterEndBorrowing":
-                action = "userInfoAfterEndBorrowing";
-                request.setAttribute("action", action);
-                requestDispatcher = request.getRequestDispatcher("libraryUser");
-                requestDispatcher.forward(request, response);
+                doRedirect(request, response ,"userInfoAfterEndBorrowing", "libraryUser");
                 break;
             case "/userPenalty":
-                action = "userPenalty";
-                request.setAttribute("action", action);
-                requestDispatcher = request.getRequestDispatcher("libraryUser");
-                requestDispatcher.forward(request, response);
+                doRedirect(request, response ,"userPenalty", "libraryUser");
                 break;
             case "/regulatePenalty":
                 doPost(request, response);
                 break;
             //BorrowingProcessServlet
             case "/requestList":
-                action = "showRequests";
-                request.setAttribute("action", action);
-                requestDispatcher = request.getRequestDispatcher("borrowingProcess");
-                requestDispatcher.forward(request, response);
+                doRedirect(request, response ,"showRequests", "borrowingProcess");
                 break;
             case "/searchRequest":
-                action = "searchRequest";
-                request.setAttribute("action", action);
-                requestDispatcher = request.getRequestDispatcher("borrowingProcess");
-                requestDispatcher.forward(request, response);
+                doRedirect(request, response ,"searchRequest", "borrowingProcess");
                 break;
             case "/requestApprove":
-                action = "requestApprove";
-                request.setAttribute("action", action);
-                requestDispatcher = request.getRequestDispatcher("borrowingProcess");
-                requestDispatcher.forward(request, response);
+                doRedirect(request, response ,"requestApprove", "borrowingProcess");
                 break;
             case "/borrowingList":
-                action = "showBorrowings";
-                request.setAttribute("action", action);
-                requestDispatcher = request.getRequestDispatcher("borrowingProcess");
-                requestDispatcher.forward(request, response);
+                doRedirect(request, response ,"showBorrowings", "borrowingProcess");
                 break;
             case "/borrowLibraryElement":
                 doPost(request, response);
@@ -143,81 +102,61 @@ public class MainServlet extends HttpServlet {
 
         String option = request.getServletPath();
         String action = "default";
-        RequestDispatcher requestDispatcher;
 
         switch (option) {
             //LibraryElementServlet
             case "/update":
-                action = "update";
-                request.setAttribute("action", action);
-                requestDispatcher = request.getRequestDispatcher("libraryElement");
-                requestDispatcher.forward(request, response);
+                doRedirect(request, response, "update", "libraryElement");
                 break;
             case "/delete":
-                action = "delete";
-                request.setAttribute("action", action);
-                requestDispatcher = request.getRequestDispatcher("libraryElement");
-                requestDispatcher.forward(request, response);
+                doRedirect(request, response, "delete", "libraryElement");
                 break;
             case "/insert":
-                action = "insert";
-                request.setAttribute("action", action);
-                requestDispatcher = request.getRequestDispatcher("libraryElement");
-                requestDispatcher.forward(request, response);
+                doRedirect(request, response, "insert", "libraryElement");
                 break;
             //UserServlet
             case "/deleteUser":
-                action = "deleteUser";
-                request.setAttribute("action", action);
-                requestDispatcher = request.getRequestDispatcher("libraryUser");
-                requestDispatcher.forward(request, response);
+                doRedirect(request, response, "deleteUser", "libraryUser");
                 break;
             case "/insertUser":
-                action = "insertUser";
-                request.setAttribute("action", action);
-                requestDispatcher = request.getRequestDispatcher("libraryUser");
-                requestDispatcher.forward(request, response);
+                doRedirect(request, response, "insertUser", "libraryUser");
                 break;
             case "/regulatePenalty":
-                action = "regulatePenalty";
-                request.setAttribute("action", action);
-                requestDispatcher = request.getRequestDispatcher("libraryUser");
-                requestDispatcher.forward(request, response);
+                doRedirect(request, response, "regulatePenalty", "libraryUser");
                 break;
             //BorrowingProcessServlet
             case "/borrowLibraryElement":
-                action = "borrowLibraryElement";
-                request.setAttribute("action", action);
-                requestDispatcher = request.getRequestDispatcher("borrowingProcess");
-                requestDispatcher.forward(request, response);
+                doRedirect(request, response, "borrowLibraryElement", "borrowingProcess");
                 break;
             case "/rejectRequest":
-                action = "rejectRequest";
-                request.setAttribute("action", action);
-                requestDispatcher = request.getRequestDispatcher("borrowingProcess");
-                requestDispatcher.forward(request, response);
+                doRedirect(request, response, "rejectRequest", "borrowingProcess");
                 break;
             case "/acceptRequest":
-                action = "acceptRequest";
-                request.setAttribute("action", action);
-                requestDispatcher = request.getRequestDispatcher("borrowingProcess");
-                requestDispatcher.forward(request, response);
+                doRedirect(request, response, "acceptRequest", "borrowingProcess");
                 break;
             case "/endBorrowing":
-                action = "endBorrowing";
-                request.setAttribute("action", action);
-                requestDispatcher = request.getRequestDispatcher("borrowingProcess");
-                requestDispatcher.forward(request, response);
+                doRedirect(request, response ,"endBorrowing", "borrowingProcess");
                 break;
             //LoginProcessServlet
             case "/login":
-                requestDispatcher = request.getRequestDispatcher("account/login.jsp");
-                requestDispatcher.forward(request, response);
+                doRedirect(request, response ,null, "account/login.jsp");
                 break;
             default:
                 break;
         }
+    }
 
+    private void doRedirect(HttpServletRequest request, HttpServletResponse response,
+                            String action, String servletName) throws ServletException, IOException {
+
+        if (action == null) {
+            requestDispatcher = request.getRequestDispatcher(servletName);
+            requestDispatcher.forward(request, response);
+        } else {
+            request.setAttribute("action", action);
+            requestDispatcher = request.getRequestDispatcher(servletName);
+            requestDispatcher.forward(request, response);
+        }
     }
 
 }

@@ -1,5 +1,7 @@
 package com.example.LibrarySystemWebApplication.dao;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -103,6 +105,9 @@ public class LibraryUserDao {
                 String surName = resultSet.getString("surName");
                 String login = resultSet.getString("login");
                 double penalty = resultSet.getDouble("penalty");
+                penalty = BigDecimal.valueOf(penalty)
+                        .setScale(2, RoundingMode.HALF_UP)
+                        .doubleValue();
 
                 LibraryUser libraryUser = new LibraryUser(id, name, surName, login, penalty);
                 libraryUserList.add(libraryUser);
@@ -133,6 +138,9 @@ public class LibraryUserDao {
                 String surName = resultSet.getString("surName");
                 String login = resultSet.getString("login");
                 double penalty = resultSet.getDouble("penalty");
+                penalty = BigDecimal.valueOf(penalty)
+                        .setScale(2, RoundingMode.HALF_UP)
+                        .doubleValue();
 
                 LibraryUser libraryUser = new LibraryUser(id, name, surName, login, penalty);
                 libraryUserList.add(libraryUser);
@@ -161,6 +169,9 @@ public class LibraryUserDao {
                 String surName = resultSet.getString("surName");
                 String login = resultSet.getString("login");
                 double penalty = resultSet.getDouble("penalty");
+                penalty = BigDecimal.valueOf(penalty)
+                        .setScale(2, RoundingMode.HALF_UP)
+                        .doubleValue();
 
                 libraryUser = new LibraryUser(id, name, surName, login, penalty);
 
@@ -213,6 +224,9 @@ public class LibraryUserDao {
                 String password = resultSet.getString("password");
                 double penalty = resultSet.getDouble("penalty");
                 int accuountType = resultSet.getInt("account_type");
+                penalty = BigDecimal.valueOf(penalty)
+                        .setScale(2, RoundingMode.HALF_UP)
+                        .doubleValue();
 
                 libraryUser = new LibraryUser(id, name, surName, login, password, accuountType, penalty);
 
@@ -243,6 +257,9 @@ public class LibraryUserDao {
                 String surName = resultSet.getString("surName");
                 String login = resultSet.getString("login");
                 double penalty = resultSet.getDouble("penalty");
+                penalty = BigDecimal.valueOf(penalty)
+                        .setScale(2, RoundingMode.HALF_UP)
+                        .doubleValue();
 
                 libraryUser = new LibraryUser(id, name, surName, login, penalty);
 
@@ -269,6 +286,9 @@ public class LibraryUserDao {
 
             while (resultSet.next()) {
                 penalty = resultSet.getDouble("penalty");
+                penalty = BigDecimal.valueOf(penalty)
+                        .setScale(2, RoundingMode.HALF_UP)
+                        .doubleValue();
             }
 
         } catch (SQLException throwables) {
