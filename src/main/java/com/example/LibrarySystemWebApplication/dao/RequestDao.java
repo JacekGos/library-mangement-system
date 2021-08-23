@@ -48,6 +48,11 @@ public class RequestDao {
             " WHERE r.borrowing_id = b.borrowing_id" +
             " AND b.library_user_id = ?";
 
+    public static final String DELETE_REQUEST_BY_LIBRARY_ELEMEMENT_ID = "DELETE FROM public.\"Request\" r" +
+            " USING public.\"Borrowings\" b" +
+            " WHERE r.borrowing_id = b.borrowing_id" +
+            " AND b.element_id = ?";
+
     public static int insertRequest(Request request) {
 
         int status = 0;
@@ -215,6 +220,25 @@ public class RequestDao {
             PreparedStatement preparedStatement = connection.prepareStatement(DELETE_REQUEST_BY_USER_ID);
 
             preparedStatement.setInt(1, libraryUserId);
+
+            rowsDeleted = preparedStatement.executeUpdate() > 0;
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return rowsDeleted;
+    }
+
+    public static boolean deleteALLRequestsByLibraryElementId(int libraryElementId) {
+
+        boolean rowsDeleted = false;
+
+        try {
+
+            PreparedStatement preparedStatement = connection.prepareStatement(DELETE_REQUEST_BY_LIBRARY_ELEMEMENT_ID);
+
+            preparedStatement.setInt(1, libraryElementId);
 
             rowsDeleted = preparedStatement.executeUpdate() > 0;
 

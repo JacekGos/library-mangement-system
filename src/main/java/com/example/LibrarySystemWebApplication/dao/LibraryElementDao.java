@@ -2,6 +2,7 @@ package com.example.LibrarySystemWebApplication.dao;
 
 import java.sql.*;
 
+import com.example.LibrarySystemWebApplication.Utility;
 import com.example.LibrarySystemWebApplication.model.Book;
 import com.example.LibrarySystemWebApplication.model.LibraryElement;
 import com.example.LibrarySystemWebApplication.model.Movie;
@@ -10,6 +11,9 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class LibraryElementDao {
+
+    private static final BorrowingDao borrowingDao = new BorrowingDao();
+    private static final RequestDao requestDao = new RequestDao();
 
     static Connection connection;
 
@@ -311,4 +315,24 @@ public class LibraryElementDao {
 
         return rowDeleted;
     }
+
+    public static boolean acceptDeleteLibraryElement(int libraryElementId) {
+
+        try {
+            connection.setAutoCommit(false);
+            requestDao.deleteALLRequestsByLibraryElementId(libraryElementId);
+            borrowingDao.deleteALLBorrowingsByLibraryElementId(libraryElementId);
+            LibraryElementDao.deleteLibraryElement(libraryElementId);
+            connection.commit();
+        } catch (SQLException e) {
+            try {
+                connection.rollback();
+            } catch (SQLException ex) {
+                ex.getMessage();
+            }
+        }
+
+        return true;
+    }
+
 }

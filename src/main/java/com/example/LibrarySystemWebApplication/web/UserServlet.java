@@ -19,10 +19,8 @@ import java.util.List;
 @WebServlet(name = "libraryUserServlet", value = "/libraryUser")
 public class UserServlet extends HttpServlet implements DataInputHelper {
 
-    private final LibraryElementDao libraryElementDao = new LibraryElementDao();
     private final LibraryUserDao libraryUserDao = new LibraryUserDao();
     private final BorrowingDao borrowingDao = new BorrowingDao();
-    private final RequestDao requestDao = new RequestDao();
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -141,9 +139,8 @@ public class UserServlet extends HttpServlet implements DataInputHelper {
 
         int libraryUserId = Integer.parseInt(request.getParameter("libraryUserId"));
 
-        requestDao.deleteALLRequests(libraryUserId);
-        borrowingDao.deleteALLBorrowings(libraryUserId);
-        libraryUserDao.deleteLibraryUser(libraryUserId);
+        libraryUserDao.acceptDeleteUserProcess(libraryUserId);
+
         libraryUserList(request, response);
     }
 
@@ -181,6 +178,7 @@ public class UserServlet extends HttpServlet implements DataInputHelper {
         }
 
         if (!errorMessageList.isEmpty()) {
+
             isDataIncorrect = true;
             request.setAttribute("isDataIncorrect", isDataIncorrect);
             request.setAttribute("userName", userName);
@@ -189,6 +187,7 @@ public class UserServlet extends HttpServlet implements DataInputHelper {
             request.setAttribute("errorMessageList", errorMessageList);
             addLibraryUser(request, response);
             return;
+
         }
 
         String login = loginGenerator(userName, userSurname);
@@ -248,12 +247,14 @@ public class UserServlet extends HttpServlet implements DataInputHelper {
         errorMessageList = getErrorMessages(returnedAmountParam, returnedAmount);
 
         if (!errorMessageList.isEmpty()) {
+
             isDataIncorrect = true;
             request.setAttribute("isDataIncorrect", isDataIncorrect);
             request.setAttribute("returnedAmountParam", returnedAmountParam);
             request.setAttribute("errorMessageList", errorMessageList);
             showPenaltyMenu(request, response);
             return;
+
         }
 
         if (userPenalty <=  returnedAmount) {
@@ -308,9 +309,6 @@ public class UserServlet extends HttpServlet implements DataInputHelper {
 
         return errorMessageList;
     }
-
-
-
 
     private boolean validateStringData(String userData) {
 

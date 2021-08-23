@@ -2,16 +2,18 @@ package com.example.LibrarySystemWebApplication.dao;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.PreparedStatement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.example.LibrarySystemWebApplication.Utility;
 import com.example.LibrarySystemWebApplication.model.*;
 
 public class LibraryUserDao {
+
+    private static final BorrowingDao borrowingDao = new BorrowingDao();
+    private static final RequestDao requestDao = new RequestDao();
+    private static final LibraryUserDao libraryUserDao = new LibraryUserDao();
 
     static Connection connection;
 
@@ -334,6 +336,25 @@ public class LibraryUserDao {
         }
 
         return rowDeleted;
+    }
+
+    public static boolean acceptDeleteUserProcess(int libraryUserId) {
+
+        try {
+            connection.setAutoCommit(false);
+            requestDao.deleteALLRequests(libraryUserId);
+            borrowingDao.deleteALLBorrowings(libraryUserId);
+            libraryUserDao.deleteLibraryUser(libraryUserId);
+            connection.commit();
+        } catch (SQLException e) {
+            try {
+                connection.rollback();
+            } catch (SQLException ex) {
+                ex.getMessage();
+            }
+        }
+
+        return true;
     }
 
 }

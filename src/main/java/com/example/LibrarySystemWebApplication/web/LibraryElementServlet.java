@@ -1,5 +1,6 @@
 package com.example.LibrarySystemWebApplication.web;
 
+import com.example.LibrarySystemWebApplication.dao.BorrowingDao;
 import com.example.LibrarySystemWebApplication.dao.LibraryElementDao;
 import com.example.LibrarySystemWebApplication.model.Book;
 import com.example.LibrarySystemWebApplication.model.LibraryElement;
@@ -19,7 +20,7 @@ import java.util.List;
 @WebServlet(name = "libraryElementServlet", value = "/libraryElement")
 public class LibraryElementServlet extends HttpServlet implements DataInputHelper {
 
-    private LibraryElementDao libraryElementDao = new LibraryElementDao();
+    private static final LibraryElementDao libraryElementDao = new LibraryElementDao();
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -164,7 +165,8 @@ public class LibraryElementServlet extends HttpServlet implements DataInputHelpe
 
         int libraryElementId = Integer.parseInt(request.getParameter("libraryElementId"));
 
-        LibraryElementDao.deleteLibraryElement(libraryElementId);
+        libraryElementDao.acceptDeleteLibraryElement(libraryElementId);
+
         libraryElementList(request, response);
 
     }

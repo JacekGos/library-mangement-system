@@ -6,9 +6,6 @@
     response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
 %>
 <c:import url="../navigationBar.jsp" />
-<c:if test="${sessionScope.userType == null}">
-    <c:redirect url = "/account/login.jsp"/>
-</c:if>
 
 <html>
 <head>

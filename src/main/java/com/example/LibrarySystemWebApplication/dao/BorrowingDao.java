@@ -1,5 +1,6 @@
 package com.example.LibrarySystemWebApplication.dao;
 
+import com.example.LibrarySystemWebApplication.Utility;
 import com.example.LibrarySystemWebApplication.model.Borrowing;
 
 import java.sql.*;
@@ -8,6 +9,9 @@ import java.util.List;
 import java.sql.Timestamp;
 
 public class BorrowingDao {
+
+    private static final BorrowingDao borrowingDao = new BorrowingDao();
+    private static final LibraryElementDao libraryElementDao = new LibraryElementDao();
 
     static Connection connection;
 
@@ -34,9 +38,6 @@ public class BorrowingDao {
 
     public static final String SELECT_BORROWING_BY_ID = "SELECT * FROM public.\"Borrowings\" WHERE borrowing_id = ?";
 
-    public static final String SELECT_LAST_BORROWING_ID = "SELECT borrowing_id FROM public.\"Borrowings\"" +
-            " WHERE library_user_id = ? AND element_id = ? AND borrowing_date = ?";
-
     public static final String SELECT_LIBRARY_ELEMENT_ID = "SELECT element_id FROM public.\"Borrowings\" WHERE borrowing_id = ?";
 
     public static final String UPDATE_BORROWING_STATUS = "UPDATE public.\"Borrowings\"" +
@@ -50,6 +51,9 @@ public class BorrowingDao {
 
     public static final String DELETE_ALL_USER_BORROWINGS = "DELETE FROM public.\"Borrowings\"" +
             " WHERE library_user_id = ?";
+
+    public static final String DELETE_BORROWINGS_BY_LIBRARY_ELEMENT_ID = "DELETE FROM public.\"Borrowings\"" +
+            " WHERE element_id = ?";
 
 
     public static int insertBorrowing(Borrowing borrowing) {
@@ -171,30 +175,6 @@ public class BorrowingDao {
         return borrowing;
     }
 
-    public static int getLastBorrowingId(Borrowing borrowing) {
-
-       int borrowingId = 0;
-
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(SELECT_LAST_BORROWING_ID);
-            preparedStatement.setInt(1, borrowing.getLibraryUserId());
-            preparedStatement.setInt(2, borrowing.getLibraryElementId());
-            preparedStatement.setTimestamp(3, borrowing.getBorrowingDate());
-
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            while (resultSet.next()) {
-
-                borrowingId = resultSet.getInt("borrowing_id");
-
-            }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-
-        return borrowingId;
-    }
-
     public static int getLibraryElementId(int borrowingId) {
 
         int libraryElementId = 0;
@@ -274,6 +254,43 @@ public class BorrowingDao {
         }
 
         return rowDeleted;
+    }
+
+    public static boolean deleteALLBorrowingsByLibraryElementId(int libraryElementId) {
+
+        boolean rowDeleted = false;
+
+        try {
+
+            PreparedStatement preparedStatement = connection.prepareStatement(DELETE_BORROWINGS_BY_LIBRARY_ELEMENT_ID);
+
+            preparedStatement.setInt(1, libraryElementId);
+
+            rowDeleted = preparedStatement.executeUpdate() > 0;
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return rowDeleted;
+    }
+    
+    public static boolean acceptEndBorrowingProcess(int borrowingId, int libraryElementId) {
+
+        try {
+            connection.setAutoCommit(false);
+            borrowingDao.updateBorrowingStatus(borrowingId, Utility.STATUS_FINISHED);
+            libraryElementDao.updateLibraryElementStatus(libraryElementId, Utility.STATUS_AVAILABLE);
+            connection.commit();
+        } catch (SQLException e) {
+            try {
+                connection.rollback();
+            } catch (SQLException ex) {
+                ex.getMessage();
+            }
+        }
+
+        return true;
     }
 
 }

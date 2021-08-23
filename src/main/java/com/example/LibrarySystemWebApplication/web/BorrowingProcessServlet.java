@@ -30,10 +30,10 @@ import static java.lang.Math.abs;
 @WebServlet(name = "borrrowingProcess", value = "/borrowingProcess")
 public class BorrowingProcessServlet extends HttpServlet {
 
-    private LibraryElementDao libraryElementDao = new LibraryElementDao();
-    private LibraryUserDao libraryUserDao = new LibraryUserDao();
-    private BorrowingDao borrowingDao = new BorrowingDao();
-    private RequestDao requestDao = new RequestDao();
+    private static final LibraryElementDao libraryElementDao = new LibraryElementDao();
+    private static final LibraryUserDao libraryUserDao = new LibraryUserDao();
+    private static final BorrowingDao borrowingDao = new BorrowingDao();
+    private static final RequestDao requestDao = new RequestDao();
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -287,8 +287,7 @@ public class BorrowingProcessServlet extends HttpServlet {
         int libraryElementId = borrowing.getLibraryElementId();
         int libraryUserId = borrowing.getLibraryUserId();
 
-        borrowingDao.updateBorrowingStatus(borrowingId, Utility.STATUS_FINISHED);
-        libraryElementDao.updateLibraryElementStatus(libraryElementId, Utility.STATUS_AVAILABLE);
+        borrowingDao.acceptEndBorrowingProcess(borrowingId, libraryElementId);
 
         request.removeAttribute("borrowingId");
         request.removeAttribute("libraryElementId");
