@@ -23,3 +23,5 @@ A web appliation designed to manage work of and library resources.
 ![userBorrowings](https://user-images.githubusercontent.com/46130249/140711804-aad2da66-8f75-4dcf-a5a8-91986384631e.png)
 
 ![acceptRequest](https://user-images.githubusercontent.com/46130249/140711958-23b1058e-924f-4108-bd71-5cbd7c027528.png)
+
+![addLibElemetn](https://user-images.githubusercontent.com/46130249/140712186-c3159988-f5e0-468b-8887-0ef3fc209eaa.png)
